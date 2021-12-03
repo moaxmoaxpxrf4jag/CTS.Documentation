@@ -1,0 +1,269 @@
+@startuml "CTS Object Diagram"
+/'**Легенда 
+Обязательность заполнения реквизита (Mandatory):588588585
+    *   Реквизит обязательный для заполненияТипы реквизита:
+Типы данных (DataType):
+    str:<long>                  Строка (string) определенной длинны в символах, размер лучше всего указывать кратным 8, т.е. 32, 64, 128, 256 и т.д., минимальная длина строки 32 символа.
+    text                        Текст (text) неограниченно длинны.
+    int                         Беззнаковое целое число (integer).
+    float:<accuracy>            Число (numeric). Вещественное число с определенной точностью. Точность определяется количеством знаков после запятой в формате .<число знаковпосле запятой>.
+    date:<mask>                 Дата (date). С помощью маски задается формат вводимого значения, dd, mm, yy, yyyy. Например: dd.mm.yyyy т.д.
+    time:<mask>                 Время (time). С помощью маски задается формат вводимого значения, элементы маски hh, mm, ss. Пример: hh:mm:ss, hh:mm, mm:ss и т.д.
+    datetime:<mask>             Дата и время (datetime). Дата, дата и время с определенной точностью. С помощью маски задается формат вводимого значения dd.mm.yyyy(yy)_hh:mm:ss, или dd.mm.yyyy(yy).
+    bool                        Логический (boolean). Логическое значение - Истина/Лож. Используется для чек-боксов и радио-кнопок.
+    enum                        Перечисление (enumeration). Значения перечисления указываются через ",". Перечисление, используется для полей с выпадающим списком к количеством значенией не более 5-ти, значения указываются в отдельном объекте с названием раналогичному названию реквизита.
+    bin                         Бинарный (binary) тип данных. Используется для указания на то что в поле будут хранится именно бинарные данные, например, такие как бинарный данные различных файлов и т.д.
+    <ObjectName>:<choice_type>  Указывается имя объекта значение записи которго используется в качестве значения реквизита. Тип выбора - single (одно значение)/plural (несколько значений).
+
+Заполнение реквзитов (Filling):
+    manual                  Заполняется вручную.
+    auto:create/save        Заполняется автоматически при создании/сохранении записи.
+    generated:create/save   Генерируется автоматически при созранении/созранении записи.
+    <value>                 Заполняется конкретным значеним по умолчанию при создании записи, например - true.1
+
+Отображение реквизита в интерфейсе (Visibility): 
+    form        Отображать в представлиении формы карточки экземпляра объекта.
+    list        Отображать в представлении реестра (списка) объектов.   
+    Может быть  указано сразу оба значения через "&". 
+
+Формат описания сущностей (объектов):
+    Сущьности:w
+    /'Пользователи Портала'/ entity EntityName <<EntityStage>> {
+
+    }
+    EntityStage   Состояние объекта, Work (в работе)/Ready (готово)
+    Пример:
+    /'Пользователи Портала'/ entity Users <<Work>> {
+
+    }
+
+    Реквизиты: 
+    /'Наименование реквизита'/<Mandatory>RequisiteName: DataType:argument Filling Visibility
+    Пример:     /'Краткое наименование'/ *ShortName str:128 manual form&list
+                /'Автор'/ *CreatedByUser: Users:single auto:create form
+'/
+'**Оформление объектов
+skinparam stereotypeCBorderColor Black
+skinparam stereotypeCBackgroundColor White
+skinparam stereotypeEBackgroundColor White
+/'skinparam handwritten true'/
+skinparam class {
+/'Готово'/      BackgroundColor<<Ready>>    LightGreen
+/'В работе'/    BackgroundColor<<Work>>     LightYellow
+}
+
+'**Объекты
+
+/'Каталог ТРУ'/
+ entity Commodities <<Work>> { 
+    *Id: int generated
+    --
+    /'Наименование товара'/ *FullName: CommoditiesNames: single manual form&list
+    /'Краткое название'/ *ShortName: str:250 auto form
+    /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
+    /'Отделение товара'/ *Sections: CommoditiesSections:single manual form&list
+    /'Категория товара'/ *Category: CommoditiesCategories:single manual form&list
+    /'Вид товара'/ *Kind: CommoditiesKind:single manual form&list
+    /'Лот (единица измерения товара)'/ *BaseUnit: BaseUnits:single manual form
+    /'Размер лота'/ Quantity: float: 5 manual form
+    /'??? Регион поставки'/ *Region: Regions:plural manual form&list
+    /'??? Базис поставки (склады, станции)'/ *Basis: Bases:plural manual form&list
+    /'Завод-производитель'/ *Plant: Plants:plural manual form&list
+    /'Упаковка'/ *Package: Packaging:plural manual form&list
+    /'Описание товара'/ Description: text: manual form
+    /'Продавец'/ OrganisationsCustomer: Organisations:single auto form
+    /'Спецификация'/ *Specification: SpecificationCommodities: single auto form&list
+    /'Сопроводительные документы'/ Files: bin auto fo
+    --
+    /'Статус'/ *Status: CommoditiesStatus:single auto form&list
+    /'Дата изменения'/ ChangeDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:create form
+    /'Дата создания'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByUser: Users:single auto:create form&list
+}
+
+/'Наименование товара'/ entity CommoditiesNames <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:256 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+    /'Отделение товара'/ *Sections: CommoditiesSections: single manual form&list
+    /'Категория товара'/ *Category: Categories:single manual form&list
+    --
+    /'Статус'/ *Status: CommoditiesStatus: auto:create form
+    /'Дата изменения'/ *ChangeDateTime: date:dd.mm.yyyy auto:create form
+    /'Дата создания'/ *CreateDateTime: date:dd.mm.yyyy auto:create form
+    /'Автор'/ *CreatedByUser: Users:single auto:create form&list
+    /'Дата блокировки'/ *LockDate: date:dd.mm.yyyy auto:create form
+}
+
+/'Спецификация биржевых товаров'/ entity SpecificationCommodities <<Work>> {
+    *Id: int generated
+    --
+    /'Номер'/ *Number: int auto form&list
+    /'Дата'/ *Date: date:dd.mm.yyyy auto form&list
+    /'Участник торгов'/ *Organisation: Organisations: str:250 manual form&list
+    /'Перечень берживых товаров (табличная часть)'/ *ListCommodities: ListCommodities:plural manual form
+    --
+    /'Статус'/ *Status: SpecificationStatus: str:32 manual list
+    /'Дата создания'/ *CreateDateTime: date:dd.mm.yyyy_hh:mm:ss auto:create form
+    /'Автор'/ *CreatedByUser: Users:single auto:create form&list
+    /'Дата утверждения'/ *ApprovalDate: date:dd.mm.yyyy manual form
+}
+
+/'Перечень берживых товаров'/ entity ListCommodities <<Work>>{
+    *Id: int generated 
+    --
+    /'Наименование товара'/ *FullName: CommoditiesNames: single manual form&list
+    /'Краткое название'/ *ShortName:  str:250 auto form
+    /'Виды сопроводительных документов'/ DocumentsKinds: DocumentsKinds:plural manual form
+    --
+    /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
+    /'Вид товара'/ *Kind: CommoditiesKind:single manual form&list
+    /'Отделение товара'/ *Sections: CommoditiesSections:single auto form&list read
+    /'Категория товара'/ *Category: CommoditiesCategories:single auto form&list read
+    /'Лот (единица измерения товара)'/ *BaseUnit: BaseUnit:single manual form
+    /'Размер лота'/ Quantity: float:.2 manual form&list
+    /'Описание товара'/ Description: str:2500 manual form
+}
+
+/'Участники торгов'/ entity Organisations <<Work>> {
+    *Id: int generated
+    --
+    /'Идентификторр'/ *Code [1] str 12
+    /'Полное наименование'/ *FullName: str:256 manual form&list
+    /'Продавец'/ *Sale: bool manual form&list
+    /'Покупатель'/ *Customer: bool manual form&list
+    /'Краткое наименование'/ *ShortName: str:128 manual form&list
+    /'ИНН'/ *BidderINN: str:12 manual form
+    /'КПП'/ *BidderKPP str:9 manual form
+    /'Вид деятельности'/ *АactivityKind: АactivityKinds manual form
+    --
+    /'Статус'/ *Status: Statuses auto:create form
+    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByUser: Users:single auto:create form&list
+}
+
+/'Персоны'/ entity Persons <<Work>> {
+    *Id: int generated
+    --
+    /'Пользователь'/ *User: Users:single auto form
+    /'Организация'/ *Organisation: Organisations auto form
+    /'Имя'/ *Name: str:64 manual form
+    /'Отчество'/ MiddleName: str:64 manual form
+    /'Фамилия'/ *LastName: str:64 manual form 
+    
+}
+
+'**Справочники
+
+/'Статусы Каталога ТРУ'/ entity CommoditiesStatus <<Work>>{
+    *Id: int generated create
+    --
+    /'Название'/ *Name: str:32 manual form
+    /'Описание'/ Description: text:single manual form
+}
+
+/'Статус Cпецификации'/ entity SpecificationStatus <<Work>>{
+    *Id: int generated create
+    --
+    /'Название'/ *Name: str:32 manual form
+    /'Описание'/ Description: text:single manual form
+}
+
+/'Виды сопроводительных документов'/ entity DocumentsKinds <<Work>>{
+    *Id: int generated
+}
+
+/'Категория товара'/ entity CommoditiesCategories <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:256 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+}
+
+/'Вид товара'/ entity CommoditiesKind <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str manual form&list
+    /'Краткое название'/ *ShortName: str manual form&list
+}
+
+/'Единица измерения'/ entity BaseUnits <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:56 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+}
+
+/'Регион поставки'/ entity Regions <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:256 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+}
+
+/'Базис поставки'/ entity Bases <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:256 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+}
+
+/'Завод-производитель'/ entity Plants <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:256 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+}
+
+/'Упаковка'/ entity Packaging <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:256 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+}
+
+/'Отделение товара'/ entity CommoditiesSections <<Work>> {
+    *Id: int generated
+    --
+    /'Название'/ *FullName: str:256 manual form&list
+    /'Краткое название'/ *ShortName: str:256 manual form&list
+    /'Вид товара'/ *TypeGood: TypeGoods:single manual form&list
+}
+
+'**Связи объектов
+
+'Персоны
+Persons::Organisation }|--|| Organisations::Id
+Persons::User }|--|| Users::Id
+
+'Каталог ТРУ'
+Commodities::FullName ||--|| CommoditiesNames::Id
+Commodities::Category }|--|| CommoditiesCategories::Id
+Commodities::Kind }|--|| CommoditiesKind::Id
+Commodities::BaseUnit }|--|| BaseUnits::Id
+Commodities::Region }|--|| Regions::Id
+Commodities::Sections }|--|| CommoditiesSections::Id
+Commodities::Package ||--|| Packaging::Id
+Commodities::Bases ||--|| Bases::Id
+Commodities::Plant }|--|| Plants::Id
+Commodities::OrganisationsCustomer }|--|| Organisations::Id
+Commodities::CatalogStatus }|--|| CommoditiesStatus::Id
+Commodities::SpecificationCommodities ||--|| SpecificationCommodities::Id 
+
+'Спецификация биржевых товаров 
+SpecificationCommodities::Organisation }|--|| Organisations::Id
+SpecificationCommodities::CommoditiesName }|--|| CommoditiesNames::Id
+SpecificationCommodities::Сreator }|--|| Users::Id
+SpecificationCommodities::SpecificationStatus }|--|| SpecificationStatus::Id
+
+'Перечень берживых товаров
+ListCommodities::FullName }|--|| CommoditiesNames::FullName
+ListCommodities::ShortName }|--|| CommoditiesNames::ShortName
+ListCommodities::Kind }|--|| CommoditiesKind::Id
+ListCommodities::Sections }|--|| CommoditiesSections::Id
+ListCommodities::Category }|--|| CommoditiesCategories::Id
+ListCommodities::BaseUnit }|--|| BaseUnits::Id
+ListCommodities::DocumentsKinds }|--|| DocumentsKinds::Id
+
+@enduml
