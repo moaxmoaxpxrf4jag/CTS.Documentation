@@ -62,7 +62,7 @@ skinparam class {
     /'Наименование товара'/ *FullName: CommoditiesNames: single manual form&list
     /'Краткое название'/ *ShortName: str:250 auto form
     /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
-    /'Отделение товара'/ *Sections: CommoditiesSections:single manual form&list
+    /'Отделение товара'/ *Sections: CommoditiesClassifier:single manual form&list
     /'Категория товара'/ *Category: CommoditiesCategories:single manual form&list
     /'Вид товара'/ *Kind: CommoditiesKind:single manual form&list
     /'Лот (единица измерения товара)'/ *BaseUnit: BaseUnits:single manual form
@@ -87,7 +87,7 @@ skinparam class {
     --
     /'Название'/ *FullName: str:256 manual form&list
     /'Краткое название'/ *ShortName: str:256 manual form&list
-    /'Отделение товара'/ *Sections: CommoditiesSections: single manual form&list
+    /'Отделение товара'/ *Sections: CommoditiesClassifier: single manual form&list
     /'Категория товара'/ *Category: Categories:single manual form&list
     --
     /'Статус'/ *Status: CommoditiesStatus: auto:create form
@@ -102,7 +102,7 @@ skinparam class {
     --
     /'Номер'/ *Number: int auto form&list
     /'Дата'/ *Date: date:dd.mm.yyyy auto form&list
-    /'Участник торгов'/ *Organisation: Organisations: str:250 manual form&list
+    /'Участник торгов'/ *Organisation: Organisations: str:250 auto form&list
     /'Перечень берживых товаров (табличная часть)'/ *ListCommodities: ListCommodities:plural manual form
     --
     /'Статус'/ *Status: SpecificationStatus: str:32 manual list
@@ -111,7 +111,7 @@ skinparam class {
     /'Дата утверждения'/ *ApprovalDate: date:dd.mm.yyyy manual form
 }
 
-/'Перечень берживых товаров'/ entity ListCommodities <<Work>>{
+/'Перечень биржевых товаров'/ entity ListCommodities <<Work>>{
     *Id: int generated 
     --
     /'Наименование товара'/ *FullName: CommoditiesNames: single manual form&list
@@ -120,7 +120,7 @@ skinparam class {
     --
     /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
     /'Вид товара'/ *Kind: CommoditiesKind:single manual form&list
-    /'Отделение товара'/ *Sections: CommoditiesSections:single auto form&list read
+    /'Отделение товара'/ *Sections: CommoditiesClassifier:single auto form&list read
     /'Категория товара'/ *Category: CommoditiesCategories:single auto form&list read
     /'Лот (единица измерения товара)'/ *BaseUnit: BaseUnit:single manual form
     /'Размер лота'/ Quantity: float:.2 manual form&list
@@ -196,13 +196,15 @@ skinparam class {
     /'Краткое название'/ *ShortName: str:256 manual form&list
 }
 
-/'Отделение товара'/ entity CommoditiesSections <<Work>> {
+/'Классификатор товаров'/ entity  CommoditiesClassifier <<Work>> {
     *Id: int generated
     --
-    /'Название'/ *FullName: str:256 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
-    /'Вид товара'/ *TypeGood: TypeGoods:single manual form&list
-}
+    /'Тип записи'/ *Type: enum:section|Отделение,category|Категория,kond|Вид form
+    /'Уровень родитель'/ *ParentLevel: CommoditiesClassifier:single manual form&list
+    /'Код'/ Code str:16 manual form&list
+    /'Краткое наименование'/ ShortName: str:32 manual form&list
+    /'Полное наименование'/ FullName: str:128 manual form&list
+ }
 
 '**Связи объектов
 
@@ -216,7 +218,7 @@ Commodities::Category }|--|| CommoditiesCategories::Id
 Commodities::Kind }|--|| CommoditiesKind::Id
 Commodities::BaseUnit }|--|| BaseUnits::Id
 Commodities::Region }|--|| Regions::Id
-Commodities::Sections }|--|| CommoditiesSections::Id
+Commodities::Sections }|--|| CommoditiesClassifier::Id
 Commodities::Package ||--|| Packaging::Id
 Commodities::Bases ||--|| Bases::Id
 Commodities::Plant }|--|| Plants::Id
@@ -235,7 +237,7 @@ SpecificationCommodities::SpecificationStatus }|--|| SpecificationStatus::Id
 ListCommodities::FullName }|--|| CommoditiesNames::FullName
 ListCommodities::ShortName }|--|| CommoditiesNames::ShortName
 ListCommodities::Kind }|--|| CommoditiesKind::Id
-ListCommodities::Sections }|--|| CommoditiesSections::Id
+ListCommodities::Sections }|--|| CommoditiesClassifier::Id
 ListCommodities::Category }|--|| CommoditiesCategories::Id
 ListCommodities::BaseUnit }|--|| BaseUnits::Id
 ListCommodities::DocumentsKinds }|--|| DocumentsKinds::Id
