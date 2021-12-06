@@ -103,7 +103,7 @@ skinparam class {
     /'Участник торгов'/ *Organisation: OrganisationsId: str:250 auto form&list
     /'Перечень берживых товаров (табличная часть)'/ *SpecificationCommodities: SpecificationCommoditiesId:plural manual form
     --
-    /'Статус'/ *Status: SpecificationStatusId: str:32 manual list
+    /'Статус'/ *Status: SpecificationStatusId: str:32 auto list
     /'Дата создания'/ *CreateDateTime: date:dd.mm.yyyy_hh:mm:ss auto:create form
     /'Автор'/ *CreatedByUser: UsersId:single auto:create form&list
     /'Дата утверждения'/ *ApprovalDate: date:dd.mm.yyyy manual form
