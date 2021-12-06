@@ -79,6 +79,8 @@ skinparam class {
     /'Е-мэйл'/ *Email: str:32 manual form
     /'Действует на основании (устава/доверенности)'/ *ActionBasis: enum:01.Устава, 02.Доверенности
     /'ЭЦП'/ *Signature: bin auto
+    /'Дата начала действия ЭЦП'/ *SignatureDateStart: date manual form
+    /'Дата окончания действия ЭЦП'/ *SignatureDateEnd: date manual form
  }
 
 /'Группы пользователей'/ entity Groups <<Work>> {
@@ -110,28 +112,28 @@ skinparam class {
     /'Вычисление'/ Calculation: text manual form
  }
 
-/'Организации-участники торгов'/ entity Organisations <<Work>> {
+/'Организации-участники торгов'/ entity Organizations <<Work>> {
     *Id: GUID generated
     --
-    /'Код'/ *Code: int auto:create form&list 
-    /'Код ЦБ'/*CodeCB: int manual  form&list
+    /'Код'/ *Code: str64 auto:create form&list 
+    /'Код ЦБ'/*CodeCB: str64 manual  form&list
     /'!! Правила формирования Кода(прописать правила) Для Юр.лиц Код=ИНН; Для иностранных орг. Код= КИО; Для ИП Код= серия и номер паспорта'/
     /'Форма собственности'/ *OwnershipTypeId: OwnershipTypes:single manual form
     /'Полное наименование'/ *FullName: str:256 manual form&list
     /'Краткое наименование'/ *ShortName: str:128 manual form&list
-    /'!!Только для ин.юр. лиц!! Полное наименование на иностранном языке'/ *FullNameForeignLanguage: str:256 manual form&list
-    /'!!Только для ин.юр. лиц!! Краткое наименование'/ *ShortNameForeignLanguage: str:128 manual form&list
+    /'!!Только для ин.юр. лиц!! Полное наименование на иностранном языке'/ FullNameForeignLanguage: str:256 manual form&list
+    /'!!Только для ин.юр. лиц!! Краткое наименование'/ ShortNameForeignLanguage: str:128 manual form&list
     /'Код страны'/*CountryId: Adresses:single manual form
     /'Юридический адрес'/ *LegalAddressId: Addresses:plural manual form
     /'Почтовый адрес'/ *PostalAddressId: Addresses:plural manual form
     /'ИНН'/ *INN-KIO: str:12 manual form
     /'КПП'/ *KPP: str:9 manual form
     /'ОКПО'/ *OKPO: str:12 manual form
-    /'ОГРН'/ *OGRN: int:single manual form
-    /'Дата выдачи ОГРН'/ *OGRNDate: date manual form
-    /'Место выдачи ОГРН'/ *OGRNPlace: str:256 manual form
-    /'!!! Только для ИП!!! ОГРНИП'/ *OGRNIP: int:single manual form
-    /'!!! Только для ИП!!! Дата регистрации ИП'/ *DateIP: date manual form
+    /'ОГРН'/ OGRN: int:single manual form
+    /'Дата выдачи ОГРН'/ OGRNDate: date manual form
+    /'Место выдачи ОГРН'/ OGRNPlace: str:256 manual form
+    /'!!! Только для ИП!!! ОГРНИП'/ OGRNIP: int:single manual form
+    /'!!! Только для ИП!!! Дата регистрации ИП'/ DateIP: date manual form
     /'Дата государственной регистрации физического лица в качестве ИП'/
     /'ФИО руководителя'/ *CEOFullName: str:256 manual form
     /'ФИО руководителя в родительном падеже'/ *CEOFullNameGenetive: str:256 manual form
@@ -150,7 +152,7 @@ skinparam class {
     /'Документы'/ *DocumentsId: Documents:plural manual form
 
     --
-    /'Статус'/ *Status: OrganisationStatuses:single auto:create form
+    /'Статус'/ *Status: OrganizationStatuses:single auto:create form
     /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
     /'Автор'/ *CreatedByUser: Users:single auto:create form&list
 }
@@ -208,7 +210,7 @@ skinparam class {
     /'Автор'/ *CreatedByUserId: Users:single auto:create form&list
 }
 
-/'Статус организации'/ entity OrganisationStatuses <<Work>> {
+/'Статус организации'/ entity OrganizationStatuses <<Work>> {
     *Id: GUID generated create
     --
     /'Название'/ *Name: str:32 manual form
@@ -256,24 +258,24 @@ skinparam class {
 /'???Личный кабинет'/ entity Room <<Work>> {
     *Id: GUID generated <FK>
     --
-    /'Организация'/ *Organisation: Organisations:single auto:create
+    /'Организация'/ *Organization: Organisations:single auto:create
 
 }
 
 '**Связи объектов
 
 'Пользователи
-Users::Organisation }|--|| Organisations::Id
+Users::Organisation }|--|| Organizations::Id
 Users::Groups }|--||Groups::Id
 Users::Roles }|--|| Roles::Id
 
 'Организация
-Organisations::Documents }|--||Documents::Id
-Organisations::OwnershipTypes ||--|{ OwnershipTypes::Id
-Organisations::BusinessesLine }|--|{ BusinessesLine::Id
-Organisations::Addresses ||--|{ Addresses::Id
-Organisations::Banks ||--|{ Banks::Id
-Organisations::OrganisationStatuses ||--|{ OrganisationStatuses::Id
+Organizations::Documents }|--||Documents::Id
+Organizations::OwnershipTypes ||--|{ OwnershipTypes::Id
+Organizations::BusinessesLine }|--|{ BusinessesLine::Id
+Organizations::Addresses ||--|{ Addresses::Id
+Organizations::Banks ||--|{ Banks::Id
+Organizations::OrganizationStatuses ||--|{ OrganzsationStatuses::Id
 
 'Документация
 Documents::DocumentKinds }|--|| DocumentKinds::Id
