@@ -1,19 +1,57 @@
-@startuml "Спецификация биржевых товаров"
-participant Participant as Foo
-actor       Actor       as Foo1
-boundary    Boundary    as Foo2
-control     Control     as Foo3
-entity      Entity      as Foo4
-database    Database    as Foo5
-collections Collections as Foo6
-queue       Queue       as Foo7
+' @startuml "Спецификация биржевых товаров"
+' actor  Участник_торгов as Foo0
+' participant Номер as Foo1
+' participant Дата as Foo2
+' collections Перечень_берживых_товаров as Foo3
+' participant Сохранить as Foo4
+' database БД as Foo5
+
+' Foo0 -> Foo1: Заполнение поля
+' Foo0 -> Foo2: Заполнение поля
+' Foo0 -> Foo3: Заполнение табличной части
+' Foo0 -> Foo4: Нажать Сохранить (Создать)
+' Foo4 -> Foo5: Сохранения в БД
+
+' @enduml
 
 
-Foo1 -> Foo6 : Заполнения Перечень берживых товаров
-Foo -> Foo2 : To boundary
-Foo -> Foo3 : To control
-Foo -> Foo4 : To entity
-Foo -> Foo5 : To database
-Foo -> Foo6 : To collections
-Foo -> Foo7 : To queue
+@startuml "Перечень биржевых товаров в спецификации"
+actor  Участник_торгов as Foo0
+participant Номер as Foo1
+participant Дата as Foo2
+collections Перечень_берживых_товаров as Foo3
+participant Сохранить as Foo4
+participant Наименование_товара as Foo6
+participant Краткое_название as Foo7
+participant Виды_сопроводительных_документов as Foo8
+participant Вид_товара as Foo13
+participant Классификатор_товаров as Foo9
+participant Лот_единица_измерения_товара as Foo10
+participant Размер_лота as Foo11
+participant Описание_товара as Foo12
+participant Сохранить as Foo13
+database БД as Foo5
+
+Foo0 -> Foo1: Выбрать товар из справочника
+Foo0 -> Foo2: Заполнение поля
+Foo0 -> Foo3: Заполнение табличной части
+
+group Перечень биржевых товаров в спецификации [Табличной части]
+    Foo0 -> Foo6 : Log attack end
+        group Новый товар [Запрос на добавление нового товара]
+            Foo0 -> Foo0: Товара нет в каталоге нименований товаров(Запрос на добавлнения нового товара)
+        end
+    Foo0 -> Foo7 : Заполнение поля
+    Foo0 --> Foo8 : Указать вид документа(Виды сопроводительных документов)
+    Foo0 -> Foo13 : Выбрать вид товара
+    Foo0 -> Foo9 : Указать класификатор
+    Foo0 -> Foo10 : Указать единица измерения товара
+    Foo0 --> Foo11 : Указать размер лота
+    Foo0 --> Foo12 : Добавить доп.описание товара
+    Foo13 -> Foo13: Записаь в Перечень биржевых товаров в спецификации
+end
+
+Foo0 <-- Foo3: Перечень биржевых товаров не заполнено
+Foo0 -> Foo4: Нажать Сохранить (Создать)
+Foo4 -> Foo5: Сохранения в БД
 @enduml
