@@ -6,8 +6,6 @@
 ' participant Сохранить as Foo4
 ' database БД as Foo5
 
-
-4
 ' Foo0 -> Foo1: Заполнение поля
 ' Foo0 -> Foo2: Заполнение поля
 ' Foo0 -> Foo3: Заполнение табличной части
