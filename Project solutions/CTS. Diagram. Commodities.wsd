@@ -59,7 +59,7 @@ skinparam class {
  entity Commodities <<Work>> { 
     *Id: GUID generated
     --
-    /'Наименование товара'/ *FullName: CommoditiesNames: single manual form&list
+    /'Наименование товара'/ *FullName: CommoditiesNamesId: single manual form&list
     /'Краткое название'/ *ShortName: str:250 auto form
     /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
     /'Классификатор товаров'/ *CommoditiesClassifier: CommoditiesClassifierId:single manual form&list
@@ -68,8 +68,8 @@ skinparam class {
     /'Размер лота'/ Quantity: float: 5 manual form
     /'??? Регион поставки'/ *Region: RegionsId:plural manual form&list
     /'??? Базис поставки (склады, станции)'/ *Basis: BasesId:plural manual form&list
-    /'Завод-производитель'/ *Plant: Plants:plural manual form&list
-    /'Упаковка'/ *Package: Packaging:plural manual form&list
+    /'Завод-производитель'/ *Plant: PlantsId:plural manual form&list
+    /'Упаковка'/ *Package: PackagingId:plural manual form&list
     /'Описание товара'/ Description: text: manual form
     /'Продавец'/ OrganisationsCustomer: OrganisationsId:single auto form
     /'Спецификация'/ *Specifications: SpecificationsId: single auto form&list
