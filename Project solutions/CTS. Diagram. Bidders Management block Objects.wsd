@@ -226,9 +226,8 @@ skinparam class {
     /'Тип карточки документы'/ *DocumentTypeId: DocumentTypes:single auto:creatre form 
     
     --
-    /'Дата создания'/ *CreateDate: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор документа'/ *AutorId: Users:single auto:save form
-
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
     
 }
 
