@@ -30,11 +30,15 @@ participant Упаковка as Foo11
 participant Описание_товара as Foo12
 participant Продавец as Foo13
 participant Спецификация as Foo14
+collections Документы as Foo15
+participant Дата_создания as Foo16
+participant Дата_изменения as Foo17
+participant Автор as Foo18
 
 database БД as Foo5
 
 Foo0 -> Foo1: Выбрать наименование товара из справочника
-Foo1 --> Foo2: Автоматическое заполнение 
+Foo0 -> Foo0: Товара нет в каталоге наименований товаров(Запрос на добавление нового наименования)
 Foo2 --> Foo0: Заполнены поля "Наименование товара" и "Краткое название"
 Foo0 -> Foo3: Выбрать отделение из справочника
 Foo3 --> Foo4: Отображение в поле "Категория товара" значений из выбранного "Отделения товара"
@@ -58,21 +62,94 @@ Foo0 --> Foo12: Заполнить поле "Описание_товара"
 
 
 group Дополнительная инфомрация
-    Foo0 -> Foo6 : Log attack end
-        group Новый товар [Запрос на добавление нового товара]
-            Foo0 -> Foo0: Товара нет в каталоге нименований товаров(Запрос на добавлнения нового товара)
-        end
-    Foo0 -> Foo7 : Заполнение поля
-    Foo0 --> Foo8 : Указать вид документа(Виды сопроводительных документов)
-    Foo0 -> Foo13 : Выбрать вид товара
-    Foo0 -> Foo9 : Указать класификатор
-    Foo0 -> Foo10 : Указать единица измерения товара
-    Foo0 --> Foo11 : Указать размер лота
-    Foo0 --> Foo12 : Добавить доп.описание товара
-    Foo13 -> Foo13: Записаь в Перечень биржевых товаров в спецификации
+    Foo0 --> Foo14 : Спецификация
+    Foo0 --> Foo13 : Продавец
+    Foo0 --> Foo15 : Документы
+    Foo0 --> Foo16 : Дата создания
+    Foo0 --> Foo17 : Дата изменения
+    Foo0 --> Foo18 : Автор
 end
 
-Foo0 <-- Foo3: Перечень биржевых товаров не заполнено
+Foo0 <-- Foo3: Карточка_товара
 Foo0 -> Foo4: Нажать Сохранить (Создать)
 Foo4 -> Foo5: Сохранения в БД
+@enduml
+
+
+
+/'v2 Схема'/
+@startuml "ЦТС.А3.2 Добавление товара в Каталог"
+/'Название файла будет: ЦТС.<Номер схемы БП>.<Номер этапа>.<Название этапа в схеме БП>'/
+title "ЦТС.А3.2. Добавление товара в Каталог"
+actor "Участник Торгов" as User
+boundary "Карточка товара" as Commodities
+database "База данных" as Database
+actor "Администратор Торгов" as User_CTS
+
+autonumber
+activate User
+User -> Commodities: Ввести данные Наименование товара
+note right
+    manual:  Классификатор товара, Вид товара, Лот, Размер лота, Регион поставки, Базис поставки, Завод-производитель, Упаковка, Описание товара
+    Перечень берживых товаров (табличная часть);
+    auto: Статус, Дата создания, Автор.
+end note
+/'Перечень биржевых товаров'/
+activate SpecificationCommodities
+SpecificationCommodities --> CommoditiesNames: Проверка корректно заполненных данных
+    /'Форма на добавления товара в Каталог наименования товара'/
+    activate CommoditiesNames
+    /'Проверка корректно заполненных данных Каталог наименования товара->Участник Торгов'/
+    CommoditiesNames -> CommoditiesNames: Проверка корректно заполненных данных
+    activate CommoditiesNames
+    deactivate CommoditiesNames
+    CommoditiesNames --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
+    activate User
+    /'Ошибка и т.д. в Каталог наименования товара->Участник Торгов'/
+    User-->CommoditiesNames: Корректировка ранее введенных данных
+    deactivate User 
+    CommoditiesNames->Database: Сохранение данных в базе данных
+    activate Database
+        Database->User_CTS: Запросы на добавления товара в Каталог наименования товара 
+        /'Администратор Торгов'/
+        activate User_CTS
+        User_CTS->User_CTS: Проверка корректно заполненных данных, Утверждения 
+        User_CTS->CommoditiesNames: Утверждения, Отказ
+        CommoditiesNames-->User: Причина отказа
+        User_CTS->Database: Сохранение данных в базе данных
+        deactivate User_CTS
+        deactivate Database
+        CommoditiesNames->CommoditiesNames: Cоздание записи в Каталоге наименования товара
+        activate CommoditiesNames
+        deactivate CommoditiesNames      
+    deactivate CommoditiesNames
+/'Ошибка и т.д. в Каталог наименования товара->Спецификации биржевых товаров'/
+SpecificationCommodities -> SpecificationCommodities: Проверка корректно заполненных данных
+activate SpecificationCommodities
+deactivate SpecificationCommodities
+/'Проверка корректно заполненных данных Спецификации биржевых товаров->Участник Торгов'/
+Specifications -> Specifications: Проверка корректно заполненных данных
+activate Specifications
+deactivate Specifications
+/'Ошибка и т.д. в Перечень биржевых товаров->Участник Торгов'/
+SpecificationCommodities --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
+activate User
+/'Корректировка ранее введенных данных Участник Торгов->Спецификации биржевых товаров'/
+User-->SpecificationCommodities: Корректировка ранее введенных данных
+deactivate User
+deactivate SpecificationCommodities
+/'Ошибка и т.д. в Спецификации биржевых товаров->Участник Торгов'/
+Specifications --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
+activate User
+/'Корректировка ранее введенных данных Участник Торгов->Спецификации биржевых товаров'/
+User-->Specifications: Корректировка ранее введенных данных
+deactivate User
+/'Cоздание записи в Спецификации биржевых товаров'/
+Specifications->Specifications: Cоздание записи в Спецификации биржевых товаров
+activate Specifications
+deactivate Specifications
+/'Сохранение данных в базе данных'/
+Specifications ->Database: Сохранение данных в базе данных
+activate Database
+deactivate Database
 @enduml
