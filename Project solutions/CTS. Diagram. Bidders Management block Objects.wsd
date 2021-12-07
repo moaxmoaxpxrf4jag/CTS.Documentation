@@ -250,8 +250,8 @@ skinparam class {
     /'Описание'/ Description: text manual form
     /'Перечень реквизитов типа карточки'/ *DocTypesRequisites: enum:<DocTypesFieldsNames,...> develop
     --
-    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUserId: Users:single auto:create form&list
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
 }
 
 
