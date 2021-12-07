@@ -69,7 +69,7 @@ skinparam class {
     --
     /'Имя пользователя'/ *Name: str:32 manual form&list
     /'Пароль'/ *Password: str:32 manual form&list
-    /'Группа'/ GroupId: Groups manual
+    /'???Группа'/ GroupId: Groups manual
     /'Организация'/ *OrganisationId: Organisations auto form
     /'Имя'/ *Name: str:64 manual form
     /'Отчество'/ MiddleName: str:64 manual form
@@ -78,9 +78,9 @@ skinparam class {
     /'Телефон'/ *Phone: str:24 manual form
     /'Е-мэйл'/ *Email: str:32 manual form
     /'Действует на основании (устава/доверенности)'/ *ActionBasis: enum:01.Устава, 02.Доверенности
-    /'ЭЦП'/ *Signature
-    /'Дата начала действия ЭЦП'/ *SignatureDateStart: date manual form
-    /'Дата окончания действия ЭЦП'/ *SignatureDateEnd: date manual form
+    /'ЭЦП'/ Signature: str
+    /'Дата начала действия ЭЦП'/ SignatureDateStart: date manual form
+    /'Дата окончания действия ЭЦП'/ SignatureDateEnd: date manual form
  }
 
 /'Группы пользователей'/ entity Groups <<Work>> {
@@ -140,16 +140,16 @@ skinparam class {
     /'Должность руководителя'/ *CEOPostName: str:256 manual form
     /'Должность руководителя в родительном падеже'/ *CEOPostNameGenetive: str:256 manual form
     /'Телефон'/ *Phone: int:single manual form
-    /'Факс'/ *Fax: int:single manual form
+    /'Факс'/ Fax: int:single manual form
     /'Е-мэйл'/ *Email: str:64 manual form
-    /'Web-адрес'/ *WebAddress: str:64 manual form
+    /'Web-адрес'/ WebAddress: str:64 manual form
     /'??? Вид деятельности (Код ОКВЭД)'/ *BusinessLineId: BusinessesLine:plural manual form
-    /'Наименование банка'/ *BankName: Banks:single manual form
+    /'Наименование банка'/ *BankId: Banks:single manual form
     /'Расчетный счёт'/ *CheckingAccount: int manual form
     /'??? Аккредитация'/ *Accreditation: bool manual form
     /'???Дата аккредитации'/ AccreditationDate: date manual form
     /'???Дата отмены аккредитации'/ CancellationDate: date manual form
-    /'Документы'/ *DocumentsId: Documents:plural manual form
+    
 
     --
     /'Статус'/ *Status: OrganizationStatuses:single auto:create form
@@ -224,6 +224,7 @@ skinparam class {
     /'Указать принцип формирования наименования'/
     /'Вид документа'/ *DocumentKindId: DocumentKinds:single manual form 
     /'Тип карточки документы'/ *DocumentTypeId: DocumentTypes:single auto:creatre form 
+    
     --
     /'Дата создания'/ *CreateDate: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
     /'Автор документа'/ *AutorId: Users:single auto:save form
