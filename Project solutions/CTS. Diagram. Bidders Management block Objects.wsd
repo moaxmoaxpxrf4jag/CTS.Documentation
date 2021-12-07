@@ -153,8 +153,8 @@ skinparam class {
 
     --
     /'Статус'/ *Status: OrganizationStatuses:single auto:create form
-    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUser: Users:single auto:create form&list
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
 }
 
 /'Адреса'/ entity Addresses <<Work>> {
@@ -168,8 +168,8 @@ skinparam class {
     /'Полное наименование'/ FullName: str:128 manual form&list
     /'Номер'/ Number int manual form&list
     --
-    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUserId: Users:single auto:create form&list
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
 }
 
 
@@ -180,8 +180,8 @@ skinparam class {
     /'Полное наименование'/ *FullName: str:256 manual form&list
     /'Краткое наименование'/ *ShortName: str:128 manual form&list
     --
-    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUserId: Users:single auto:create form&list
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
 } 
 
 /'Виды деятельности'/ entity BusinessesLine <<Work>> {
@@ -191,8 +191,8 @@ skinparam class {
     /'Наименование'/ *Name: str:128 manual form
     /'Расшифровка'/ *Description: text manual form
     --
-    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUserId: Users:single auto:create form&list
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
 }
 
 /'Банки'/ entity Banks <<Work>> {
@@ -206,8 +206,8 @@ skinparam class {
     /'Телефон'/ *Phone: int:single manual form
     /'E-мэйл'/ *Email: str:64 manual form
     --
-    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUserId: Users:single auto:create form&list
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
 }
 
 /'Статус организации'/ entity OrganizationStatuses <<Work>> {
@@ -239,8 +239,8 @@ skinparam class {
     /'Наименование'/  *Name: str:64 manual form
     /'Описание'/ Description: text manual form
     --
-    /'Создано'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUserId: Users:single auto:create form&list
+    /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
+    /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
 }
 
 /'Тип карточки документа'/ entity DocumentTypes <<Work>>{
