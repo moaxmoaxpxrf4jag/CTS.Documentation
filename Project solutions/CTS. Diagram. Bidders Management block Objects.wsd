@@ -198,8 +198,8 @@ skinparam class {
 /'Банки'/ entity Banks <<Work>> {
     *Id: GUID generated create
     --
-    /'Полное наименование'/ *FullName: str:256 manual form&list
-    /'Краткое наименование'/ *ShortName: str:128 manual form&list
+    /'Полное наименование'/ *FullName: str:256 manual form
+    /'Краткое наименование'/ *ShortName: str:128 manual form
     /'БИК'/ *BIK: int: single manual form
     /'Адрес'/ *AddressId: Addresses:plural manual form
     /'Корресподентский счёт'/ *CorrespondentAccount: int:single manual form
