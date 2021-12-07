@@ -1,5 +1,4 @@
 /'v1 Схемы'/
-
 ' @startuml "Перечень биржевых товаров в спецификации"
 ' actor  "Участник торгов" as Foo0
 ' participant "Номер" as Foo1
@@ -90,14 +89,14 @@ SpecificationCommodities --> CommoditiesNames: Проверка корректн
         /'Администратор Торгов'/
         activate User_CTS
         User_CTS->User_CTS: Проверка корректно заполненных данных, Утверждения 
-        activate User_CTS
-        User_CTS->User_CTS: Утверждения, Отказ
-        User_CTS-->User: Причина отказа
-        deactivate User_CTS
+        User_CTS->CommoditiesNames: Утверждения, Отказ
+        CommoditiesNames-->User: Причина отказа
         User_CTS->Database: Сохранение данных в базе данных
-        deactivate Database
-        User_CTS-->CommoditiesNames: Cоздание записи в Каталоге наименования товара
         deactivate User_CTS
+        deactivate Database
+        CommoditiesNames->CommoditiesNames: Cоздание записи в Каталоге наименования товара
+        activate CommoditiesNames
+        deactivate CommoditiesNames      
     deactivate CommoditiesNames
 /'Ошибка и т.д. в Каталог наименования товара->Спецификации биржевых товаров'/
 SpecificationCommodities -> SpecificationCommodities: Проверка корректно заполненных данных
