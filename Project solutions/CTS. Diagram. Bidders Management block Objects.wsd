@@ -203,7 +203,7 @@ skinparam class {
     /'БИК'/ *BIK: int: single manual form
     /'Адрес'/ *AddressId: Addresses:plural manual form
     /'Корресподентский счёт'/ *CorrespondentAccount: int:single manual form
-    /'Телефон'/ *Phone: int:single manual form
+    /'Телефон'/ *Phone: str32:single manual form
     /'E-мэйл'/ *Email: str:64 manual form
     --
     /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
