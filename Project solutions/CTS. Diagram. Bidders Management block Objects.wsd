@@ -78,7 +78,7 @@ skinparam class {
     /'Телефон'/ *Phone: str:24 manual form
     /'Е-мэйл'/ *Email: str:32 manual form
     /'Действует на основании (устава/доверенности)'/ *ActionBasis: enum:01.Устава, 02.Доверенности
-    /'ЭЦП'/ *Signature: bin auto
+    /'ЭЦП'/ *Signature
     /'Дата начала действия ЭЦП'/ *SignatureDateStart: date manual form
     /'Дата окончания действия ЭЦП'/ *SignatureDateEnd: date manual form
  }
