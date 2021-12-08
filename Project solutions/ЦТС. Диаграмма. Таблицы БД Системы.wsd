@@ -190,10 +190,10 @@ skinparam class {
     /'Страна'/*CountryId: GUID:Countries.Id
     /'Юридический адрес'/ *LegalAddressId: GUID:Addresses.Id
     /'Почтовый адрес'/ *PostalAddressId: GUID:Addresses.Id
-    /'ИНН'/ *INN: str:50
-    /'КИО'/ *KIO: str:50
-    /'КПП'/ *KPP: str:50
-    /'ОКПО'/ *OKPO: str:50
+    /'ИНН'/ INN: str:50
+    /'КИО'/ KIO: str:50
+    /'КПП'/ KPP: str:50
+    /'ОКПО'/ OKPO: str:50
     /'ОГРН'/ OGRN: str:50
     /'Дата присвоения ОГРН'/ OGRNDate: date
     /'Место выдачи ОГРН'/ OGRNPlace: str:200
