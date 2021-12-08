@@ -148,7 +148,7 @@ skinparam class {
     /'Расчетный счёт'/ *CheckingAccount: int manual form
     /'??? Аккредитация'/ *Accreditation: bool manual form
     /'???Дата аккредитации'/ AccreditationDate: date manual form
-    /'???Дата отмены аккредитации'/ CancellationDate: date manual form
+    /'???Дата отмены аккредитации'/ AccreditationCancellationDate: date manual form
     
 
     --
@@ -198,13 +198,13 @@ skinparam class {
 /'Банки'/ entity Banks <<Work>> {
     *Id: GUID generated create
     --
-    /'Полное наименование'/ *FullName: str:256 manual form
-    /'Краткое наименование'/ *ShortName: str:128 manual form
+    /'Полное наименование'/ *FullName: str:250 manual form
+    /'Краткое наименование'/ *ShortName: str:250 manual form
     /'БИК'/ *BIK: int: single manual form
     /'Адрес'/ *AddressId: Addresses:plural manual form
     /'Корресподентский счёт'/ *CorrespondentAccount: int:single manual form
-    /'Телефон'/ *Phone: str32:single manual form
-    /'E-мэйл'/ *Email: str:64 manual form
+    /'Телефон'/ *Phone: str 50:single manual form
+    /'E-мэйл'/ *Email: str:50 manual form
     --
     /'Создано'/ *CreatedAtDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
     /'Автор'/ *CreatedByGuid: Users:single auto:create form&list
