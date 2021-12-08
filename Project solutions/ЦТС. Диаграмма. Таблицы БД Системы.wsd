@@ -240,7 +240,7 @@ skinparam class {
     *Id: GUID
     --
     /'Наименование'/ *Name: str:200
-    /'БИК'/ *BIK: int: single manual
+    /'БИК'/ *BIK: str:50
     /'Адрес'/ *AddressId: GUID:Addresses.Id
     /'Корресподентский счёт'/ *CorrespondentAccount: str:50
     /'Телефон'/ *Phone: str:50
