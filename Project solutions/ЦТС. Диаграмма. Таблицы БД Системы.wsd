@@ -180,6 +180,7 @@ skinparam class {
     /'Полное наименование на иностранном языке'/ ForeignLanguageName: str:200
     /'Краткое наименование на иностранном языке'/ ForeignLanguageShortName: str:50
     /'Страна'/*CountryId: GUID:Countries.Id
+    /'Страна'/ *CountryName: str:200:Countries.Name
     /'Юридический адрес'/ *LegalAddressId: GUID:Addresses.Id
     /'Почтовый адрес'/ *PostalAddressId: GUID:Addresses.Id
     /'ИНН'/ INN: str:50
