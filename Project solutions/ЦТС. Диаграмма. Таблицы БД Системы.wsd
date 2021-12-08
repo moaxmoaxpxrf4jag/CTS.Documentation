@@ -1,0 +1,322 @@
+
+@startuml "CTS Object Diagram"
+/'**Легенда 
+Обязательность заполнения реквизита (Mandatory):
+    *                           Реквизит обязательный для заполненияТипы реквизита:
+
+Типы данных (DataType):
+    str:<long>                  Строка (string) определенной длинны в символах, размер лучше всего указывать кратным 8, т.е. 32, 64, 128, 256 и т.д., минимальная длина строки 32 символа.
+    text                        Текст (text) неограниченно длинны.
+    int                         Беззнаковое целое число (integer).
+    float:<accuracy>            Число (numeric). Вещественное число с определенной точностью. Точность определяется количеством знаков после запятой в формате .<число знаковпосле запятой>.
+    date:<mask>                 Дата (date). С помощью маски задается формат вводимого значения, dd, mm, yy, yyyy. Например: dd.mm.yyyy т.д.
+    time:<mask>                 Время (time). С помощью маски задается формат вводимого значения, элементы маски hh, mm, ss. Пример: hh:mm:ss, hh:mm, mm:ss и т.д.
+    datetime:<mask>             Дата и время (datetime). Дата, дата и время с определенной точностью. С помощью маски задается формат вводимого значения dd.mm.yyyy(yy)_hh:mm:ss, или dd.mm.yyyy(yy).
+    bool                        Логический (boolean). Логическое значение - Истина/Лож. Используется для чек-боксов и радио-кнопок.
+    enum                        Перечисление (enumeration). Значения перечисления указываются в следующей строке в <enumvalue:>, в виде комментария обозначаемом "'", через "," в формате <code>|<Name>. Перечисление, используется для полей с выпадающим списком к количеством значенией не более 5-10.
+    bin                         Бинарный (binary) тип данных. Используется для указания на то что в поле будут хранится именно бинарные данные, например, такие как бинарный данные различных файлов и т.д.
+    <ObjectName>:<choice_type>  Указывается имя объекта значение записи которго используется в качестве значения реквизита. Тип выбора - single (одно значение)/plural (несколько значений).
+
+Заполнение реквзитов (Filling):
+    manual                      Заполняется вручную.
+    auto:create/save            Заполняется автоматически при создании/сохранении записи.
+    generated:create/save       Генерируется автоматически при созранении/созранении записи.
+    <value>                     Заполняется конкретным значеним по умолчанию при создании записи, например - true.
+    develop                     Заполняется в процессе разработки ПО.
+
+Отображение реквизита в интерфейсе (Visibility): 
+    form                        Отображать в представлиении формы карточки экземпляра объекта.
+    list                        Отображать в представлении реестра (списка) объектов.   
+    Может быть  указано сразу оба значения через "&". 
+
+Формат описания объектов (сущьностей):
+    EntityName                  Имя объекта.
+    EntityStage                 Состояние объекта, Work (в работе)/Ready (готово)    'Сущьности:
+
+    /'Наименование объекта'/ entity EntityName <<EntityStage>> {
+        /'Наименование реквизита'/<Mandatory>RequisiteName: DataType:argument Filling Visibility
+    }
+        
+    'Пример:
+    /'Пользователи'/ entity Users <<Work>> {
+        *Id: int generated
+        --
+        /'Имя пользователя'/ *Name: str:32 manual form&list
+        /'Пароль'/ *Password: str:32 manual form&list
+        /'Группа'/ Group: Groups manual
+    }
+'/
+
+'**Оформление объектов
+skinparam class {
+/'Готово'/      BackgroundColor<<Ready>>    LightGreen
+/'В работе'/    BackgroundColor<<Work>>     LightYellow
+}
+
+'**Таблицы
+
+/'Пользователи'/ entity Users <<Ready>> {
+    *Id: GUID
+    --
+    /'Имя пользователя'/ *Name: str:50
+    /'Пароль'/ *Password: str:50
+    /'Роль'/ RoleId: GUID:Roles.Id
+    /'Организация'/ *OrganisationId: GUID:Organisations.Id auto:create
+    /'Имя'/ *Name: str:50
+    /'Отчество'/ MiddleName: str:50
+    /'Фамилия'/ *LastName: str:50
+    /'Должность'/ *Position: str:50
+    /'Телефон'/ *Phone: str:50
+    /'Е-мэйл'/ *Email: str:50
+    /'Действует на основании)'/ *ActionBasis: enum:0.Устава, 1.Доверенности
+    /'ЭЦП'/ Signature: str:50
+    /'Дата начала действия ЭЦП'/ SignValidStartDate DateTime
+    /'Дата окончания действия ЭЦП'/ SignValidEndDate DateTime
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Модифицировано'/ LastModifiedAt: DateTime
+}
+
+/'Роли'/ entity Roles <<Ready>> {
+    *Id: GUID
+    --
+    /'Имя'/ *Name: str:50
+    /'Описание'/ Description: str:500
+     --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Разрешения'/ entity Permissions <<Work>> {
+'Нужно продумать как будем описывать разрешения для отдельных объектов 
+    *Id: GUID
+    --
+    /'Имя'/ *Name: str:50
+    /'Описание'/ Description str:500
+    /'Роль'/ *RoleId: GUID:Roles.Id
+     --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Адреса'/ entity Addresses <<Ready>> {
+    *Id: GUID
+    --
+    /'Страна'/ *CountryId: GUID:Countries.Id
+    /'Страна'/ *CountryName: str:200:Countries.Name
+    /'Регион'/ *RegionId: GUID:Regions.Id
+    /'Регион'/ *RegionName: str:200:Regions.Name
+    /'Район'/ DistrictId: GUID:Districts.Id
+    /'Район'/ DistrictName: str:200:Districts.Name
+    /'Населенный пункт'/ LocalityId: GUID:Localities.Id
+    /'Населенный пункт'/ LocalityName: str:200:Localities.Name
+    /'Улица'/ Street: str:50
+    /'Дом'/ Bilding: int
+    /'Корпус'/ BildingPart: int
+    /'Комната'/ Room: str:int
+    /'Индекс'/ Postcode: str:50
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Страны'/ entity Countries <<Ready>> {
+    *Id: GUID
+    --
+    /'Код'/ *CodeISO: int
+    /'Наименование'/ *Name: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Регионы'/ entity Regions <<Ready>> {
+    *Id: GUID
+    --
+    /'Страна'/ *СountyId: GUID:Countries.Id
+    /'Код'/ Code: int
+    /'Наименование'/ *Name: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Районы'/ entity Districts <<Ready>> {
+    *Id: GUID
+    --
+    /'Регион'/ *RegionId: GUID:Regions.Id
+    /'Наименование'/ *Name: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Населенные пункты'/ entity Localities <<Ready>> {
+    *Id: GUID
+    --
+    /'Регион'/ *RegionId: GUID:Regions.Id
+    /'Район'/ DistrictId: GUID:Districts.Id
+    /'Наименование'/ *Name: str:200
+     --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    LocalitiesTypes: enum ...
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Организации-участники торгов'/ entity Organizations <<Work>> {
+    *Id: GUID
+    --
+    /'Код'/ *Code: str:50
+    /'Код ЦБ'/*CodeCB: str:50
+    /'Форма собственности'/ *OwnershipTypeId: GUID:OwnershipTypes.Id 
+    /'Наименование'/ *Name: str:200
+    /'Сокращенно наименование'/ *ShortName: str:50
+    /'Полное наименование на иностранном языке'/ NameForeignLanguage: str:200
+    /'Краткое наименование на иностранном языке'/ ShortNameForeignLanguage: str:50
+    /'Страна'/*CountryId: GUID:Countries.Id
+    /'Юридический адрес'/ *LegalAddressId: GUID:Addresses.Id
+    /'Почтовый адрес'/ *PostalAddressId: GUID:Addresses.Id
+    /'ИНН'/ *INN: str:50
+    /'КИО'/ *KIO: str:50
+    /'КПП'/ *KPP: str:50
+    /'ОКПО'/ *OKPO: str:50
+    /'ОГРН'/ OGRN: str:50
+    /'Дата присвоения ОГРН'/ OGRNDate: date
+    /'Место выдачи ОГРН'/ OGRNPlace: str:200
+    /'ОГРНИП'/ OGRNIP: str:50
+    /'Дата регистрации ИП'/ OGRNIPDate: date
+    /'ФИО руководителя'/ *CEOFullName: str:200
+    /'ФИО руководителя в родительном падеже'/ *CEOFullNameGenetive: str:200
+    /'Должность руководителя'/ *CEOPostName: str:200
+    /'Должность руководителя в родительном падеже'/ *CEOPostNameGenetive: str:200
+    /'Телефон'/ *Phone: str:50
+    /'Е-мэйл'/ *Email: str:50
+    /'Web-адрес'/ URL: str:50
+    /'Вид деятельности по ОКВЭД'/ *BusinessLineId: GUID:BusinessLines.Id
+    /'Банк'/ *BankId: GUID:Banks.Id
+    /'Расчетный счёт'/ *CheckingAccount: str:50
+    /'???Аккредитация'/ *Accreditation: bool
+    /'???Дата аккредитации'/ AccreditationDate: date 
+    /'???Дата отмены аккредитации'/ CancellationDate: date 
+    --
+    /'Статус'/ *Status: GUID:OrganizationStatuses.Id
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Статус организации'/ entity OrganizationStatuses <<Ready>> {
+    *Id: GUID
+    --
+    /'Название'/ *Name: str:50
+    /'Описание'/ Description: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Формы собственности'/  entity OwnershipTypes <<Ready>> {
+    *Id: GUID
+    --
+    /'Полное наименование'/ *Name: str:50
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+} 
+
+/'Банки'/ entity Banks <<Ready>> {
+    *Id: GUID
+    --
+    /'Наименование'/ *Name: str:200
+    /'БИК'/ *BIK: int: single manual
+    /'Адрес'/ *AddressId: GUID:Addresses.Id
+    /'Корресподентский счёт'/ *CorrespondentAccount: str:50
+    /'Телефон'/ *Phone: str:50
+    /'E-мэйл'/ *Email: str:50
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Виды деятельности по ОКВЭД'/ entity BusinessLines <<Ready>> {
+    *Id: GUID generated create
+    --
+    /'Код'/ *Code: str:50
+    /'Наименование'/ *Name: str:200
+    /'Расшифровка'/ *Description: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Документы'/ entity Documents <<Ready>> {
+    *Id: GUID generated create
+    --
+    /'Организация'/ *OrganisationId: GUID:Organisations.Id
+    /'Вид документа'/ *DocumentKindId: GUID:DocumentKinds.Id 
+    /'Наименование документа'/ *Name: str:200
+    /'Номер документа'/ *Name: str:50
+    /'Дата документа'/ *Date: Date
+    /'Тема документа'/ *Name: str:200
+    /'Дата завердения действия'/ EndDate: Date
+    --
+    /'Сффлка на документ в файловом зранилище'/ *FileId: GUID
+    /'Расширение файла'/ FileExtention str:50
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+/'Вид документа'/ entity DocumentKinds <<Ready>>{
+    *Id: GUID
+    --
+    /'Наименование'/ *Name: str:50
+    /'Описание'/ Description: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+}
+
+'**Связи
+
+'Пользователи
+    Users::OrganisationId }|--|| Organizations::Id
+    Users::RolesId }|--|| Roles::Id
+
+'Организация
+    Organizations::OwnershipTypeId ||--|{ OwnershipTypes::Id
+    Organizations::BusinessLineId }|--|{ BusinessLines::Id
+    Organizations::AddressId ||--|{ Addresses::Id
+    Organizations::BankId ||--|{ Banks::Id
+    Organizations::OrganizationStatusId ||--|{ OrganizationStatuses::Id
+
+'Документация
+    Documents::OrganisationId }|--|| Organizations::Id
+    Documents::DocumentKindsId }|--|| DocumentKinds::Id
+@enduml
