@@ -177,8 +177,8 @@ skinparam class {
     /'Форма собственности'/ *OwnershipTypeId: GUID:OwnershipTypes.Id 
     /'Наименование'/ *Name: str:200
     /'Сокращенно наименование'/ *ShortName: str:50
-    /'Полное наименование на иностранном языке'/ NameForeignLanguage: str:200
-    /'Краткое наименование на иностранном языке'/ ShortNameForeignLanguage: str:50
+    /'Полное наименование на иностранном языке'/ ForeignLanguageName: str:200
+    /'Краткое наименование на иностранном языке'/ ForeignLanguageShortName: str:50
     /'Страна'/*CountryId: GUID:Countries.Id
     /'Юридический адрес'/ *LegalAddressId: GUID:Addresses.Id
     /'Почтовый адрес'/ *PostalAddressId: GUID:Addresses.Id
