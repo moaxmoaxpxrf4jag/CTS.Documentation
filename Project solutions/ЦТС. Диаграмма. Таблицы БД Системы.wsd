@@ -298,8 +298,10 @@ skinparam class {
 'Пользователи
     Users::OrganisationId }|--|| Organizations::Id
     Users::RolesId }|--|| Roles::Id
+    
 'Разрешения'
     Permissions::RolesId }|--|{ Roles::Id
+
 'Адреса
     Addresses::CountryId }|--|| Countries::Id
     Addresses::RegionId }|--|| Regions::Id
