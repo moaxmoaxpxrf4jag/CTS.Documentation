@@ -13,37 +13,27 @@
     time:<mask>                 Время (time). С помощью маски задается формат вводимого значения, элементы маски hh, mm, ss. Пример: hh:mm:ss, hh:mm, mm:ss и т.д.
     datetime:<mask>             Дата и время (datetime). Дата, дата и время с определенной точностью. С помощью маски задается формат вводимого значения dd.mm.yyyy(yy)_hh:mm:ss, или dd.mm.yyyy(yy).
     bool                        Логический (boolean). Логическое значение - Истина/Лож. Используется для чек-боксов и радио-кнопок.
-    enum                        Перечисление (enumeration). Значения перечисления указываются в следующей строке в <enumvalue:>, в виде комментария обозначаемом "'", через "," в формате <code>|<Name>. Перечисление, используется для полей с выпадающим списком к количеством значенией не более 5-10.
-    bin                         Бинарный (binary) тип данных. Используется для указания на то что в поле будут хранится именно бинарные данные, например, такие как бинарный данные различных файлов и т.д.
-    <ObjectName>:<choice_type>  Указывается имя объекта значение записи которго используется в качестве значения реквизита. Тип выбора - single (одно значение)/plural (несколько значений).
-
-Заполнение реквзитов (Filling):
-    manual                      Заполняется вручную.
-    auto:create/save            Заполняется автоматически при создании/сохранении записи.
-    generated:create/save       Генерируется автоматически при созранении/созранении записи.
-    <value>                     Заполняется конкретным значеним по умолчанию при создании записи, например - true.
-    develop                     Заполняется в процессе разработки ПО.
-
-Отображение реквизита в интерфейсе (Visibility): 
-    form                        Отображать в представлиении формы карточки экземпляра объекта.
-    list                        Отображать в представлении реестра (списка) объектов.   
-    Может быть  указано сразу оба значения через "&". 
+    enum:enumvalue              Перечисление (enumeration). Значения перечисления указываются в следующей строке в <enumvalue:>, в виде комментария обозначаемом "'", через "," в формате enumvalue:<code>|<Name>. Перечисление, используется для полей с выпадающим списком к количеством значенией не более 5-10.
+    bin                         Бинарный (binary) тип данных. Используется для указания на то что в поле будут хранится именно бинарные данные, например, хэши и т.д.
+    GUID                        Глобальный уникльный идентификатор.  
 
 Формат описания объектов (сущьностей):
     EntityName                  Имя объекта.
-    EntityStage                 Состояние объекта, Work (в работе)/Ready (готово)    'Сущьности:
+    EntityStage                 Состояние объекта, Work (в работе)/Ready (готово).
+    DataType:argument           Тип данных и даполнительный аргумент, напимер длина строки для строкового реквизита.
+    RefrerenceObject.Requsite   Указание на то что данные в рекыизит нужно взять из реквизита указанного объекта, указывается при необходимости.     
 
     /'Наименование объекта'/ entity EntityName <<EntityStage>> {
-        /'Наименование реквизита'/<Mandatory>RequisiteName: DataType:argument Filling Visibility
+        /'Наименование реквизита'/<Mandatory>RequisiteName: DataType:argument:RefrerenceObject.Requsite
     }
         
     'Пример:
     /'Пользователи'/ entity Users <<Work>> {
         *Id: int generated
         --
-        /'Имя пользователя'/ *Name: str:32 manual form&list
-        /'Пароль'/ *Password: str:32 manual form&list
-        /'Группа'/ Group: Groups manual
+        /'Имя пользователя'/ *Name: str:32
+        /'Пароль'/ *Password: str:32
+        /'Организация'/ *OrganisationId: GUID:Organisations.Id
     }
 '/
 
@@ -61,14 +51,15 @@ skinparam class {
     /'Имя пользователя'/ *Name: str:50
     /'Пароль'/ *Password: str:50
     /'Роль'/ RoleId: GUID:Roles.Id
-    /'Организация'/ *OrganisationId: GUID:Organisations.Id auto:create
+    /'Организация'/ *OrganisationId: GUID:Organisations.Id
     /'Имя'/ *Name: str:50
     /'Отчество'/ MiddleName: str:50
     /'Фамилия'/ *LastName: str:50
     /'Должность'/ *Position: str:50
     /'Телефон'/ *Phone: str:50
     /'Е-мэйл'/ *Email: str:50
-    /'Действует на основании)'/ *ActionBasis: enum:0.Устава, 1.Доверенности
+    /'Действует на основании)'/ *ActionBasis: enum:enumvalue
+    'enumvalue:0|Устава, 1|Доверенности
     /'ЭЦП'/ Signature: str:50
     /'Дата начала действия ЭЦП'/ SignValidStartDate DateTime
     /'Дата окончания действия ЭЦП'/ SignValidEndDate DateTime
@@ -90,7 +81,7 @@ skinparam class {
 }
 
 /'Разрешения'/ entity Permissions <<Work>> {
-'Нужно продумать как будем описывать разрешения для отдельных объектов 
+'?Нужно продумать как будем описывать разрешения для отдельных объектов?
     *Id: GUID
     --
     /'Имя'/ *Name: str:50
@@ -172,7 +163,8 @@ skinparam class {
      --
     /'Создано'/ *CreatedAt: DateTime
     /'Кем создано'/ *CreatedBy: GUID:Users.Id
-    LocalitiesTypes: enum ...
+    /'Типы населенных пунктов'/ LocalitiesTypes: enum:enumvalue
+    'enumvalue: 0|Индекс,10|Город,20|Поселок,21|Станица,30|Древня,31|Село,32|Хутор,40|Станция,41|ЖД станция
     /'Модифицировано'/ LastModifiedAt: DateTime
     /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
 }
@@ -251,7 +243,7 @@ skinparam class {
     /'Адрес'/ *AddressId: GUID:Addresses.Id
     /'Корресподентский счёт'/ *CorrespondentAccount: str:50
     /'Телефон'/ *Phone: str:50
-    /'E-мэйл'/ *Email: str:50
+    /'Веб-адрес'/ URL: str:50
     --
     /'Создано'/ *CreatedAt: DateTime
     /'Кем создано'/ *CreatedBy: GUID:Users.Id
@@ -303,20 +295,28 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
 }
 
-'**Связи
-
 'Пользователи
     Users::OrganisationId }|--|| Organizations::Id
     Users::RolesId }|--|| Roles::Id
+'Разрешения'
+    Permissions::RolesId }|--|{ Roles::Id
+'Адреса
+    Addresses::CountryId }|--|| Countries::Id
+    Addresses::RegionId }|--|| Regions::Id
+    Addresses::DistrictId }|--|| Districts::Id
+    Addresses::LocalityId }|--|| Localities::Id
 
 'Организация
-    Organizations::OwnershipTypeId ||--|{ OwnershipTypes::Id
+    
+    Organizations::OwnershipTypeId }|--|| OwnershipTypes::Id
     Organizations::BusinessLineId }|--|{ BusinessLines::Id
-    Organizations::AddressId ||--|{ Addresses::Id
-    Organizations::BankId ||--|{ Banks::Id
-    Organizations::OrganizationStatusId ||--|{ OrganizationStatuses::Id
+    Organizations::LegalAddressId }|--|| Addresses::Id
+    Organizations::PostalAddressId }|--|| Addresses::Id
+    Organizations::BankId }|--|| Banks::Id
+    Organizations::OrganizationStatusId }|--|| OrganizationStatuses::Id
 
 'Документация
     Documents::OrganisationId }|--|| Organizations::Id
     Documents::DocumentKindsId }|--|| DocumentKinds::Id
+
 @enduml
