@@ -148,7 +148,7 @@ skinparam class {
     /'Расчетный счёт'/ *CheckingAccount: int manual form
     /'??? Аккредитация'/ *Accreditation: bool manual form
     /'???Дата аккредитации'/ AccreditationDate: date manual form
-    /'???Дата отмены аккредитации'/ CancellationDate: date manual form
+    /'???Дата отмены аккредитации'/ AccreditationCancellationDate: date manual form
     
 
     --
