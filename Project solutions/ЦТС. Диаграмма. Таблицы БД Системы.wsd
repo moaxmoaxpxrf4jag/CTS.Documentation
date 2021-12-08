@@ -51,7 +51,7 @@ skinparam class {
     /'Имя пользователя'/ *Name: str:50
     /'Пароль'/ *Password: str:50
     /'Роль'/ RoleId: GUID:Roles.Id
-    /'Организация'/ *OrganisationId: GUID:Organisations.Id
+    /'Организация'/ *OrganizationId: GUID:Organizations.Id
     /'Имя'/ *Name: str:50
     /'Отчество'/ MiddleName: str:50
     /'Фамилия'/ *LastName: str:50
@@ -267,7 +267,7 @@ skinparam class {
 /'Документы'/ entity Documents <<Ready>> {
     *Id: GUID generated create
     --
-    /'Организация'/ *OrganisationId: GUID:Organisations.Id
+    /'Организация'/ *OrganizationId: GUID:Organizations.Id
     /'Вид документа'/ *DocumentKindId: GUID:DocumentKinds.Id 
     /'Наименование документа'/ *Name: str:200
     /'Номер документа'/ *Name: str:50
@@ -296,7 +296,7 @@ skinparam class {
 }
 
 'Пользователи
-    Users::OrganisationId }|--|| Organizations::Id
+    Users::OrganizationId }|--|| Organizations::Id
     Users::RolesId }|--|| Roles::Id
     
 'Разрешения'
@@ -318,7 +318,7 @@ skinparam class {
     Organizations::OrganizationStatusId }|--|| OrganizationStatuses::Id
 
 'Документация
-    Documents::OrganisationId }|--|| Organizations::Id
+    Documents::OrganizationId }|--|| Organizations::Id
     Documents::DocumentKindsId }|--|| DocumentKinds::Id
 
 @enduml
