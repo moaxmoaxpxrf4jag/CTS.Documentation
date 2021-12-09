@@ -98,8 +98,8 @@ skinparam class {
 /'Спецификация биржевых товаров'/ entity Specifications <<Work>> {
     *Id: GUID generated
     --
-    /'Номер'/ *Number: int manual form&list
-    /'Дата'/ *Date: date:dd.mm.yyyy manual form&list
+    /'Номер'/ *Number: int auto form&list
+    /'Дата'/ *Date: date:dd.mm.yyyy auto form&list
     /'Участник торгов'/ *Organisation: OrganisationsId: str:250 auto form&list
     /'Перечень берживых товаров (табличная часть)'/ *SpecificationCommodities: SpecificationCommoditiesId:plural manual form
     --
