@@ -52,7 +52,8 @@ SpecificationCommodities --> CommoditiesNames: Проверка корректн
             Причина отказа
         end note
         CommoditiesNames-->User: Уведомления об отказае на добаления тавора в Каталог наименовай товаров
-        User_CTS->Database: Сохранение данных в базе данных      
+        User_CTS->Database: Сохранение данных в базе данных    
+        note over Database: Только "Утвржденные" товары Администратором торгов       
         deactivate User_CTS
         Database->Database: Создание записи в базе данных 
         note over CommoditiesNames : Только "Утвржденные" товары Администратором торгов     
