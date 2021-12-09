@@ -45,6 +45,7 @@ skinparam class {
     /'Имя'/ *Name: str:50
     /'Отчество'/ MiddleName: str:50
     /'Фамилия'/ *LastName: str:50
+    /'ФИО'/ FullName: str:200:Users.LastName&Name&MiddleName auto:save
     /'Должность'/ *Position: str:50
     /'Телефон'/ *Phone: str:50
     /'Е-мэйл'/ *Email: str:50
