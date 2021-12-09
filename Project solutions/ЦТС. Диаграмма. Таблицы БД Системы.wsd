@@ -182,6 +182,7 @@ skinparam class {
     /'Место выдачи ОГРН'/ OGRNPlace: str:200
     /'ОГРНИП'/ OGRNIP: str:50
     /'Дата регистрации ИП'/ OGRNIPDate: date
+    /'Паспорт'/ Passport:str50
     /'ФИО руководителя'/ *CEOFullName: str:200
     /'ФИО руководителя в родительном падеже'/ *CEOFullNameGenetive: str:200
     /'Должность руководителя'/ *CEOPostName: str:200
