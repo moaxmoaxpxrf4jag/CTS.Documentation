@@ -137,7 +137,17 @@ skinparam class {
     /'???Дата отмены аккредитации'/ +CancellationDate: date 
 }
 
+/'Реквизиты списка объекта Участник Торгов'/ interface ListOrganizations <<Work>> {
 
+    /'Код'/ #*Code: str:Organizations.Code
+    'Принцип формирования кода...
+    /'Код ЦБ'/ +*CodeCB: str:Organizations.CodeCB
+    /'Форма собственности'/ +*OwnershipTypeNmae: GUID:OwnershipTypes.Name
+    /'Страна'/ +*CountryName: str:Organizations.CountryName
+    /'Вид деятельности по ОКВЭД'/ +*BusinessLineId: GUID:BusinessLines.Id
+    /'Вид деятельности по ОКВЭД'/ +*BusinessLineId: str:BusinessLines.Name
+    /'Наименование'/ +*Name: str:Banks.Name
+}
 
 
 '**Связи
