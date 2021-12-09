@@ -65,7 +65,7 @@ skinparam class {
     /'Код'/ #*Code: str:Organizations.Code
     'Принцип формирования кода...
     /'Код ЦБ'/ +*CodeCB: str:Organizations.CodeCB
-    /'Форма собственности'/ +*OwnershipTypeNmae: GUID:OwnershipTypes.Name
+    /'Форма собственности'/ +*OwnershipTypeNmae: str:OwnershipTypes.Name
     /'Наименование'/ +*Name: str:Organizations.Name
     /'Сокращенно наименование'/ +*ShortName: str:Organizations.ShortName
     /'Полное наименование на иностранном языке'/ +ForeignLanguageName: str:Organizations.ForeignLanguageName
@@ -111,7 +111,6 @@ skinparam class {
     /'Телефон'/ +*Phone: str:Organizations.Phone
     /'Е-мэйл'/ +*Email: str:Organizations.Email
     /'Web-адрес'/ +URL: str:Organizations.URL
-    /'Вид деятельности по ОКВЭД'/ +*BusinessLineId: GUID:BusinessLines.Id
     /'Вид деятельности по ОКВЭД'/ +*BusinessLineId: str:BusinessLines.Name
     --
     /'Наименование'/ +*Name: str:Banks.Name
@@ -143,10 +142,10 @@ skinparam class {
     'Принцип формирования кода...
     /'Код ЦБ'/ +*CodeCB: str:Organizations.CodeCB
     /'Форма собственности'/ +*OwnershipTypeNmae: GUID:OwnershipTypes.Name
+    /'Наименование'/ +*Name: str:Organizations.Name
     /'Страна'/ +*CountryName: str:Organizations.CountryName
-    /'Вид деятельности по ОКВЭД'/ +*BusinessLineId: GUID:BusinessLines.Id
     /'Вид деятельности по ОКВЭД'/ +*BusinessLineId: str:BusinessLines.Name
-    /'Наименование'/ +*Name: str:Banks.Name
+    
 }
 
 
