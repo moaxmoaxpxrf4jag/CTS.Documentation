@@ -1,10 +1,9 @@
-' @startuml "Спецификация биржевых товаров"
+' @startuml "Каталог товаров ТРУ"
 ' actor  Участник_торгов as Foo0
 ' participant Карточка_товара as Foo1
 ' participant Краткое_название as Foo2
 ' collections Перечень_берживых_товаров as Foo3
 ' participant Сохранить as Foo4
-' database БД as Foo5
 ' Foo0 -> Foo1: Заполнение поля
 ' Foo0 -> Foo2: Заполнение поля
 ' Foo0 -> Foo3: Заполнение табличной части
@@ -84,7 +83,8 @@ title "ЦТС.А3.2. Добавление товара в Каталог"
 actor "Участник Торгов" as User
 boundary "Карточка товара" as Commodities
 database "База данных" as Database
-actor "Администратор Торгов" as User_CTS
+participant "Менеджер торгов" as User_CTS
+collections "Каталог Наименований товаров" as CommoditiesNames
 
 autonumber
 activate User
@@ -92,29 +92,47 @@ User -> Commodities: Ввести данные Наименование това
 note right
     manual:  Классификатор товара, Вид товара, Лот, Размер лота, Регион поставки, Базис поставки, Завод-производитель, Упаковка, Описание товара
     Перечень берживых товаров (табличная часть);
-    auto: Статус, Дата создания, Автор.
+    auto: Проверка введённого наименования на наличие в Каталоге, Мнемоника, Краткое наименование товара, Статус, Дата создания, Автор.
 end note
-/'Перечень биржевых товаров'/
-activate SpecificationCommodities
-SpecificationCommodities --> CommoditiesNames: Проверка корректно заполненных данных
-    /'Форма на добавления товара в Каталог наименования товара'/
-    activate CommoditiesNames
+deactivate User
+
+Commodities --> Database: Запрос в БД 
+    activate Database
     /'Проверка корректно заполненных данных Каталог наименования товара->Участник Торгов'/
-    CommoditiesNames -> CommoditiesNames: Проверка корректно заполненных данных
-    activate CommoditiesNames
-    deactivate CommoditiesNames
-    CommoditiesNames --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
+    Database -> Commodities: Проверка корректно заполненных данных
+    deactivate Database
+    Commodities --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
     activate User
     /'Ошибка и т.д. в Каталог наименования товара->Участник Торгов'/
-    User-->CommoditiesNames: Корректировка ранее введенных данных
-    deactivate User 
-    CommoditiesNames->Database: Сохранение данных в базе данных
-    activate Database
-        Database->User_CTS: Запросы на добавления товара в Каталог наименования товара 
+    User-->Commodities: Корректировка ранее введенных данных
+    deactivate User
+    User->User_CTS: Запросы на добавления товара в Каталог наименования товара 
         /'Администратор Торгов'/
         activate User_CTS
-        User_CTS->User_CTS: Проверка корректно заполненных данных, Утверждения 
-        User_CTS->CommoditiesNames: Утверждения, Отказ
+        User_CTS->User_CTS: Проверка корректно заполненных данных
+        User_CTS->User: Отказ
+    note right
+         manual: Причина отказа
+    end note
+
+    User_CTS-->Database: Утверждение
+        deactivate User_CTS
+    note right
+         auto: Запись наименования в Каталог наименований
+    end note
+        CommoditiesNames-->Database: Запись нового наименования в БД
+        CommoditiesNames-->User: Наименование доступно для выбора в Карточке товара
+    activate User
+    User-->Commodities: Корректировка ранее введенных данных
+    deactivate User    
+    deactivate User 
+    Commodities->Database: Сохранение данных в базе данных
+    activate Database
+        Database->User_CTS: Запрос на добавление наименования в Каталог наименования товара 
+        /'Администратор Торгов'/
+        activate User_CTS
+        User_CTS->User_CTS: Проверка корректно заполненных данных, Утверждение 
+        User_CTS->CommoditiesNames: Утверждение, Отказ
         CommoditiesNames-->User: Причина отказа
         User_CTS->Database: Сохранение данных в базе данных
         deactivate User_CTS
@@ -123,33 +141,4 @@ SpecificationCommodities --> CommoditiesNames: Проверка корректн
         activate CommoditiesNames
         deactivate CommoditiesNames      
     deactivate CommoditiesNames
-/'Ошибка и т.д. в Каталог наименования товара->Спецификации биржевых товаров'/
-SpecificationCommodities -> SpecificationCommodities: Проверка корректно заполненных данных
-activate SpecificationCommodities
-deactivate SpecificationCommodities
-/'Проверка корректно заполненных данных Спецификации биржевых товаров->Участник Торгов'/
-Specifications -> Specifications: Проверка корректно заполненных данных
-activate Specifications
-deactivate Specifications
-/'Ошибка и т.д. в Перечень биржевых товаров->Участник Торгов'/
-SpecificationCommodities --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
-activate User
-/'Корректировка ранее введенных данных Участник Торгов->Спецификации биржевых товаров'/
-User-->SpecificationCommodities: Корректировка ранее введенных данных
-deactivate User
-deactivate SpecificationCommodities
-/'Ошибка и т.д. в Спецификации биржевых товаров->Участник Торгов'/
-Specifications --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
-activate User
-/'Корректировка ранее введенных данных Участник Торгов->Спецификации биржевых товаров'/
-User-->Specifications: Корректировка ранее введенных данных
-deactivate User
-/'Cоздание записи в Спецификации биржевых товаров'/
-Specifications->Specifications: Cоздание записи в Спецификации биржевых товаров
-activate Specifications
-deactivate Specifications
-/'Сохранение данных в базе данных'/
-Specifications ->Database: Сохранение данных в базе данных
-activate Database
-deactivate Database
 @enduml
