@@ -77,10 +77,9 @@ skinparam class {
     --
     Роль и разрешения
     --
-    /'Роль'/  * RoleNamesList: str:Roles.Name
-    
+    /'Роль'/  * RoleNamesList: str:Roles.Name   
 }
-}
+
 
 
 /'Реквезиты карточки Пользователи'/ interface ListUsers <<Work>> {
