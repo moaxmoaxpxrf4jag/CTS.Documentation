@@ -59,19 +59,16 @@ skinparam class {
 'В описании объектов приведены только реквизиты отображаемые на форме, служебные реквизиты добавляются при необходимости при разработке. 
 
 /'Реквизиты карточки объекта Участник торгов'/ interface Specifications <<Work>> {
-    [1]
-    --
     /'Номер'/ #*Number: str:Specifications.Number
     'Принцип формирования номера...
     /'Дата'/ +*Date: date:str:Specifications.Date
     /'Участник торгов'/ #*Organisation: str:Organizations.Name
-    --
-    [2]
-    --
+--
+    Табличная часть
+--
     /'Перечень берживых товаров (табличная часть)'/
         /'Наименование товара'/ +*^FullNameId^: str:Commodities.CommoditiesNames
-        /'Виды сопроводительных документов'/ +^DocumentsKinds^: str:DocumentsKinds.SpecificationCommodities
-        --
+        /'??? Виды сопроводительных документов'/ +^DocumentsKinds^: str:DocumentsKinds.SpecificationCommodities
         /'??? Мнемоника'/ #*Mnemonic: str:Specifications.Mnemonic
         'Принцип формирования мнемоники...
         /'Вид товара'/ #*Kind: str:Commodities.Kind
@@ -79,19 +76,15 @@ skinparam class {
         /'Лот (единица измерения товара)'/ +*BaseUnit: str:BaseUnit.BaseUnits
         /'Размер лота'/ +Quantity: float:SpecificationCommodities.Quantity
         /'Описание товара'/ +Description: text:SpecificationCommodities.Description
-    --
-    [3]
-    --
+--
+    Документ Button
+--
     /'Статус'/ #*Status: str:CommoditiesStatus.Name
     /'Дата создания'/ #*CreateDateTime: date:Specifications.CreateDateTime
     /'Автор'/ #*CreatedByUser: str:Users.
     /'Дата утверждения'/ #*ApprovalDate: date:Specifications.ApprovalDate
 }
 
-
-
-
 '**Связи
-
 
 @enduml
