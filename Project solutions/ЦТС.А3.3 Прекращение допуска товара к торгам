@@ -1,0 +1,47 @@
+@startuml "ЦТС.А3.3 Прекращение допуска товара к торгам"
+title "ЦТС.А3.3 Спецификация на прекращение допуска товара к торгам"
+actor "Участник Торгов" as User
+boundary "Форма Спецификации биржевых товаров" as Specifications
+collections "Форма Перечень биржевых товаров" as SpecificationCommodities
+database "База данных" as Database
+actor "Администратор Торгов" as User_CTS
+participant "Сайт ЦТС" as CTS
+
+autonumber
+activate User
+User -> Specifications: Создать объект "Спецификация", Перечень берживых товаров
+note right
+    manual: Заполнить поле "Тип спецификации:" (выбрать значение "Отмена допуска товара к торгам"), Перечень берживых товаров (табличная часть);
+    auto: Номер, Статус, Дата создания, Автор.
+end note
+deactivate User
+/'Форма Спецификации биржевых товаров'/
+activate Specifications
+Specifications -> SpecificationCommodities : Выбрать биржевые товары для отмены допуска
+note right
+    manual: Добавление товаров (статус товаров "Активный", по товару нет ни одной активной заявки на покупку или продажу), 
+    Виды сопроводительных документов (прикрепление файлов к спецификации),
+end note
+deactivate Specifications
+
+activate SpecificationCommodities
+SpecificationCommodities -->Database : Запрос в БД
+deactivate SpecificationCommodities
+
+/'База данных'/
+activate Database
+Database -->User : Проверка пройдена
+note right
+  auto: Проверка корректно заполненных данных, выбранных товаров
+end note
+deactivate Database
+
+activate User
+User -> Database : Нажать кнопку "Отменить допуск" в подстрочном меню созданной спецификации
+deactivate User
+
+activate Database
+Database --> User_CTS : Отправка уведомления о снятии товаров с торгов
+Database --> CTS : Публикация новости о снятия товара с торгов
+
+@enduml
