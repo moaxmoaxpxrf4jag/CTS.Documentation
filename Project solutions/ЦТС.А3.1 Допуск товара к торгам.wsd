@@ -1,0 +1,32 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1 Допуск товара к торгам"
+actor "Участник Торгов" as User
+participant "Спецификации биржевых товаров" as Specifications
+boundary "Форма Спецификации биржевых товаров" as SpecificationsForm
+database "База данных" as Database
+actor "Администратор Торгов" as User_CTS
+
+autonumber 
+User->Specifications: Запрос на допуск товаров к торгам
+activate Specifications
+Specifications->Database: Сохранение данных в базе данных
+activate Database
+Specifications-->SpecificationsForm: Создание Спецификации на допуск товара к торгам
+activate SpecificationsForm
+' SpecificationsForm-->SpecificationsForm
+SpecificationsForm-->Database: Сохранение данных в базе данных
+deactivate SpecificationsForm
+
+
+User_CTS->Specifications: Верификация Спецификации на допуск товара к торгам
+activate Specifications
+
+autonumber resume "<font color=red><b>0 Уведомления о отклонение Спецификация на допуск товара к торгам "
+Specifications->User
+note right of Specifications:  Причин Отклонения (описания причины отклонения)
+autonumber resume 2 "<font color=blue><b>0 Уведомления о допустке Спецификация на допуск товара к торгам "
+Specifications->User
+autonumber 9
+Specifications->Database: Сохранение данных в базе данных
+deactivate Specifications
+@enduml
