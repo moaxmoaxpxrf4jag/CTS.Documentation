@@ -42,6 +42,6 @@ deactivate User
 
 activate Database
 Database --> User_CTS : Отправка уведомления о снятии товаров с торгов
-Database --> CTS : Публикация новости о снятия товара с торгов
+Database --> CTS : Публикация новости на сайте о снятии товара с торгов
 
 @enduml
