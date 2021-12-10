@@ -191,7 +191,7 @@ skinparam class {
     /'Телефон'/ *Phone: str:50
     /'Е-мэйл'/ *Email: str:50
     /'Web-адрес'/ URL: str:50
-    /'Вид деятельности по ОКВЭД'/ *OKVED: GUID:BusinessLines.Id
+    /'Вид деятельности по ОКВЭД'/ *OKVEDId: GUID:OKVED.Id
     /'Банк'/ *BankId: GUID:Banks.Id
     /'Расчетный счёт'/ *CheckingAccount: str:50
     /'???Аккредитация'/ *Accreditation: bool
@@ -244,7 +244,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
 }
 
-/'Виды деятельности по ОКВЭД'/ entity BusinessLines <<Ready>> {
+/'Виды деятельности по ОКВЭД'/ entity OKVED <<Ready>> {
     *Id: GUID generated create
     --
     /'Код'/ *Code: str:50
