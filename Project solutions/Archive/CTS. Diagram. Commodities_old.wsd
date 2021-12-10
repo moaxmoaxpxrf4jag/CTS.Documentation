@@ -60,7 +60,7 @@ skinparam class {
     *Id: GUID generated
     --
     /'Наименование товара'/ *FullName: CommoditiesNamesId: single manual form&list
-    /'Краткое название'/ *ShortName: str:250 auto form
+    /'Краткое наименование'/ *ShortName: str:250 auto form
     /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
     /'Классификатор товаров'/ *CommoditiesClassifier: CommoditiesClassifierId:single manual form&list
     /'Вид товара'/ *Kind: CommoditiesKind:single manual form&list
