@@ -208,7 +208,7 @@ skinparam class {
 /'Статус организации'/ entity OrganizationStatuses <<Ready>> {
     *Id: GUID
     --
-    /'Название'/ *Name: str:50
+    /'Наименование'/ *Name: str:50
     /'Описание'/ Description: str:200
     --
     /'Создано'/ *CreatedAt: DateTime
@@ -294,15 +294,14 @@ skinparam class {
  entity Commodities <<Work>> { 
     *Id: GUID
     --
-    /'Наименование товара'/ *FullName:  GUID:CommoditiesNames.Id
+    /'Наименование товара'/ *Name:  GUID:CommoditiesNames.Id
     /'Краткое название'/ *ShortName: GUID:CommoditiesNames.Id
     /'??? Мнемоника'/ *Mnemonic: str:250
     /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
     /'Вид товара'/ *Kind: GUID:CommoditiesKind.Id
     /'Лот (единица измерения товара)'/ *BaseUnit: GUID:BaseUnits.Id
     /'Размер лота'/ Quantity: float: 
-    /'??? Регион поставки'/ *Region: GUID:Regions.Id
-    /'??? Базис поставки (склады, станции)'/ *Bases: GUID:Bases.Id
+    /'Базис поставки'/ *Bases: GUID:Addresses.Id
     /'Завод-производитель'/ *Plant: GUID:Plants.Id
     /'Упаковка'/ *Package: GUID:Packaging.Id
     /'Описание товара'/ Description: str:200
@@ -319,7 +318,7 @@ skinparam class {
 /'Наименование товара'/ entity CommoditiesNames <<Work>> {
     *Id: GUID
     --
-    /'Название'/ *FullName: str:200
+    /'Наименование'/ *Name: str:200
     /'Краткое название'/ *ShortName: str:200
     /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
     --
@@ -335,6 +334,7 @@ skinparam class {
     --
     /'Номер'/ *Number: str:50
     /'Дата'/ *Date: Date
+    /'Тип спецификации'/ *TypeSpecifications: GUID:TypeSpecifications.Id
     /'Участник торгов'/ *Organisation: GUID:Organisations.Id
     /'Перечень берживых товаров (табличная часть)'/ *SpecificationCommodities: GUID:SpecificationCommodities.Id
     --
@@ -347,7 +347,7 @@ skinparam class {
 /'Перечень биржевых товаров в спецификации'/ entity SpecificationCommodities <<Work>>{
     *Id: GUID 
     --
-    /'Наименование товара'/ *FullNameId: GUID:CommoditiesNames.Id
+    /'Наименование товара'/ *Name: GUID:CommoditiesNames.Id
     /'Краткое название'/ *ShortName: str:200
     /'Виды сопроводительных документов'/ DocumentsKinds: GUID:DocumentsKinds.Id
     --
@@ -364,14 +364,14 @@ skinparam class {
 /'Статусы Каталога ТРУ'/ entity CommoditiesStatus <<Work>>{
     *Id: GUID
     --
-    /'Название'/ *Name: str:50
+    /'Наименование'/ *Name: str:50
     /'Описание'/ Description: str:200
 }
 
 /'Статус Cпецификации'/ entity SpecificationStatus <<Work>>{
     *Id: GUID
     --
-    /'Название'/ *Name: str:50
+    /'Наименование'/ *Name: str:50
     /'Описание'/ Description: str:200
 }
 
@@ -382,60 +382,53 @@ skinparam class {
 /'Категория товара'/ entity CommoditiesCategories <<Work>> {
     *Id: GUID
     --
-    /'Название'/ *FullName: str:200
+    /'Наименование'/ *Name: str:200
     /'Краткое название'/ *ShortName: str:50
 }
 
 /'Вид товара'/ entity CommoditiesKind <<Work>> {
     *Id: GUID
     --
-    /'Название'/ *FullName: str:200
+    /'Наименование'/ *Name: str:200
     /'Краткое название'/ *ShortName: str:50
 }
 
 /'Единица измерения'/ entity BaseUnits <<Work>> {
     *Id: GUID
     --
-    /'Название'/ *FullName: str:200
+    /'Наименование'/ *Name: str:200
     /'Краткое название'/ *ShortName: str:50
-}
-
-/'Регион поставки'/ entity Regions <<Work>> {
-    *Id: GUID
-    --
-    /'Название'/ *FullName: str:200
-    /'Краткое название'/ *ShortName: str:200
-
-/'Базис поставки'/ entity Bases <<Work>> {
-    *Id: GUID
-    --
-    /'Название'/ *FullName: str:200
-    /'Краткое название'/ *ShortName: str:200
 }
 
 /'Завод-производитель'/ entity Plants <<Work>> {
     *Id: GUID
     --
-    /'Название'/ *FullName: str:200
-    /'Краткое название'/ *ShortName: str:200
+    /'Наименование'/ *Name: str: 200
+    /'Краткое название'/ *ShortName: str:50
 }
 
 /'Упаковка'/ entity Packaging <<Work>> {
     *Id: GUID
     --
-    /'Название'/ *FullName: str:200
-    /'Краткое название'/ *ShortName: str:200
+    /'Наименование'/ *Name: str:200
+    /'Краткое название'/ *ShortName: str:50
 }
 
-/'Классификатор товаров'/ entity CommoditiesClassifier <<Work>> {
+/'(Преработать) Классификатор товаров'/ entity CommoditiesClassifier <<Work>> {
     *Id: GUID
     --
     /'Тип записи'/ *Type: enum:section|Отделение,category|Категория,kond|Вид form
     /'Уровень родитель'/ *ParentLevel: GUID:CommoditiesClassifier.Id
     /'Код'/ Code str:50
     /'Краткое наименование'/ ShortName: str:50
-    /'Полное наименование'/ FullName: str:200
+    /'Полное наименование'/ Name: str:200
  }
+
+/'Тип специификации'/ entity TypeSpecifications <<Work>> {
+    *Id: GUID
+    --
+    /'Наименование'/ *Name: str:50
+}
 /'--------------------'/
 
 'Пользователи
@@ -466,13 +459,11 @@ skinparam class {
 
 /'New 09/12/21'/
 'Каталог ТРУ'
-    Commodities::FullName ||--|| CommoditiesNames::Id
+    Commodities::Name ||--|| CommoditiesNames::Id
     Commodities::Kind }|--|| CommoditiesKind::Id
     Commodities::BaseUnit }|--|| BaseUnits::Id
-    Commodities::Region }|--|| Regions::Id
     Commodities::CommoditiesClassifier }|--|| CommoditiesClassifier::Id
     Commodities::Package ||--|| Packaging::Id
-    Commodities::Bases ||--|| Bases::Id
     Commodities::Plant }|--|| Plants::Id
     Commodities::OrganisationsCustomer }|--|| Organizations::Id
     Commodities::CatalogStatus }|--|| CommoditiesStatus::Id
@@ -483,9 +474,10 @@ skinparam class {
     Specifications::CommoditiesName }|--|| CommoditiesNames::Id
     Specifications::Сreator }|--|| Users::Id
     Specifications::SpecificationStatus }|--|| SpecificationStatus::Id
+    Specifications::TypeSpecifications }|--|| TypeSpecifications::Id
 
 'Перечень берживых товаров
-    SpecificationCommodities::FullName }|--|| CommoditiesNames::Id
+    SpecificationCommodities::Name }|--|| CommoditiesNames::Id
     SpecificationCommodities::ShortName }|--|| CommoditiesNames::Id
     SpecificationCommodities::Kind }|--|| CommoditiesKind::Id
     SpecificationCommodities::CommoditiesClassifier }|--|| CommoditiesClassifier::Id

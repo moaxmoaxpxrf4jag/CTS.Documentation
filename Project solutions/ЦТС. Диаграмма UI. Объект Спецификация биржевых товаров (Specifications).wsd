@@ -61,8 +61,9 @@ skinparam class {
 /'Реквизиты карточки объекта Участник торгов'/ interface Specifications <<Work>> {
     /'Номер'/ #*Number: str:Specifications.Number
     'Принцип формирования номера...
-    /'Дата'/ +*Date: date:str:Specifications.Date
+    /'Дата'/ #*Date: date:str:Specifications.Date
     /'Участник торгов'/ #*Organisation: str:Organizations.Name
+    /'Тип Спецификации'/ +**TypeSpecifications: GUID:TypeSpecifications.Neme
 --
     Табличная часть
 --
