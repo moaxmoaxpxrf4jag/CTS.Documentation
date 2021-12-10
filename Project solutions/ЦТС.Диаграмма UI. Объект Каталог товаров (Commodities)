@@ -63,20 +63,21 @@ skinparam class {
     /'Дата создания'/ #*Date: date:str:Commodities.Date
     /'Наименование товара'/ +*{ComoditiesNamesID}: str:Commodities.CommoditiesNames
     /'Краткое наименование'/ #*ComoditiesNamesID: str:Commodities.CommoditiesShortName
-    /'Классификатор товаров'/ +*{CommoditiesClassifier}: str:Commodities.CommoditiesClassifier
-    /'Вид товара'/ +*{KindID}: str:Commodities.CommoditiesKind
-    /'Лот (единица измерения товара)'/ +*{BaseUnitID}: str:Commodities.CommoditiesBaseUnit
-    /'Размер лота'/ +*QuantityID: float:Commodities.CommoditiesQuantity
-    /'Регион поставки'/ +*{RegionID}: float:Commodities.CommoditiesRegionName
-    /'Базис поставки (склады, станции)'/ *{BasisID}: str:Commodities.CommoditiesBases
-    /'Завод-производитель'/ +*{PlantID}: str: Commodities.CommoditiesPlants
-    /'Упаковка'/ +*{Package}: str: Commodities.CommoditiesPaskage
+    /'Классификатор товаров'/ +*{ClassifierName}: str:Commodities.CommoditiesClassifier
+    /'Вид товара'/ +*{KindName}: str:Commodities.CommoditiesKind
+    /'Лот (единица измерения товара)'/ +*{BaseUnitName}: str:Commodities.CommoditiesBaseUnit
+    /'Размер лота'/ +*Quantity: float:Commodities.CommoditiesQuantity
+    /'Регион поставки'/ +*{RegionName}: float:Commodities.CommoditiesRegionName
+    /'Базис поставки (склады, станции)'/ *{BasisName}: str:Commodities.CommoditiesBases
+    /'Завод-производитель'/ +*{PlantName}: str: Commodities.CommoditiesPlants
+    /'Упаковка'/ +*{PackageName}: str: Commodities.CommoditiesPaskage
     /'Описание товара'/ +Description: str: Commodities.CommoditiesDescription
-    /'Продавец'/ #*OrganisationsCustomer: str: Commodities.CommoditiesOrganisationsCustomer
+    /'Продавец'/ #*OrganisationsCustomerName: str: Commodities.CommoditiesOrganisationsCustomer
     /'Спецификация'/ #*Specifications:  str: Commodities.CommoditiesSpecifications
 
-    Документ Button
+    /'Сопроводительные документы'/ Файлы и примечания
 --
+    
     /'Статус'/ #*Status: str:CommoditiesStatus.Name
     /'Автор'/ #*CreatedByUser: str:Users.
 }
