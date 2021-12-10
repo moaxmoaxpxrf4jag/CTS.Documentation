@@ -61,14 +61,16 @@ skinparam class {
 /'Реквизиты карточки объекта Участник торгов'/ interface Specifications <<Work>> {
     /'Номер'/ #*Number: str:Specifications.Number
     'Принцип формирования номера...
-    /'Дата'/ +*Date: date:str:Specifications.Date
+    /'Дата'/ #*Date: date:str:Specifications.Date
     /'Участник торгов'/ #*Organisation: str:Organizations.Name
+    /'Тип Спецификации'/ +*TypeSpecifications: GUID:TypeSpecifications.Neme
 --
     Табличная часть
 --
     /'Перечень берживых товаров (табличная часть)'/
-        /'Наименование товара'/ +*^FullNameId^: str:Commodities.CommoditiesNames
-        /'??? Виды сопроводительных документов'/ +^DocumentsKinds^: str:DocumentsKinds.SpecificationCommodities
+        /'Наименование товара'/ +*{FullNameId}: str:Commodities.CommoditiesNames
+            /'??? Виды сопроводительных документов'/ /'+^DocumentsKinds^: str:DocumentsKinds.SpecificationCommodities'/
+            'Виды сопроводительных документов отдельно(кнопка загрузить, хранения файлов и типов с наименованием документов)...
         /'??? Мнемоника'/ #*Mnemonic: str:Specifications.Mnemonic
         'Принцип формирования мнемоники...
         /'Вид товара'/ #*Kind: str:Commodities.Kind
@@ -77,7 +79,7 @@ skinparam class {
         /'Размер лота'/ +Quantity: float:SpecificationCommodities.Quantity
         /'Описание товара'/ +Description: text:SpecificationCommodities.Description
 --
-    Документ Button
+    /'Cопроводительный документ'/ +[DocumentsKinds]: str:DocumentsKinds.SpecificationCommodities
 --
     /'Статус'/ #*Status: str:CommoditiesStatus.Name
     /'Дата создания'/ #*CreateDateTime: date:Specifications.CreateDateTime
