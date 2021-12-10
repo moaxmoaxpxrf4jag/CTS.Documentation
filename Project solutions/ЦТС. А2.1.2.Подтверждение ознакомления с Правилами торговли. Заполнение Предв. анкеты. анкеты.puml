@@ -1,0 +1,56 @@
+@startuml 
+title "ЦТС. А2.1.2.Подтверждение ознакомления с Правилами торговли. Заполнение Предв. анкеты"
+actor "Участник Торгов" as User
+boundary "Форма Правила торговли" as A
+boundary "Форма для предворительной анкеты" as B
+entity "Внешняя ИС" as E
+entity "База данных" as C
+
+
+autonumber
+
+User-> A:Открывет форму "Правила торговли"
+activate User
+activate A
+
+A-->User: Создать предзаполненную анкету
+
+User->A: Пользователь соглашается с правилами торговли (кнопка/чекбокс)
+deactivate User
+deactivate A
+
+loop "Проверка и автоматическое заполнение анкеты"
+A->B: Система показывает форму Анкеты
+activate A
+activate B
+
+B->E: Запрос данных во внешнюю ИС
+activate B
+activate E
+E->B: Подтягивание данных в анкету со внешних ИС
+deactivate E
+
+B->B: Проверка все ли данные подтянуты со внешних ИС
+activate B
+deactivate B
+
+B->C: Передача данных анкеты в БД
+activate B
+activate C
+deactivate B
+C->C: Создание записи в БД
+deactivate B
+deactivate B
+
+B-->User: Система показывает предзаполненную анкету  
+activate User
+deactivate User
+deactivate A
+end
+
+C->C: Формирование анкеты с не предзаполненными данными
+activate C
+C-->User: Не все данные подтянуты! Необходимо заполнить данные вручную
+activate User
+deactivate User
+@enduml
