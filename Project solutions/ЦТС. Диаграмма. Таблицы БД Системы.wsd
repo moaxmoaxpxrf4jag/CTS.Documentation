@@ -191,7 +191,7 @@ skinparam class {
     /'Телефон'/ *Phone: str:50
     /'Е-мэйл'/ *Email: str:50
     /'Web-адрес'/ URL: str:50
-    /'Вид деятельности по ОКВЭД'/ *BusinessLineId: GUID:BusinessLines.Id
+    /'Вид деятельности по ОКВЭД'/ *OKVED: GUID:BusinessLines.Id
     /'Банк'/ *BankId: GUID:Banks.Id
     /'Расчетный счёт'/ *CheckingAccount: str:50
     /'???Аккредитация'/ *Accreditation: bool
