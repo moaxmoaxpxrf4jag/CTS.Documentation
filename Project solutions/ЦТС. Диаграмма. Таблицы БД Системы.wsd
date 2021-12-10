@@ -292,150 +292,149 @@ skinparam class {
 
 /'Каталог ТРУ'/
  entity Commodities <<Work>> { 
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Наименование товара'/ *FullName: CommoditiesNamesId: single manual form&list
-    /'Краткое название'/ *ShortName: str:250 auto form
-    /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
-    /'Классификатор товаров'/ *CommoditiesClassifier: CommoditiesClassifierId:single manual form&list
-    /'Вид товара'/ *Kind: CommoditiesKind:single manual form&list
-    /'Лот (единица измерения товара)'/ *BaseUnit: BaseUnitsId:single manual form
-    /'Размер лота'/ Quantity: float: 5 manual form
-    /'??? Регион поставки'/ *Region: RegionsId:plural manual form&list
-    /'??? Базис поставки (склады, станции)'/ *Basis: BasesId:plural manual form&list
-    /'Завод-производитель'/ *Plant: PlantsId:plural manual form&list
-    /'Упаковка'/ *Package: PackagingId:plural manual form&list
-    /'Описание товара'/ Description: text: manual form
-    /'Продавец'/ OrganisationsCustomer: OrganisationsId:single auto form
-    /'Спецификация'/ *Specifications: SpecificationsId: single auto form&list
-    /'Сопроводительные документы'/ Files: bin auto fo
+    /'Наименование товара'/ *FullName:  GUID:CommoditiesNames.Id
+    /'Краткое название'/ *ShortName: GUID:CommoditiesNames.Id
+    /'??? Мнемоника'/ *Mnemonic: str:250
+    /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
+    /'Вид товара'/ *Kind: GUID:CommoditiesKind.Id
+    /'Лот (единица измерения товара)'/ *BaseUnit: GUID:BaseUnits.Id
+    /'Размер лота'/ Quantity: float: 
+    /'??? Регион поставки'/ *Region: GUID:Regions.Id
+    /'??? Базис поставки (склады, станции)'/ *Bases: GUID:Bases.Id
+    /'Завод-производитель'/ *Plant: GUID:Plants.Id
+    /'Упаковка'/ *Package: GUID:Packaging.Id
+    /'Описание товара'/ Description: str:200
+    /'Продавец'/ OrganisationsCustomer: GUID:Organisations.Id
+    /'Спецификация'/ *Specifications: GUID:Specifications.Id
+    /'Сопроводительные документы'/ Files: bin
     --
-    /'Статус'/ *Status: CommoditiesStatusId:single auto form&list
-    /'Дата изменения'/ ChangeDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:create form
-    /'Дата создания'/ *CreateDateTime: datetime:dd.mm.yyyy_hh:mm:ss auto:save form
-    /'Автор'/ *CreatedByUser: UsersId:single auto:create form&list
+    /'Статус'/ *Status: GUID:CommoditiesStatus.Id
+    /'Дата изменения'/ ChangeDateTime: Date
+    /'Дата создания'/ *CreateDateTime: Date
+    /'Автор'/ *CreatedByUser: GUID:Users.Id
 }
 
 /'Наименование товара'/ entity CommoditiesNames <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str:256 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
-    /'Классификатор товаров'/ *CommoditiesClassifier: CommoditiesClassifierId: single manual form&list
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:200
+    /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
     --
-    /'Статус'/ *Status: CommoditiesStatusId: auto:create form
-    /'Дата изменения'/ *ChangeDateTime: date:dd.mm.yyyy auto:create form
-    /'Дата создания'/ *CreateDateTime: date:dd.mm.yyyy auto:create form
-    /'Автор'/ *CreatedByUser: UsersId:single auto:create form&list
-    /'Дата блокировки'/ *LockDate: date:dd.mm.yyyy auto:create form
+    /'Статус'/ *Status: GUID:CommoditiesStatu.Id
+    /'Дата изменения'/ *ChangeDateTime: Date
+    /'Дата создания'/ *CreateDateTime: Date
+    /'Автор'/ *CreatedByUser: GUID:Users.Id
+    /'Дата блокировки'/ *LockDate: Date
 }
 
 /'Спецификация биржевых товаров'/ entity Specifications <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Номер'/ *Number: int auto form&list
-    /'Дата'/ *Date: date:dd.mm.yyyy auto form&list
-    /'Участник торгов'/ *Organisation: OrganisationsId: str:250 auto form&list
-    /'Перечень берживых товаров (табличная часть)'/ *SpecificationCommodities: SpecificationCommoditiesId:plural manual form
+    /'Номер'/ *Number: str:50
+    /'Дата'/ *Date: Date
+    /'Участник торгов'/ *Organisation: GUID:Organisations.Id
+    /'Перечень берживых товаров (табличная часть)'/ *SpecificationCommodities: GUID:SpecificationCommodities.Id
     --
-    /'Статус'/ *Status: SpecificationStatusId: str:32 auto list
-    /'Дата создания'/ *CreateDateTime: date:dd.mm.yyyy_hh:mm:ss auto:create form
-    /'Автор'/ *CreatedByUser: UsersId:single auto:create form&list
-    /'Дата утверждения'/ *ApprovalDate: date:dd.mm.yyyy manual form
+    /'Статус'/ *Status: GUID:SpecificationStatus.Id
+    /'Дата создания'/ *CreateDateTime: Date
+    /'Автор'/ *CreatedByUser: GUID:Users.Id
+    /'Дата утверждения'/ *ApprovalDate: Date
 }
 
 /'Перечень биржевых товаров в спецификации'/ entity SpecificationCommodities <<Work>>{
-    *Id: GUID generated 
+    *Id: GUID 
     --
-    /'Наименование товара'/ *FullNameId: CommoditiesNamesId: single manual form&list
-    /'Краткое название'/ *ShortName: str:250 auto form
-    /'Виды сопроводительных документов'/ DocumentsKinds: DocumentsKindsId:plural manual form
+    /'Наименование товара'/ *FullNameId: GUID:CommoditiesNames.Id
+    /'Краткое название'/ *ShortName: str:200
+    /'Виды сопроводительных документов'/ DocumentsKinds: GUID:DocumentsKinds.Id
     --
-    /'??? Мнемоника'/ *Mnemonic: str:250 auto form&list
-    /'Вид товара'/ *Kind: CommoditiesKindId:single manual form&list
-    /'Классификатор товаров'/ *CommoditiesClassifier: CommoditiesClassifierId:single auto form&list read
-    /'Лот (единица измерения товара)'/ *BaseUnit: BaseUnitId:single manual form
-    /'Размер лота'/ Quantity: float:.2 manual form&list
-    /'Описание товара'/ Description: str:2500 manual form
+    /'??? Мнемоника'/ *Mnemonic: str:200
+    /'Вид товара'/ *Kind: GUID:CommoditiesKind.Id
+    /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
+    /'Лот (единица измерения товара)'/ *BaseUnit: GUID:BaseUnit.Id
+    /'Размер лота'/ Quantity: str:50
+    /'Описание товара'/ Description: str:200
 }
 
 '**Справочники
 
 /'Статусы Каталога ТРУ'/ entity CommoditiesStatus <<Work>>{
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *Name: str:32 manual form
-    /'Описание'/ Description: text:single manual form
+    /'Название'/ *Name: str:50
+    /'Описание'/ Description: str:200
 }
 
 /'Статус Cпецификации'/ entity SpecificationStatus <<Work>>{
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *Name: str:32 manual form
-    /'Описание'/ Description: text:single manual form
+    /'Название'/ *Name: str:50
+    /'Описание'/ Description: str:200
 }
 
 /'Виды сопроводительных документов'/ entity DocumentsKinds <<Work>>{
-    *Id: GUID generated
+    *Id: GUID
 }
 
 /'Категория товара'/ entity CommoditiesCategories <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str:256 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:50
 }
 
 /'Вид товара'/ entity CommoditiesKind <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str manual form&list
-    /'Краткое название'/ *ShortName: str manual form&list
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:50
 }
 
 /'Единица измерения'/ entity BaseUnits <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str:56 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:50
 }
 
 /'Регион поставки'/ entity Regions <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str:256 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
-}
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:200
 
 /'Базис поставки'/ entity Bases <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str:256 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:200
 }
 
 /'Завод-производитель'/ entity Plants <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str:256 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:200
 }
 
 /'Упаковка'/ entity Packaging <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
-    /'Название'/ *FullName: str:256 manual form&list
-    /'Краткое название'/ *ShortName: str:256 manual form&list
+    /'Название'/ *FullName: str:200
+    /'Краткое название'/ *ShortName: str:200
 }
 
 /'Классификатор товаров'/ entity CommoditiesClassifier <<Work>> {
-    *Id: GUID generated
+    *Id: GUID
     --
     /'Тип записи'/ *Type: enum:section|Отделение,category|Категория,kond|Вид form
-    /'Уровень родитель'/ *ParentLevel: CommoditiesClassifier:single manual form&list
-    /'Код'/ Code str:16 manual form&list
-    /'Краткое наименование'/ ShortName: str:32 manual form&list
-    /'Полное наименование'/ FullName: str:128 manual form&list
+    /'Уровень родитель'/ *ParentLevel: GUID:CommoditiesClassifier.Id
+    /'Код'/ Code str:50
+    /'Краткое наименование'/ ShortName: str:50
+    /'Полное наименование'/ FullName: str:200
  }
 /'--------------------'/
 
@@ -475,19 +474,19 @@ skinparam class {
     Commodities::Package ||--|| Packaging::Id
     Commodities::Bases ||--|| Bases::Id
     Commodities::Plant }|--|| Plants::Id
-    Commodities::OrganisationsCustomer }|--|| Organisations::Id
+    Commodities::OrganisationsCustomer }|--|| Organizations::Id
     Commodities::CatalogStatus }|--|| CommoditiesStatus::Id
     Commodities::Specifications ||--|| Specifications::Id 
 
 'Спецификация биржевых товаров
-    Specifications::Organisation }|--|| Organisations::Id
+    Specifications::Organisation }|--|| Organizations::Id
     Specifications::CommoditiesName }|--|| CommoditiesNames::Id
     Specifications::Сreator }|--|| Users::Id
     Specifications::SpecificationStatus }|--|| SpecificationStatus::Id
 
 'Перечень берживых товаров
-    SpecificationCommodities::FullName }|--|| CommoditiesNames::FullName
-    SpecificationCommodities::ShortName }|--|| CommoditiesNames::ShortName
+    SpecificationCommodities::FullName }|--|| CommoditiesNames::Id
+    SpecificationCommodities::ShortName }|--|| CommoditiesNames::Id
     SpecificationCommodities::Kind }|--|| CommoditiesKind::Id
     SpecificationCommodities::CommoditiesClassifier }|--|| CommoditiesClassifier::Id
     SpecificationCommodities::BaseUnit }|--|| BaseUnits::Id
