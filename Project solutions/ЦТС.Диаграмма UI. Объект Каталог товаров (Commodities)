@@ -75,7 +75,7 @@ skinparam class {
     /'Продавец'/ #*OrganisationsCustomerName: str: Commodities.CommoditiesOrganisationsCustomer
     /'Спецификация'/ #*Specifications:  str: Commodities.CommoditiesSpecifications
 
-    /'Сопроводительные документы'/ Файлы и примечания
+    /'Сопроводительные документы'/ Файлы
 --
     
     /'Статус'/ #*Status: str:CommoditiesStatus.Name
