@@ -2,57 +2,51 @@
 /'Название файла будет: ЦТС.<Номер схемы БП>.<Номер этапа>.<Название этапа в схеме БП>'/
 title "ЦТС.А2.1.1.Ввод данных для предварительной регистрации"
 actor "Участник Торгов" as User
-boundary "Форма для предворительной регистрации" as A
-entity "База данных" as B
-participant  "Каталог УТ" as C
-participant "Профиль УТ" as D
+boundary "Форма для предворительной регистрации" as PreRegistrationForm
+entity "Система" as System
 
 
 autonumber
 
-User -> A: Открыть форму
+User -> PreRegistrationForm: Открыть форму
 activate User
-activate A
-A-->User: Система показывает форму регистрации
+activate PreRegistrationForm
+
+PreRegistrationForm-->User: Система показывает форму регистрации
 deactivate User
-deactivate A
+deactivate PreRegistrationForm
 
 loop Проверка и заполнение формы
-User -> A: Ввести данные ФИО, Корп. e-mai, Телефон, ИНН, Пароль, Подтв. пароля
+User -> PreRegistrationForm: Ввести данные ФИО, Корп. e-mai, Телефон, ИНН, Пароль, Подтв. пароля
 activate User
-activate A
-User -> A: Нажать кнопку "Сохранить" (Сохранить введенные данные)
+activate PreRegistrationForm
 
-A -> A: Проверка корректности заполненных данных 
-activate A
+User -> PreRegistrationForm: Нажать кнопку "Зарегистрироваться"
+
+PreRegistrationForm -> PreRegistrationForm: Проверка корректности заполненных данных 
+activate PreRegistrationForm
 deactivate User
-A --> User: Ошибка! Неправильны введены данные! Не заполнены обязательные поля
-deactivate A
+
+PreRegistrationForm --> User: Ошибка ввода данных! (Текст ошибки в разработке) 
+deactivate PreRegistrationForm
 activate User
-User->A: Корректировка ранее введенных данных
+
+User->PreRegistrationForm: Корректировка ранее введенных данных
 deactivate User
-deactivate A
+deactivate PreRegistrationForm
 end
 
-A -> B: Сохранение данных в базе данных
-activate A
-activate B
+PreRegistrationForm -> System: Сохранение данных в базе данных
+activate PreRegistrationForm
+activate System
+deactivate PreRegistrationForm
 
-B->B:Создание записи в базе данных
-
-A->C: Создание записи в Каталоге УТ
-deactivate B
-deactivate A
-activate C
-
-C->User: Уведомление об успешном создании записи в Каталоге УТ
+System->System:Создание записи в Справочнике "Организации-УТ"
+System->System:Создание записи в Справочнике "Пользователь", связаную с Организацией-УТ
+System->User: Подтверждение регистрации по Е-мэйл
 activate User
-deactivate C
 
-A ->D: Создание записи в Профиле УТ
-activate D
-
-D->A: Уведомление об успешном создание Пользователя
-deactivate D
+User->User: Переход к А2.1.2
+activate User
 
 @enduml
