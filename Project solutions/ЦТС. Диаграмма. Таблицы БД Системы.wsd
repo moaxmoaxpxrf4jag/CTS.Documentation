@@ -38,7 +38,7 @@ skinparam class {
 /'Пользователи'/ entity Users <<Ready>> {
     *Id: GUID
     --
-    /'Имя пользователя'/ *Name: str:50
+    /'Логин'/ *Login: str:50
     /'Пароль'/ *Password: str:50
     /'Роль'/ RoleId: GUID:Roles.Id
     /'Организация'/ *OrganizationId: GUID:Organizations.Id
