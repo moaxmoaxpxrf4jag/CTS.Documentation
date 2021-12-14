@@ -160,7 +160,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Организации-участники торгов'/ entity Organizations <<Work>> {
+/'Организации-участники торгов'/ entity Organizations <<Ready>> {
     *Id: GUID
     --
     /'Код'/ *Code: str:50
@@ -249,7 +249,8 @@ skinparam class {
     *Id: GUID generated create
     --
     /'Код'/ *Code: str:50
-    /'Код-родитель'/ *OKVEDId: GUID:OKVED.Id
+    /'Код-родитель'/ *ParentId: GUID:OKVED.Id
+    /'Код-родитель'/ *ParentCode: str:50:OKVED.Code
     /'Наименование'/ *Name: str:200
     /'Расшифровка'/ *Description: str:200
     --
@@ -279,7 +280,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Связи Документов'/ entity DocumentLinks <<Ready>> {
+/'Связи Документов'/ entity DocumentLinks <<Work>> {
     *Id: GUID generated create
     --
     /'Документ'/ *OrganizationId: GUID:Organizations.Id
@@ -305,7 +306,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Каталог товаров, работ и услуг (ТРУ)'/  entity Commodities <<Work>> { 
+/'Каталог товаров, работ и услуг (ТРУ)'/  entity Commodities <<Ready>> { 
     *Id: GUID
     /'Классификатор товаров'/ *CommoditiesClassifierId: GUID:CommoditiesClassifier.Id
     /'Спецификация'/ *SpecificationId: GUID:Specifications.Id
@@ -329,7 +330,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Наименования товаров'/ entity CommoditiesNames <<Work>> {
+/'Наименования товаров'/ entity CommoditiesNames <<Ready>> {
     *Id: GUID
     /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
     --
@@ -345,7 +346,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Спецификации биржевых товаров'/ entity CommoditySpecifications <<Work>> {
+/'Спецификации биржевых товаров'/ entity CommoditySpecifications <<Ready>> {
     *Id: GUID
     --
     /'Номер'/ *Number: str:50
@@ -363,7 +364,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Табличная часть Спецификаций биржевых товаров'/ entity CommoditySpecificationTables <<Work>>{
+/'Табличная часть Спецификаций биржевых товаров'/ entity CommoditySpecificationTables <<Ready>>{
     *Id: GUID 
     /'Спецификация'/ *CommoditySpecifications: GUID:CommoditySpecifications.Id
     --
@@ -372,6 +373,7 @@ skinparam class {
     /'Единица измерения)'/ *MeasuringUnitsId: GUID:BaseUnit.Id
     /'Размер лота'/ *Quantity: str:50
     /'Описание'/ Description: str:200
+    /'Производитель'/ *CommodityManufacturerId: GUID:CommodityManufacturers.Id
     --
     /'Создано'/ *CreatedAt: DateTime
     /'Кем создано'/ *CreatedById: GUID:Users.Id
@@ -381,7 +383,7 @@ skinparam class {
 
 '**Справочники
 
-/'Статусы Каталога ТРУ'/ entity CommodityStatuses <<Work>>{
+/'Статусы Каталога ТРУ'/ entity CommodityStatuses <<Ready>>{
     *Id: GUID
     --
     /'Наименование'/ *Name: str:50
@@ -393,7 +395,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Статусы Cпецификации'/ entity SpecificationStatuses <<Work>>{
+/'Статусы Cпецификации'/ entity SpecificationStatuses <<Ready>>{
     *Id: GUID
     --
     /'Наименование'/ *Name: str:50
@@ -405,7 +407,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Единицы измерения'/ entity MeasuringUnits <<Work>> {
+/'Единицы измерения'/ entity MeasuringUnits <<Ready>> {
     *Id: GUID
     --
     /'Ннаименование'/ *Name: str:50
@@ -417,7 +419,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Заводы-производители'/ entity CommodityManufacturers <<Work>> {
+/'Заводы-производители'/ entity CommodityManufacturers <<Ready>> {
     *Id: GUID
     --
     /'Наименование'/ *Name: str: 200
@@ -429,7 +431,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Виды упаковок'/ entity PackageKinds <<Work>> {
+/'Виды упаковок'/ entity PackageKinds <<Ready>> {
     *Id: GUID
     --
     /'Наименование'/ *Name: str:50
