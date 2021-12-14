@@ -50,8 +50,6 @@ end
 User -> SpecificationForm: Нажимает на кнопку "Cохранить"
 activate SpecificationForm
 activate User
-SpecificationForm->User: Выходит из формы Спецификация биржевых товаров
-deactivate User
 note right
     Заполняется автоматически 
     при сохранении записи: 
@@ -60,10 +58,14 @@ note right
     Дата создания.
 end note
 SpecificationForm->Database: Запись в базу данных
-deactivate SpecificationForm
+
 
 activate Database
 Database->Database: Создание записи в базе данных
 activate Database
 deactivate Database
+deactivate Database
+SpecificationForm->User: Выходит из формы Спецификация биржевых товаров после нажатия на кнопку "Cохранить"
+deactivate SpecificationForm
+deactivate User
 @enduml
