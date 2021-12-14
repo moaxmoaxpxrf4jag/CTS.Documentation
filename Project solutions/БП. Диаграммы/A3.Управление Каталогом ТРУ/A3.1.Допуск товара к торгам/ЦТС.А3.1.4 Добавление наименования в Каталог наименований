@@ -1,0 +1,29 @@
+@startuml "ЦТС.А3.1.4 Запрос на добавление наименования в каталог товаров"
+title "ЦТС.А3.1 Запрос на добавление наименования в каталог товаров"
+actor "Участник Торгов" as User
+participant "Форма добавления товаров к спецификации" as SpecificationsForm
+database "База данных" as Database
+actor "Администратор Торгов" as User_CTS
+
+User-> SpecificationsForm: Открыть форму добавления товаров к спецификации
+activate User
+activate SpecificationsForm
+
+SpecificationsForm->User: Открыта форма добавления товаров к спецификации
+deactivate SpecificationsForm
+
+User->SpecificationsForm: Ввод названия наименования в поле "Наименование товара"
+activate SpecificationsForm
+SpecificationsForm-->SpecificationsForm: Отображение наименований, которые уже существуют при вводе от трёх букв
+SpecificationsForm-->Database: Проверка наличия наименований
+SpecificationsForm->User: Не найдено необходимое наименование, доступна кнопка "Создать запрос" на форме
+User-->User: Нажатие на кнопку "Создать запрос"
+note left
+     manual: Заполнить поле "Наименование товара" и "Краткое наименование
+end note
+User-->User_CTS: Нажать на кнопку "Отправить запрос"
+ /'Администратор Торгов'/
+ activate User_CTS
+ User_CTS-->User_CTS: А3.1.5 Утверждение добавления наименования в Каталог наименований
+@enduml
+

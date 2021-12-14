@@ -1,0 +1,44 @@
+@startuml 
+title "ЦТС. А2.1.3.Заполнение анкеты"
+actor "Участник Торгов" as User
+boundary "Форма Анкеты" as A
+entity "База данных" as B
+
+autonumber
+
+loop "Проверка и заполнение анкеты"
+User->A: Открывает форму анкеты
+activate User
+activate A
+A-->User: Система показывает форму Анкеты
+deactivate User
+deactivate A
+
+User->A: Заполняет Анкету
+activate User
+activate A
+
+A->A: Проверка корректности заполнения анкеты 
+/'Проверка заполнения обязательных полей, масок полей'/
+activate A
+deactivate A
+
+User->A: Нажатие кнопки "Сохранить"
+A-->User: Уведомление! Анкета сохранена!
+A-->User: Ошибка!Не корректно заполненные поля!
+/'!!!Надо продумать уведомления'/
+deactivate A
+deactivate User
+end
+
+A->B: Передача данных в БД
+activate A
+activate B
+B->B: Создание записи в БД
+
+
+
+
+
+
+@enduml
