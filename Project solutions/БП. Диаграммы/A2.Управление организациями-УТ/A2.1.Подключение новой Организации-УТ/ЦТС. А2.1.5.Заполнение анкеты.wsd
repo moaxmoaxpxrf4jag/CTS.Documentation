@@ -1,0 +1,41 @@
+@startuml 
+title "ЦТС. А2.1.5.Заполнение анкеты"
+actor "Участник Торгов" as User
+boundary "Форма Анкеты" as ProfileForm
+entity "Система" as System
+
+autonumber
+
+User->ProfileForm: Открывает форму анкеты
+activate User
+activate ProfileForm
+ProfileForm-->User: Система показывает форму Анкеты
+deactivate User
+deactivate ProfileForm
+
+User->ProfileForm: Заполняет Анкету
+activate User
+activate ProfileForm
+
+ProfileForm->ProfileForm: Проверка корректности заполнения анкеты 
+/'Проверка заполнения обязательных полей, масок полей'/
+activate ProfileForm
+deactivate ProfileForm
+
+User->ProfileForm: Нажатие кнопки "Сохранить"
+ProfileForm-->User: Уведомление! (Текст Ошибки в разработке)!
+ProfileForm-->User: Ошибка!(Текст ошибки в разработке)!
+/'!!!Надо продумать уведомления'/
+deactivate User
+
+ProfileForm->System: Передача данных в Систему
+activate ProfileForm
+activate System
+System->System: Сохранение данных в Системе в справочнике "Организация-УТ"
+
+activate System
+System ->System: Переход в А2.1.6 Автоматическая проверка данных
+deactivate System
+
+
+@enduml
