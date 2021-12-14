@@ -1,0 +1,21 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1.10 Спецификация биржевых товаров отклонена"
+actor "Участник торгов" as User
+participant "Коммуникационная панель" as CommunicationPanel
+boundary "Форма Спецификация биржевых товаров" as SpecificationForm
+
+autonumber
+
+activate User
+User-->CommunicationPanel: Получено уведомление от отклонении запроса, переход в блок уведомлений
+
+CommunicationPanel-->User: Открылись уведомления пользователя
+User-->User: Нажать на уведомление "Спецификация биржевых товаров отклонена"
+
+note left
+  auto: Открылся комментарий к визе об отклонении
+end note
+User-->SpecificationForm: Переход к ЦТС.А3.1.1. Создание Спецификация биржевых товаров
+User-->SpecificationForm: Переход к ЦТС.А3.2.1 Внесение изменения в Спецификация биржевых товаров
+
+@enduml

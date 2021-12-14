@@ -1,12 +1,12 @@
 @startuml "ЦТС.А3.1 Допуск товара к торгам"
-title "ЦТС.А3.1.10 Запрос на cогласование Спецификация биржевых товаров утвержден"
+title "ЦТС.А3.1.10 Спецификация биржевых товаров утвержден"
 actor "Участник торгов" as User
 participant "Коммуникационная панель" as CommunicationPanel
 
 autonumber
 
 activate User
-User-->CommunicationPanel: Получено уведомление от отклонении запроса, переход в блок уведомлений
+User-->CommunicationPanel: Получено уведомление утверждении запроса, переход в блок уведомлений
 activate CommunicationPanel
 
 CommunicationPanel-->User: Открылись уведомления пользователя
