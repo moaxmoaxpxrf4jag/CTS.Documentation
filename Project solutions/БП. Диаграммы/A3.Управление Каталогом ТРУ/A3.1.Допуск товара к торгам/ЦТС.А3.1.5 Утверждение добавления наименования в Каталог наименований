@@ -1,6 +1,5 @@
 @startuml "ЦТС.А3.1.5 Утверждение запроса на добавление наименования в каталог наименований"
 title "ЦТС.А3.1.5 Утверждение запроса на добавление наименования в каталог наименований"
-actor "Участник Торгов" as User
 actor "Администратор Торгов" as User_CTS
 participant "Коммуникационная панель" as CommunicationPanel
 database "База данных" as Database
@@ -9,19 +8,15 @@ collections "Каталог товаров" as Commodities
 
 autonumber
 
-activate User
-User->User_CTS: Отправка запроса на добавление наименования в каталог наименований
-deactivate User
+activate User_CTS
+User_CTS->User_CTS: Получение запроса на добавление наименования в каталог наименований
+deactivate User_CTS
 
-        activate User_CTS
 User_CTS-->CommunicationPanel: Переход в блок "Визы" коммуникационной паанели
 CommunicationPanel-->User_CTS: Открылись объекты на визировании
 User_CTS-->User_CTS: Нажать на визу "Запрос на добавление наименования в каталог наименований"
 User_CTS-->CommoditiesNames: Открылся объект "Наименование товара"
-User_CTS->User_CTS: Нажать на кнопку "Утвердить" или "Отклонить"
-     note left
-     manual: Проверка корректно заполненных данных
-     end note
+User_CTS->User_CTS: Проверка корректно заполненных данных
 
         User_CTS-->CommunicationPanel: Нажать кнопку "Отклонить"
     note left
@@ -29,9 +24,9 @@ User_CTS->User_CTS: Нажать на кнопку "Утвердить" или "
     end note
     activate CommunicationPanel
 
-CommunicationPanel-->User: Отображение уведомления об отклонении
+CommunicationPanel-->CommunicationPanel: Отображение уведомления об отклонении отправившему запрос
     User_CTS-->CommunicationPanel: Нажать на кнопку "Утвердить"
-CommunicationPanel-->User: Отображение уведомления об утверждении
+CommunicationPanel-->CommunicationPanel: Отображение уведомления об утверждении отправившему запрос
  deactivate User_CTS
 CommunicationPanel->Database: Запись наименования в БД
     deactivate CommunicationPanel
