@@ -1,0 +1,23 @@
+@startuml "ЦТС.А3.1.8 Деактивация наименования в каталоге наименований"
+title "ЦТС.А3.1.8 Деактивация наименования в каталоге наименований"
+actor "Администратор Торгов" as User_CTS
+participant "Наименования товаров" as CommoditiesNames
+database "База данных" as Database
+
+
+User_CTS-> CommoditiesNames: Открыть реестр наименований
+activate CommoditiesNames
+CommoditiesNames-->User_CTS: Открылся реестр наименований
+User_CTS->CommoditiesNames: В подстрочном меню наименования нажать на кнопку "Деактивировать"
+CommoditiesNames-->CommoditiesNames: Проверка активных заявок на продажу или на покупку по наименованию
+
+/'Есть активные заявки по наименованию'/
+CommoditiesNames->User_CTS: Ошибка! По наименованию имеются активные заявки : Печенень активных заявок.
+User_CTS->CommoditiesNames: В подстрочном меню наименования нажать на кнопку "Деактивировать"
+CommoditiesNames-->CommoditiesNames: Проверка активных заявок на продажу или на покупку по наименованию
+
+/'Нет активных заявок по наименованию'/
+CommoditiesNames-->User_CTS: Уведомление. Наименование деактивировано
+CommoditiesNames->Database: Сохранение статуса наименования "Не активный" в БД
+
+@enduml
