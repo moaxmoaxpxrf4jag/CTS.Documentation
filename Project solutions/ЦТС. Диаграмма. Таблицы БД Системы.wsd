@@ -408,7 +408,7 @@ skinparam class {
     /'Краткое название'/ *ShortName: str:50
 }
 
-/'Упаковка'/ entity PackagingTypes <<Work>> {
+/'Виды упаковок'/ entity PackagingTypes <<Work>> {
     *Id: GUID
     --
     /'Наименование'/ *Name: str:200
