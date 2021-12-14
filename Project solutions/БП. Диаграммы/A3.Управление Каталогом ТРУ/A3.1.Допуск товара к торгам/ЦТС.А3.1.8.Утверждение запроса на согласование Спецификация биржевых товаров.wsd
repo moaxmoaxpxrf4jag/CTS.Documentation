@@ -1,0 +1,52 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1.8 Утверждение запроса на согласование Спецификация биржевых товаров"
+actor "Администратор Торгов" as UserCTS
+participant "Коммуникационная панель" as CommunicationPanel
+actor "Участник торгов" as User
+boundary "Форма Спецификация биржевых товаров" as Specification
+
+autonumber
+
+activate UserCTS
+UserCTS->UserCTS: Получение запроса на согласование Спецификация биржевых товаров
+
+
+UserCTS-->CommunicationPanel: Переход в блок "Визы" коммуникационной паанели
+activate CommunicationPanel
+CommunicationPanel-->UserCTS: Открылись объекты на визировании
+deactivate CommunicationPanel
+UserCTS-->UserCTS: Нажать на визу "Запрос на согласование Спецификация биржевых товаров"
+
+note left
+ auto: Открылся объект "Спецификация биржевых товаров"
+end note 
+
+UserCTS->UserCTS: Проверка корректно заполненных данных
+
+        UserCTS-->CommunicationPanel: Нажать кнопку "Отклонить"
+    note left
+         manual: Заполнить поле Комментарий к визе
+    end note
+    activate CommunicationPanel
+
+CommunicationPanel-->CommunicationPanel: Отображение уведомления об отклонении отправившему запрос
+
+
+
+CommunicationPanel-->User: Переход к "А3.1.9 Спецификация биржевых товаров отклонена"
+activate User
+UserCTS-->CommunicationPanel: Нажать на кнопку "Утвердить"
+deactivate UserCTS
+CommunicationPanel-->CommunicationPanel: Отображение уведомления об утверждении отправившему запрос
+deactivate UserCTS
+CommunicationPanel-->User: Переход к "А3.1.10 Спецификация биржевых товаров утверждена"
+deactivate User
+CommunicationPanel->Specification: Переход к "А3.1.1 Создание Спецификация биржевых товаров"
+deactivate CommunicationPanel
+activate Specification
+Specification-->Specification: Сменить статус с "Отправлена на согласование" на "Отклонена/Утверждена"
+   
+
+   
+
+@enduml
