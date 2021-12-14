@@ -1,0 +1,69 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1.1. Создание Спецификация биржевых товаров"
+actor "Участник Торгов" as User
+boundary "Форма Спецификация биржевых товаров" as SpecificationForm
+database "База данных" as Database
+boundary "Форма Перечень биржевых товаров" as SpecificationCommoditiesForm
+
+autonumber
+User -> SpecificationForm: Открыть форму
+activate User
+activate SpecificationForm
+
+SpecificationForm-->User: Система показывает форму Спецификация биржевых товаров
+deactivate User
+deactivate SpecificationForm
+
+loop Проверка и заполнение формы
+
+User -> SpecificationForm: Выберает Тип спецификации
+note right
+    Заполняется автоматически при
+    создании/сохранении записи.: 
+    Номер, Дата, 
+    Участник торгов
+    (Наименования организации), 
+    Автор.
+ end note
+activate User
+activate SpecificationForm
+
+User -> SpecificationForm: Нажать кнопку "Добавить Перечень берживых товаров"
+SpecificationForm -> SpecificationCommoditiesForm: Переход к А3.1.2
+SpecificationForm -> SpecificationForm: Данные из "Форма Перечень биржевых товаров" заполняются в табличную часть Перечень биржевых товаров
+activate SpecificationForm
+deactivate SpecificationForm
+SpecificationForm -> SpecificationForm: Проверка корректности заполненных данных 
+activate SpecificationForm
+deactivate User
+
+SpecificationForm --> User: Ошибка ввода данных! (Текст ошибки в разработке) 
+deactivate SpecificationForm
+activate User
+
+User->SpecificationForm: Корректировка ранее введенных данных
+deactivate User
+deactivate SpecificationForm
+end
+
+
+User -> SpecificationForm: Нажимает на кнопку "Cохранить"
+activate SpecificationForm
+activate User
+SpecificationForm->User: Выходит из формы Спецификация биржевых товаров
+deactivate User
+note right
+    Заполняется автоматически 
+    при сохранении записи: 
+    Статус="Создано"
+    (Пример. Текст статуса в разработке), 
+    Дата создания.
+end note
+SpecificationForm->Database: Запись в базу данных создана
+deactivate SpecificationForm
+
+activate Database
+Database->Database: Создание записи в базе данных
+activate Database
+deactivate Database
+@enduml
