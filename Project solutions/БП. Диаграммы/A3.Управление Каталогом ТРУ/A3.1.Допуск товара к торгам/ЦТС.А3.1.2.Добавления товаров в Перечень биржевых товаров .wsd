@@ -38,7 +38,9 @@ deactivate SpecificationCommoditiesForm
 end
 
 User -> SpecificationCommoditiesForm: Нажимает на кнопку "Добавить в спецификацию"
+deactivate User
 activate SpecificationCommoditiesForm
 SpecificationCommoditiesForm -> SpecificationForm: Переход к А3.1.1
 deactivate SpecificationCommoditiesForm
+
 @enduml
