@@ -1,0 +1,18 @@
+@startuml "ЦТС.А3.1.6 Запрос на добавление наименования отклонен
+title "ЦТС.А3.1.6 Запрос на добавление наименования отклонен"
+actor "Участник торгов" as User
+participant "Коммуникационная панель" as CommunicationPanel
+
+autonumber
+
+activate User
+User-->CommunicationPanel: Получено уведомление от отклонении запроса, переход в блок уведомлений
+deactivate User
+
+CommunicationPanel-->User: Открылись уведомления пользователя
+User-->User: Нажать на уведомление "Добавление наименования в каталог наименований отклонено"
+note left
+ auto: Открылся комментарий к визе об отклонении
+end note 
+    
+@enduml
