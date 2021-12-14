@@ -17,7 +17,7 @@ deactivate SpecificationForm
 
 loop Проверка и заполнение формы
 
-User -> SpecificationForm: Выберает Тип спецификации
+User -> SpecificationForm: Выбрать Тип спецификации "Спецификация на допуск товара к торгам"
 note right
     Заполняется автоматически при
     создании: 
