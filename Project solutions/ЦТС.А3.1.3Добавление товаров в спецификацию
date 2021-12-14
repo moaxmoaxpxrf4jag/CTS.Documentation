@@ -5,8 +5,7 @@ title "ЦТС.А3.2. Добавление товара в Каталог"
 actor "Участник Торгов" as User
 boundary "Карточка товара" as Commodities
 database "База данных" as Database
-participant "Менеджер торгов" as User_CTS
-collections "Каталог Наименований товаров" as CommoditiesNames
+collections "А3.1.4 Каталог Наименований товаров" as CommoditiesNames
 
 autonumber
 activate User
@@ -19,6 +18,7 @@ end note
 deactivate User
 
 Commodities --> Database: Запрос в БД 
+Database --> CommoditiesNames: Отсутствует наименование в каталоге товаров, переход к А3.1.4
     activate Database
     /'Проверка корректно заполненных данных Каталог наименования товара->Участник Торгов'/
     Database -> Commodities: Проверка корректно заполненных данных
@@ -26,30 +26,8 @@ Commodities --> Database: Запрос в БД
     Commodities --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
     activate User
     /'Ошибка и т.д в Каталог наименования товара->Участник Торгов'/
-    User-->Commodities: Корректировка ранее введенных данных
+    User-->Commodities: Корректировка ранее введенных данных, нажатие кнопки "Сохранить"
     deactivate User
-    User->User_CTS: Запросы на добавления товара в Каталог наименования товара 
-        /'Администратор Торгов'/
-        activate User_CTS
-        User_CTS->User_CTS: Проверка корректно заполненных данных
-        User_CTS->User: Отказ
-    note right
-         manual: Причина отказа
-    end note
-
-    User_CTS-->Database: Утверждение
-     deactivate User_CTS
-
-     activate Database
-    note left
-         auto: Запись наименования в БД
-    end note    
-    Database--> CommoditiesNames: Запись нового наименования в Каталог наименований
-    deactivate Database
-        CommoditiesNames-->User: Наименование доступно для выбора в Карточке товара
-    activate User
-    User-->Commodities: Корректировка ранее введенных данных
-    deactivate User    
-    deactivate User 
-    Commodities->Database: Сохранение данных в базе данных
+    Commodities --> Database: Сохранение добавленного товара в спецификации
+    
 @enduml

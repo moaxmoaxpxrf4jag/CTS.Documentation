@@ -1,39 +1,29 @@
-@startuml "ЦТС.А3.1 Допуск товара к торгам"
-title "ЦТС.А3.1 Допуск товара к торгам"
+@startuml "ЦТС.А3.1.4 Запрос на добавление наименования в каталог товаров"
+title "ЦТС.А3.1 Запрос на добавление наименования в каталог товаров"
 actor "Участник Торгов" as User
-participant "Спецификации биржевых товаров" as Specifications
-boundary "Форма Спецификации биржевых товаров" as SpecificationsForm
+participant "Форма добавления товаров к спецификации" as SpecificationsForm
 database "База данных" as Database
 actor "Администратор Торгов" as User_CTS
-entity "Информация о товарах допущенных к торгам" as infCTS
 
+User-> SpecificationsForm: Открыть форму добавления товаров к спецификации
 activate User
-autonumber 
-User->Specifications: Запрос на допуск товаров к торгам
-activate Specifications
-Specifications->Database: Сохранение данных в базе данных
-activate Database
-Specifications-->SpecificationsForm: Создание Спецификации на допуск товара к торгам
 activate SpecificationsForm
-' SpecificationsForm-->SpecificationsForm
-SpecificationsForm-->Database: Сохранение данных в базе данных
+
+SpecificationsForm->User: Открыта форма добавления товаров к спецификации
 deactivate SpecificationsForm
-User_CTS->Specifications: Верификация Спецификации на допуск товара к торгам
-Specifications->Specifications: Допустить/Отклонить Спецификацию
-activate Specifications
-autonumber resume "<font color=red><b>0 Уведомления о отклонение Спецификация на допуск товара к торгам "
-Specifications-->User
-note right of Specifications:  Причин Отклонения (описания причины отклонения)
-autonumber resume 2 "<font color=blue><b>0 Уведомления о допустке Спецификация на допуск товара к торгам "
-Specifications-->User
-activate User
-deactivate Specifications
-autonumber 9
-User-->Specifications: Корректировка ранее введенных данных
-deactivate User
-Specifications->Specifications: Смена статуса Спецификации
-Specifications->Database: Сохранение данных в базе данных
-Specifications->infCTS: Публикация переченя товаров допущеных к торгам (общедоступная информация)
-activate infCTS
-deactivate infCTS
+
+User->SpecificationsForm: Ввод названия наименования в поле "Наименование товара"
+activate SpecificationsForm
+SpecificationsForm-->SpecificationsForm: Отображение наименований, которые уже существуют при вводе от трёх букв
+SpecificationsForm-->Database: Проверка наличия наименований
+SpecificationsForm->User: Не найдено необходимое наименование, доступна кнопка "Создать запрос" на форме
+User-->User: Нажатие на кнопку "Создать запрос"
+note left
+     manual: Заполнить поле "Наименование товара" и "Краткое наименование
+end note
+User-->User_CTS: Нажать на кнопку "Отправить запрос"
+ /'Администратор Торгов'/
+ activate User_CTS
+ User_CTS-->User_CTS: А3.1.5 Утверждение добавления наименования в Каталог наименований
 @enduml
+
