@@ -1,0 +1,44 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1.2. Добавления товаров в Перечень биржевых товаров"
+actor "Участник Торгов" as User
+collections "Форма Перечень биржевых товаров" as SpecificationCommoditiesForm
+boundary "Каталог Наименования товаров" as CommoditiesForm
+boundary "Форма Спецификация биржевых товаров" as SpecificationForm
+
+autonumber
+
+autonumber
+User -> SpecificationCommoditiesForm: Открыть форму
+activate User
+activate SpecificationCommoditiesForm
+
+SpecificationCommoditiesForm-->User: Система показывает форму Перечень биржевых товаров
+deactivate User
+deactivate SpecificationCommoditiesForm
+
+loop Проверка и заполнение формы
+User -> SpecificationCommoditiesForm: Заполняет Наименования товара
+activate User
+activate SpecificationCommoditiesForm
+SpecificationCommoditiesForm --> SpecificationCommoditiesForm: Если нет нужного Наименования товара нет
+activate SpecificationCommoditiesForm
+SpecificationCommoditiesForm -> CommoditiesForm: Переход к А3.1.4
+deactivate SpecificationCommoditiesForm
+User->SpecificationCommoditiesForm: Заполняет Вид товара, Классификатор товаров, Лот (единица измерения товара), Размер лота, Описание товара.
+User-->SpecificationCommoditiesForm: Добавляет Cопроводительный документ
+SpecificationCommoditiesForm -> SpecificationCommoditiesForm: Проверка корректности заполненных данных 
+activate SpecificationCommoditiesForm
+deactivate SpecificationCommoditiesForm
+SpecificationCommoditiesForm --> User: Ошибка ввода данных! (Текст ошибки в разработке) 
+deactivate SpecificationForm
+activate User
+User->SpecificationCommoditiesForm: Корректировка ранее введенных данных
+deactivate User
+deactivate SpecificationCommoditiesForm
+end
+
+User -> SpecificationCommoditiesForm: Нажимает на кнопку "Добавить в спецификацию"
+activate SpecificationCommoditiesForm
+SpecificationCommoditiesForm -> SpecificationForm: Переход к А3.1.1
+deactivate SpecificationCommoditiesForm
+@enduml
