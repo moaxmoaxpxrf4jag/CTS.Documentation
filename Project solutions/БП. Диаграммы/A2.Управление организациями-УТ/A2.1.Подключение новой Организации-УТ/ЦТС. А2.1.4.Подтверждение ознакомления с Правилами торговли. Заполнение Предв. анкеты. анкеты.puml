@@ -1,0 +1,54 @@
+@startuml 
+title "ЦТС. А2.1.4.Подтверждение ознакомления с Правилами торговли. Заполнение Предв. анкеты"
+actor "Участник Торгов" as User
+boundary "Форма Правила торговли" as TradingForm
+boundary "Форма для предварительной анкеты" as PreliminaryQuestionnaireForm
+entity "Внешняя ИС" as ExternalInformationSystem
+entity "Система" as System
+
+autonumber
+
+User-> TradingForm:Открывет форму "Правила торговли"
+activate User
+activate TradingForm
+
+TradingForm-->User: Система отображает форму "Правила торговли"
+deactivate User
+
+User->TradingForm: Нажать кнопку "Согласен"
+activate User
+deactivate User
+deactivate TradingForm
+
+TradingForm->PreliminaryQuestionnaireForm: Переход на форму Анкеты
+activate TradingForm
+activate PreliminaryQuestionnaireForm
+deactivate TradingForm
+
+PreliminaryQuestionnaireForm->ExternalInformationSystem: Запрос данных во внешнюю ИС
+activate PreliminaryQuestionnaireForm
+activate ExternalInformationSystem
+
+ExternalInformationSystem->PreliminaryQuestionnaireForm: Подтягивание данных в анкету со внешних ИС
+deactivate ExternalInformationSystem
+deactivate PreliminaryQuestionnaireForm
+
+PreliminaryQuestionnaireForm->User: Система отображает форму Предворительная Анкета
+activate User
+User->PreliminaryQuestionnaireForm: Пользователь нажимает кнопку "Далее"
+deactivate User
+
+PreliminaryQuestionnaireForm->System: Передача данных анкеты в Систему
+activate PreliminaryQuestionnaireForm
+activate System
+deactivate PreliminaryQuestionnaireForm
+
+System->System: Создание записи в Системе
+activate System
+deactivate System
+
+System->System: Переход в А2.1.5
+activate System
+deactivate System
+
+@enduml
