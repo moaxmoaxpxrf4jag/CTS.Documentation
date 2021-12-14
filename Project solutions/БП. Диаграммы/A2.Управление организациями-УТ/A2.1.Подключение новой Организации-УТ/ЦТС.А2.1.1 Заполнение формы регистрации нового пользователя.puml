@@ -36,18 +36,18 @@ deactivate User
 deactivate PreRegistrationForm
 end
 
-PreRegistrationForm -> System: Сохранение данных в базе данных
+PreRegistrationForm -> System: Переход к А2.1.2
 activate PreRegistrationForm
 activate System
 deactivate PreRegistrationForm
 
-System->System:Создание записи в Справочнике "Организации-УТ"
-System->System:Создание записи в Справочнике "Пользователь", связаную с Организацией-УТ
-System->User: Подтверждение регистрации по Е-мэйл
-activate User
+'System->System:Создание записи в Справочнике "Организации-УТ"
+'System->System:Создание записи в Справочнике "Пользователь", связаную с Организацией-УТ
+'System->User: Подтверждение регистрации по Е-мэйл
+'activate User
 
-User->User: Переход к А2.1.2
-activate User
+'User->User: Переход к А2.1.2
+'activate User
 
 @enduml
 
