@@ -1,0 +1,64 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1.11 Внесение изменения в Спецификация биржевых товаров"
+actor "Участник Торгов" as User
+boundary "Форма Спецификация биржевых товаров" as SpecificationForm
+database "База данных" as Database
+boundary "Форма Перечень биржевых товаров" as SpecificationCommoditiesForm
+actor "Администратор Торгов" as UserCTS
+
+autonumber
+User -> SpecificationForm: Открыть форму
+activate User
+activate SpecificationForm
+
+SpecificationForm-->User: Система показывает форму Спецификация биржевых товаров
+deactivate User
+deactivate SpecificationForm
+
+loop Проверка и заполнение формы
+
+User -> SpecificationForm: Выберает Тип спецификации
+activate User
+activate SpecificationForm
+
+SpecificationForm -> SpecificationCommoditiesForm: Переход к А3.1.2
+activate SpecificationCommoditiesForm
+SpecificationCommoditiesForm -> SpecificationCommoditiesForm: Внести изменения в "Перечень биржевых товаров" (Удалить/Добавить товар. Изменить информацию о товаре)
+activate SpecificationCommoditiesForm
+deactivate SpecificationCommoditiesForm
+deactivate SpecificationCommoditiesForm
+SpecificationForm -> SpecificationForm: Данные из "Форма Перечень биржевых товаров" заполняются в табличную часть Перечень биржевых товаров
+activate SpecificationForm
+deactivate SpecificationForm
+SpecificationForm -> SpecificationForm: Проверка корректности заполненных данных 
+activate SpecificationForm
+deactivate User
+
+SpecificationForm --> User: Ошибка ввода данных! (Текст ошибки в разработке) 
+deactivate SpecificationForm
+activate User
+
+User->SpecificationForm: Корректировка ранее введенных данных
+deactivate User
+deactivate SpecificationForm
+end
+
+User -> SpecificationForm: Нажимает на кнопку "Отправить на согласование"
+activate SpecificationForm
+activate User
+SpecificationForm->Database: Запись в базу данных
+
+activate Database
+Database->Database: Создание записи в базе данных
+activate Database
+deactivate Database
+deactivate Database
+SpecificationForm->User: Выходит из формы Спецификация биржевых товаров после нажатия на кнопку "Отправить на согласование"
+
+deactivate User
+
+SpecificationForm->UserCTS: Отправка запросана на согласование при нажатие на кнопку "Отправить на согласование"
+deactivate SpecificationForm
+UserCTS-->UserCTS: А3.1.8 Утверждение добавления Спецификация биржевых товаров
+
+@enduml
