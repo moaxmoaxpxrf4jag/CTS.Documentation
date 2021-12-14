@@ -17,7 +17,7 @@ deactivate SpecificationForm
 
 loop Проверка и заполнение формы
 
-User -> SpecificationForm: Выберает Тип спецификации
+User -> SpecificationForm: Внести изменения в "Перечень биржевых товаров"
 activate User
 activate SpecificationForm
 
