@@ -1,7 +1,0 @@
-@startuml "ЦТС.А3.1 Допуск товара к торгам"
-title "ЦТС.А3.1 Допуск товара к торгам"
-actor "Участник Торгов" as User
-participant "Спецификации биржевых товаров" as Specifications
-boundary "Форма Спецификации биржевых товаров" as SpecificationsForm
-database "База данных" as Database
-actor "Администратор Торгов" as User_CTS
