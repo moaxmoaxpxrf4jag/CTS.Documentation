@@ -1,0 +1,94 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1.2. Создания Спецификация на допуск товара к торгам"
+actor "Участник Торгов" as User
+boundary "Форма Спецификации биржевых товаров" as Specifications
+collections "Форма Перечень биржевых товаров" as SpecificationCommodities
+boundary "Форма на добавления товара в Каталог наименования товара" as CommoditiesNames
+database "База данных" as Database
+actor "Администратор Торгов" as User_CTS
+
+autonumber
+activate User
+User -> Specifications: Ввести данные Номер, Дата, Перечень берживых товаров
+note right
+    manual: Тип спецификации, Перечень берживых товаров (табличная часть),
+    Сопроводительный документ;
+    auto: Номер, Дата, Статус, Дата создания, Автор.
+end note
+/'Форма Спецификации биржевых товаров'/
+activate Specifications
+Specifications -> SpecificationCommodities : Ввести данные Номер, Дата, Перечень берживых товаров
+note right
+    manual: Наименование товара, 
+    Виды сопроводительных документов,
+    Классификатор товаров, 
+    Лот (единица измерения товара),
+    Размер лота, Описание товара.
+end note
+/'Перечень биржевых товаров'/
+activate SpecificationCommodities
+SpecificationCommodities --> CommoditiesNames: Проверка корректно заполненных данных
+    /'Форма на добавления товара в Каталог наименования товара'/
+    activate CommoditiesNames
+    /'Проверка корректно заполненных данных Каталог наименования товара->Участник Торгов'/
+    CommoditiesNames -> CommoditiesNames: Проверка корректно заполненных данных
+    activate CommoditiesNames
+    deactivate CommoditiesNames
+    CommoditiesNames --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
+    activate User
+    /'Ошибка и т.д. в Каталог наименования товара->Участник Торгов'/
+    User-->CommoditiesNames: Корректировка ранее введенных данных
+    deactivate User 
+    CommoditiesNames->Database: Сохранение данных в базе данных
+    activate Database
+        Database->Database: Создание записи в базе данных
+        Database->User_CTS: Запросы на добавления товара в Каталог наименования товара 
+        /'Администратор Торгов'/
+        activate User_CTS
+        User_CTS->User_CTS: Проверка корректно заполненных данных, Утверждения 
+        User_CTS->CommoditiesNames: Утверждения, Отказ, Причина отказа
+        note right
+            manual: Утвердить, Отказ (bool)
+            Причина отказа
+        end note
+        CommoditiesNames-->User: Уведомления об отказае на добаления тавора в Каталог наименовай товаров
+        User_CTS->Database: Сохранение данных в базе данных    
+        note over Database: Только "Утвржденные" товары Администратором торгов       
+        deactivate User_CTS
+        Database->Database: Создание записи в базе данных 
+        note over CommoditiesNames : Только "Утвржденные" товары Администратором торгов     
+        CommoditiesNames->CommoditiesNames: Cоздание записи в Каталоге наименования товара
+        activate CommoditiesNames  
+        deactivate CommoditiesNames  
+        deactivate Database    
+    deactivate CommoditiesNames
+/'Ошибка и т.д. в Каталог наименования товара->Спецификации биржевых товаров'/
+SpecificationCommodities -> SpecificationCommodities: Проверка корректно заполненных данных
+activate SpecificationCommodities
+deactivate SpecificationCommodities
+/'Проверка корректно заполненных данных Спецификации биржевых товаров->Участник Торгов'/
+Specifications -> Specifications: Проверка корректно заполненных данных
+activate Specifications
+deactivate Specifications
+/'Ошибка и т.д. в Перечень биржевых товаров->Участник Торгов'/
+SpecificationCommodities --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
+activate User
+/'Корректировка ранее введенных данных Участник Торгов->Спецификации биржевых товаров'/
+User-->SpecificationCommodities: Корректировка ранее введенных данных
+deactivate User
+deactivate SpecificationCommodities
+/'Ошибка и т.д. в Спецификации биржевых товаров->Участник Торгов'/
+Specifications --> User: Ошибка! Неправильные введены данные! Не заполнены обязательные поля
+activate User
+/'Корректировка ранее введенных данных Участник Торгов->Спецификации биржевых товаров'/
+User-->Specifications: Корректировка ранее введенных данных
+deactivate User
+/'Cоздание записи в Спецификации биржевых товаров'/
+Specifications->Specifications: Cоздание записи в Спецификации биржевых товаров
+activate Specifications
+deactivate Specifications
+/'Сохранение данных в базе данных'/
+Specifications ->Database: Сохранение данных в базе данных
+activate Database
+Database->Database: Создание записи в базе данных
+@enduml
