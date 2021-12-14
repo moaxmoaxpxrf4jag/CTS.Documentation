@@ -10,7 +10,7 @@ activate User_CTS
 User_CTS->User_CTS: Получение запроса на добавление наименования в каталог наименований
 deactivate User_CTS
 
-User_CTS-->CommunicationPanel: Переход в блок "Визы" коммуникационной паанели
+User_CTS-->CommunicationPanel: Переход в блок "Визы" коммуникационной панели
 CommunicationPanel-->User_CTS: Открылись объекты на визировании
 User_CTS-->User_CTS: Нажать на визу "Запрос на добавление наименования в каталог наименований"
 note left
