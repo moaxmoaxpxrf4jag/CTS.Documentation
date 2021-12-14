@@ -59,7 +59,7 @@ note right
     (Пример. Текст статуса в разработке), 
     Дата создания.
 end note
-SpecificationForm->Database: Запись в базу данных создана
+SpecificationForm->Database: Запись в базу данных
 deactivate SpecificationForm
 
 activate Database
