@@ -350,6 +350,7 @@ skinparam class {
     /'Наименование товара'/ *Name: GUID:CommoditiesNames.Id
     /'Краткое название'/ *ShortName: str:200
     /'Виды сопроводительных документов'/ DocumentsKinds: GUID:DocumentsKinds.Id
+    // Specifications.Id для разработчиков
     --
     /'??? Мнемоника'/ *Mnemonic: str:200
     /'Вид товара'/ *Kind: GUID:CommoditiesKind.Id
