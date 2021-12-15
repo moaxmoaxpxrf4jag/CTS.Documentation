@@ -4,7 +4,7 @@ actor "Участник Торгов" as User
 boundary "Форма Спецификация биржевых товаров" as SpecificationForm
 database "База данных" as Database
 boundary "Форма Перечень биржевых товаров" as SpecificationCommoditiesForm
-actor "Администратор Торгов" as UserCTS
+actor "Менеджер торгов" as UserCTS
 
 autonumber
 User -> SpecificationForm: Открыть форму

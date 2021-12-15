@@ -1,6 +1,6 @@
 @startuml "ЦТС.А3.1 Допуск товара к торгам"
 title "ЦТС.А3.1.11 Утверждение запроса на согласование Спецификация биржевых товаров"
-actor "Администратор Торгов" as UserCTS
+actor "Менеджер торгов" as UserCTS
 participant "Коммуникационная панель" as CommunicationPanel
 boundary "Форма Спецификация биржевых товаров" as Specification
 actor "Участник торгов" as User

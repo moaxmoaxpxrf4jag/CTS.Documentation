@@ -1,6 +1,6 @@
 @startuml "ЦТС.А3.1.8 Деактивация наименования в каталоге наименований"
 title "ЦТС.А3.1.8 Деактивация наименования в каталоге наименований"
-actor "Администратор Торгов" as User_CTS
+actor "Менеджер торгов" as User_CTS
 participant "Наименования товаров" as CommoditiesNames
 database "База данных" as Database
 
