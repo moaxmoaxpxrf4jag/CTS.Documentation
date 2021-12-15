@@ -57,8 +57,7 @@ SpecificationForm->User: Выходит из формы Спецификация
 
 deactivate User
 
-SpecificationForm->UserCTS: Отправка запросана на согласование при нажатие на кнопку "Отправить на согласование"
+SpecificationForm-->UserCTS: Отправка уведмления об изменения в спецификации
 deactivate SpecificationForm
-UserCTS-->UserCTS: А3.1.8 Утверждение добавления Спецификация биржевых товаров
 
 @enduml
