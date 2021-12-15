@@ -110,7 +110,6 @@ deactivate User
 
 SpecificationForm->UserCTS: Отправка запросана на согласование при нажатие на кнопку "Отправить на согласование"
 deactivate SpecificationForm
-UserCTS-->UserCTS: А3.1.8 Утверждение добавления Спецификация биржевых товаров
 activate UserCTS
-deactivate UserCTS
+UserCTS-->UserCTS: А3.1.8 Утверждение добавления Спецификация биржевых товаров
 @enduml
