@@ -35,7 +35,7 @@ activate User
 deactivate User
 deactivate System
 
-System->System: Переход А2.1.9 Проверка на попытки запроса данных у УТ
+System->System: Переход А2.1.9 Проверка оставшихся попыток на запрос данных у УТ
 activate System
 deactivate System
 
