@@ -37,11 +37,11 @@ skinparam class {
 
 /'Пользователи'/ entity Users <<Ready>> {
     *Id: GUID
+    /'Организация'/ *OrganizationId: GUID:Organizations.Id
+    /'Роль'/ *RoleId: GUID:Roles.Id
     --
     /'Логин'/ *Login: str:50
     /'Пароль'/ *Password: str:50
-    /'Роль'/ RoleId: GUID:Roles.Id
-    /'Организация'/ *OrganizationId: GUID:Organizations.Id
     /'Имя'/ *Name: str:50
     /'Отчество'/ MiddleName: str:50
     /'Фамилия'/ *LastName: str:50
@@ -66,9 +66,9 @@ skinparam class {
     /'Описание'/ Description: str:500
      --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Разрешения'/ entity Permissions <<Work>> {
@@ -80,9 +80,9 @@ skinparam class {
     /'Роль'/ *RoleId: GUID:Roles.Id
      --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Адреса'/ entity Addresses <<Ready>> {
@@ -103,9 +103,9 @@ skinparam class {
     /'Индекс'/ Postcode: str:50
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Страны'/ entity Countries <<Ready>> {
@@ -115,9 +115,9 @@ skinparam class {
     /'Наименование'/ *Name: str:200
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Регионы'/ entity Regions <<Ready>> {
@@ -128,9 +128,9 @@ skinparam class {
     /'Наименование'/ *Name: str:200
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Районы'/ entity Districts <<Ready>> {
@@ -140,9 +140,9 @@ skinparam class {
     /'Наименование'/ *Name: str:200
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Населенные пункты'/ entity Localities <<Ready>> {
@@ -151,16 +151,16 @@ skinparam class {
     /'Регион'/ *RegionId: GUID:Regions.Id
     /'Район'/ DistrictId: GUID:Districts.Id
     /'Наименование'/ *Name: str:200
-     --
-    /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
     /'Типы населенных пунктов'/ LocalitiesTypes: enum:enumvalue
     'enumvalue: 0|Индекс,10|Город,20|Поселок,21|Станица,30|Древня,31|Село,32|Хутор,40|Станция,41|ЖД станция
+     --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Организации-участники торгов'/ entity Organizations <<Work>> {
+/'Организации-участники торгов'/ entity Organizations <<Ready>> {
     *Id: GUID
     --
     /'Код'/ *Code: str:50
@@ -183,7 +183,7 @@ skinparam class {
     /'Место выдачи ОГРН'/ OGRNPlace: str:200
     /'ОГРНИП'/ OGRNIP: str:50
     /'Дата регистрации ИП'/ OGRNIPDate: date
-    /'Паспорт'/ Passport:str50
+    /'Паспорт'/ PassportNumber:str50
     /'ФИО руководителя'/ *CEOFullName: str:200
     /'ФИО руководителя в родительном падеже'/ *CEOFullNameGenetive: str:200
     /'Должность руководителя'/ *CEOPostName: str:200
@@ -194,15 +194,16 @@ skinparam class {
     /'Вид деятельности по ОКВЭД'/ *OKVEDId: GUID:OKVED.Id
     /'Банк'/ *BankId: GUID:Banks.Id
     /'Расчетный счёт'/ *CheckingAccount: str:50
-    /'???Аккредитация'/ *Accreditation: bool
-    /'???Дата аккредитации'/ AccreditationDate: date 
-    /'???Дата отмены аккредитации'/ CancellationDate: date 
+    /'Дата аккредитации'/ AccreditationDate: date 
+    /'Дата отмены аккредитации'/ CancellationDate: date 
     --
-    /'Статус'/ *Status: GUID:OrganizationStatuses.Id
+    /'Статус'/ *StatusId: GUID:OrganizationStatuses.Id
+    /'Дата статуса'/ *StatusDate: Date
+    --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Статус организации'/ entity OrganizationStatuses <<Ready>> {
@@ -212,20 +213,20 @@ skinparam class {
     /'Описание'/ Description: str:200
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Формы собственности'/  entity OwnershipTypes <<Ready>> {
     *Id: GUID
     --
-    /'Полное наименование'/ *Name: str:50
+    /'Наименование'/ *Name: str:50
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 } 
 
 /'Банки'/ entity Banks <<Ready>> {
@@ -239,22 +240,24 @@ skinparam class {
     /'Веб-адрес'/ URL: str:50
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Виды деятельности по ОКВЭД'/ entity OKVED <<Ready>> {
     *Id: GUID generated create
     --
     /'Код'/ *Code: str:50
+    /'Код-родитель'/ *ParentId: GUID:OKVED.Id
+    /'Код-родитель'/ *ParentCode: str:50:OKVED.Code
     /'Наименование'/ *Name: str:200
     /'Расшифровка'/ *Description: str:200
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Документы'/ entity Documents <<Ready>> {
@@ -272,12 +275,12 @@ skinparam class {
     /'Расширение файла'/ FileExtention str:50
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Связи Документов'/ entity DocumentLinks <<Ready>> {
+/'Связи Документов'/ entity DocumentLinks <<Work>> {
     *Id: GUID generated create
     --
     /'Документ'/ *OrganizationId: GUID:Organizations.Id
@@ -285,9 +288,9 @@ skinparam class {
     /'Объект'/ *ObjectID: GUID:...
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 
@@ -298,12 +301,12 @@ skinparam class {
     /'Описание'/ Description: str:200
     --
     /'Создано'/ *CreatedAt: DateTime
-    /'Кем создано'/ *CreatedBy: GUID:Users.Id
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
     /'Модифицировано'/ LastModifiedAt: DateTime
-    /'Кем модифицировано'/ LastModifiedBy: GUID:Users.Id
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Каталог товаров, работ и услуг (ТРУ)'/  entity Commodities <<Work>> { 
+/'Каталог товаров, работ и услуг (ТРУ)'/  entity Commodities <<Ready>> { 
     *Id: GUID
     /'Классификатор товаров'/ *CommoditiesClassifierId: GUID:CommoditiesClassifier.Id
     /'Спецификация'/ *SpecificationId: GUID:Specifications.Id
@@ -315,126 +318,184 @@ skinparam class {
     /'Размер лота'/ Quantity: float: 
     /'Базис поставки'/ *DeliveryBasisId: GUID:Addresses.Id
     /'Завод-производитель'/ *CommodityManufacturerId: GUID:CommodityManufacturers.Id
-    /'Упаковка'/ *PackageKindId: GUID:Packagekinds.Id
+    /'Упаковка'/ *PackageKindId: GUID:PackageKinds.Id
     /'Описание'/ Description: str:200
     --
     /'Статус'/ *StatusId: GUID:CommodityStatuses.Id
-    /'Дата изменения'/ ChangeDateTime: Date
-    /'Дата создания'/ *CreateDateTime: Date
-    /'Автор'/ *CreatedByUserId: GUID:Users.Id
+    /'Дата статуса'/ *StatusDate: Date
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Наименования товаров'/ entity CommoditiesNames <<Work>> {
+/'Наименования товаров'/ entity CommoditiesNames <<Ready>> {
     *Id: GUID
     /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
     --
     /'Наименование'/ *Name: str:200
     /'Краткое наименование'/ *ShortName: str:50
     --
-    /'Статус'/ *StatusId: GUID:CommoditiesStatu.Id
-    /'Дата изменения'/ *ChangeDateTime: Date
-    /'Дата создания'/ *CreateDateTime: Date
-    /'Автор'/ *CreatedByUserId: GUID:Users.Id
-    /'Дата блокировки'/ *LockDate: Date
+    /'Статус'/ *StatusId: GUID:CommodityStatuses.Id
+    /'Дата статуса'/ *StatuseDate: Date
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Спецификации биржевых товаров'/ entity CommoditySpecifications <<Work>> {
+/'Спецификации биржевых товаров'/ entity CommoditySpecifications <<Ready>> {
     *Id: GUID
     --
     /'Номер'/ *Number: str:50
     /'Дата'/ *Date: Date
-    /'Тип спецификации'/ *SpecificationType: enum
+    /'Тип спецификации'/ *SpecificationType: enum:enumvalue
     'enumvalue:1|На допуск товара,2|На корректировку товара, 3|На снятие товара
-    /'Участник торгов'/ *Organisation: GUID:Organisations.Id
+    /'Участник торгов'/ *OrganisationId: GUID:Organisations.Id
     --
-    /'Статус'/ *Status: GUID:SpecificationStatus.Id
-    /'Дата создания'/ *CreateDateTime: Date
-    /'Автор'/ *CreatedByUser: GUID:Users.Id
-    /'Дата утверждения'/ *ApprovalDate: Date
+    /'Статус'/ *StatusId: GUID:SpecificationStatuses.Id
+    /'Дата статуса'/ *StatusDate: Date
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Табличная часть Спецификаций биржевых товаров'/ entity CommoditySpecificationTables <<Work>>{
+/'Табличная часть Спецификаций биржевых товаров'/ entity CommoditySpecificationTables <<Ready>>{
     *Id: GUID 
-    /'Спецификация'/ *Specification: GUID:Specifications.Id
+    /'Спецификация'/ *CommoditySpecifications: GUID:CommoditySpecifications.Id
     --
-    /'Наименование товара'/ *Name: GUID:CommoditiesNames.Id
+    /'Наименование товара'/ *CommodityNameId: GUID:CommoditiesNames.Id
     /'Мнемоника'/ *Mnemonic: str:50
-    /'Единица измерения)'/ *BaseUnit: GUID:BaseUnit.Id
+    /'Единица измерения)'/ *MeasuringUnitsId: GUID:BaseUnit.Id
     /'Размер лота'/ *Quantity: str:50
     /'Описание'/ Description: str:200
+    /'Производитель'/ *CommodityManufacturerId: GUID:CommodityManufacturers.Id
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 '**Справочники
 
-/'Статусы Каталога ТРУ'/ entity CommodityStatuses <<Work>>{
+/'Статусы Каталога ТРУ'/ entity CommodityStatuses <<Ready>>{
     *Id: GUID
     --
     /'Наименование'/ *Name: str:50
     /'Описание'/ Description: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Статусы Cпецификации'/ entity SpecificationStatuses <<Work>>{
+/'Статусы Cпецификации'/ entity SpecificationStatuses <<Ready>>{
     *Id: GUID
     --
     /'Наименование'/ *Name: str:50
     /'Описание'/ Description: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Единицы измерения'/ entity BaseUnits <<Work>> {
+/'Единицы измерения'/ entity MeasuringUnits <<Ready>> {
     *Id: GUID
     --
     /'Ннаименование'/ *Name: str:50
     /'Описание'/ Description: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Заводы-производители'/ entity CommodityManufacturers <<Work>> {
+/'Заводы-производители'/ entity CommodityManufacturers <<Ready>> {
     *Id: GUID
     --
     /'Наименование'/ *Name: str: 200
     /'Краткое наименование'/ *ShortName: str:50
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Виды упаковок'/ entity PackageKinds <<Work>> {
+/'Виды упаковок'/ entity PackageKinds <<Ready>> {
     *Id: GUID
     --
-    /'Ннаименование'/ *Name: str:50
+    /'Наименование'/ *Name: str:50
     /'Описание'/ Description: str:200
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
 /'Классификатор товаров'/ entity CommoditiesClassifier <<Ready>> {
     *Id: GUID
     --
-    /'Тип записи'/ *Type: enum:section|Отделение,category|Категория,kond|Вид form
-    /'Отделение торгов'/ CommodityDesk: GUID:CommodityDesks.Id
-    /'Категория товаров'/ CommodityCategory: GUID:CommodityCategories.Id
-    /'Виды товаров'/ CommodityKind: GUID:CommodityKinds.Id
- }
+    /'Отделение торгов'/ CommoditySectionId: GUID:CommoditySections.Id
+    /'Категория товаров'/ CommodityCategoryId: GUID:CommodityCategories.Id
+    /'Виды товаров'/ CommodityKindId: GUID:CommodityKinds.Id
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
+}
 
-/'Отделения торгов'/ entity CommodityDesks<<Ready>> {
+/'Отделения торгов'/ entity CommoditySections<<Ready>> {
     *Id: GUID
     --
     /'Код'/ Code str:50
     /'Полное наименование'/ Name: str:200
     /'Краткое наименование'/ ShortName: str:50
- }
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
+}
 
 /'Категории товаров'/ entity CommodityCategories <<Ready>> {
     *Id: GUID
     --
     /'Код'/ Code str:50
-    /'Отделение торгов'/ CommodityDesk: GUID:CommodityDesks.Id
+    /'Отделение торгов'/ CommodityDeskId: GUID:CommodityDesks.Id
     /'Полное наименование'/ Name: str:200
     /'Краткое наименование'/ ShortName: str:50
- }
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
+}
 
 /'Виды товаров'/ entity CommodityKinds <<Ready>> {
     *Id: GUID
     --
     /'Код'/ Code str:50
-    /'Категория товаров'/ CommodityCategory: GUID:CommodityCategories.Id
+    /'Категория товаров'/ CommodityCategoryId: GUID:CommodityCategories.Id
     /'Полное наименование'/ Name: str:200
     /'Краткое наименование'/ ShortName: str:50
- }
+    --
+    /'Создано'/ *CreatedAt: DateTime
+    /'Кем создано'/ *CreatedById: GUID:Users.Id
+    /'Модифицировано'/ LastModifiedAt: DateTime
+    /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
+}
 
 '***Связи таблиц
 
@@ -452,43 +513,34 @@ skinparam class {
     Addresses::LocalityId }|--|| Localities::Id
 
 'Организация
-    
     Organizations::OwnershipTypeId }|--|| OwnershipTypes::Id
-    Organizations::BusinessLineId }|--|{ BusinessLines::Id
-    Organizations::LegalAddressId }|--|| Addresses::Id
+    Organizations::OKVEDId }|--|| OKVED::Id
     Organizations::PostalAddressId }|--|| Addresses::Id
     Organizations::BankId }|--|| Banks::Id
-    Organizations::OrganizationStatusId }|--|| OrganizationStatuses::Id
+    Organizations::StatusId }|--|| OrganizationStatuses::Id
 
-'Документация
+'Документы
     Documents::OrganizationId }|--|| Organizations::Id
     Documents::DocumentKindsId }|--|| DocumentKinds::Id
 
 /'New 09/12/21'/
 'Каталог ТРУ'
-    Commodities::Name ||--|| CommoditiesNames::Id
-    Commodities::Kind }|--|| CommoditiesKind::Id
-    Commodities::BaseUnit }|--|| BaseUnits::Id
+    Commodities::NameId ||--|| CommoditiesNames::Id
+    Commodities::MeasuringUnitId }|--|| MeasuringUnits::Id
     Commodities::CommoditiesClassifier }|--|| CommoditiesClassifier::Id
-    Commodities::Package ||--|| Packaging::Id
-    Commodities::Plant }|--|| Plants::Id
-    Commodities::OrganisationsCustomer }|--|| Organizations::Id
-    Commodities::CatalogStatus }|--|| CommoditiesStatus::Id
-    Commodities::Specifications ||--|| Specifications::Id 
+    Commodities::PackageKindId ||--|| PackageKinds::Id
+    Commodities::CommodityManufacturerId }|--|| CommodityManufacturers::Id
+    Commodities::OrganisationsId }|--|| Organizations::Id
+    Commodities::StatusId }|--|| CommodityStatuses::Id
+    Commodities::CommoditySpecificationId ||--|| CommoditySpecifications::Id 
 
 'Спецификация биржевых товаров
-    Specifications::Organisation }|--|| Organizations::Id
-    Specifications::CommoditiesName }|--|| CommoditiesNames::Id
-    Specifications::Сreator }|--|| Users::Id
-    Specifications::SpecificationStatus }|--|| SpecificationStatus::Id
-    Specifications::TypeSpecifications }|--|| TypeSpecifications::Id
+    CommoditySpecifications::OrganisationId }|--|| Organizations::Id
+    CommoditySpecifications::StatusId }|--|| SpecificationStatuses::Id
 
-'Перечень берживых товаров
-    SpecificationCommodities::Name }|--|| CommoditiesNames::Id
-    SpecificationCommodities::ShortName }|--|| CommoditiesNames::Id
-    SpecificationCommodities::Kind }|--|| CommoditiesKind::Id
-    SpecificationCommodities::CommoditiesClassifier }|--|| CommoditiesClassifier::Id
-    SpecificationCommodities::BaseUnit }|--|| BaseUnits::Id
-    SpecificationCommodities::DocumentsKinds }|--|| DocumentsKinds::Id
+'Табличная часть Спецификаций биржевых товаров
+    CommoditySpecificationTables::CommoditySpecificationId }|--|| CommoditySpecifications::Id
+    CommoditySpecificationTables::CommodityNameId }|--|| CommoditiesNames::Id
+    CommoditySpecificationTables::MeasuringUnitId }|--|| MeasuringUnits::Id
 
 @enduml
