@@ -24,13 +24,13 @@ deactivate ExternaInformationSystem
 
 
 /'Если проверка не пройдена'/
-
+alt "Если проверка не пройдена"
 System->System: Переход А2.1.9 Проверка оставшихся попыток на запрос данных у УТ
 activate System
 deactivate System
 
 /'Если проверка пройдена'/
-
+else "Если проверка пройдена"
 System->System:Формирование списка данных для ручной проверки
 activate System
 deactivate System
@@ -40,5 +40,6 @@ System->CustomerServiceManager:Уведомление о пройденной п
 activate CustomerServiceManager
 CustomerServiceManager->CustomerServiceManager:Переход в А2.1.8 Ручная проверка
 deactivate CustomerServiceManager
+end
 
 @enduml
