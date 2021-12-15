@@ -473,7 +473,7 @@ skinparam class {
     *Id: GUID
     --
     /'Код'/ Code str:50
-    /'Отделение торгов'/ CommodityDeskId: GUID:CommodityDesks.Id
+    /'Отделение торгов'/ CommoditySectionId: GUID:CommoditySections.Id
     /'Полное наименование'/ Name: str:200
     /'Краткое наименование'/ ShortName: str:50
     --
