@@ -1,0 +1,17 @@
+@startuml "ЦТС.А3.3.3 Уведомление о снятии товара с торгов
+title "ЦТС.А3.3.3 Уведомление о снятии товара с торгов"
+
+actor "Менеджер торгов" as User_CTS
+participant "Коммуникационная панель" as CommunicationPanel
+
+autonumber
+activate User_CTS
+User_CTS-->User_CTS: Получено уведомление о снятии товара/ов с торгов , переход в блок уведомлений
+
+User_CTS->CommunicationPanel: Перейти в блок уведомлений
+CommunicationPanel-->User_CTS: Открылся список уведомлений
+User_CTS-->CommunicationPanel: Нажать на уведомление "Товары сняты с торгов"
+CommunicationPanel-->User_CTS: Открылось уведомление со списком товаров снятых с торгов
+
+
+@enduml
