@@ -1,20 +1,24 @@
 @startuml ЦТС.А3.1 Допуск товара к торгам"
 title "ЦТС.А3.1.3 Публикация новости о допущенных к торгам"
-participant "Спецификация биржевых товаров" as Specification
+
 database "База данных" as DataBase
 participant "Сайт ЦТС" as SiteCTS
 
 autonumber
 
-activate Specification
-Specification-->DataBase: Спецификация биржевых товаров с статусом "Утверждена"
-   note right
-        Только перечень биржевых 
-        товаров в Спецификации
-    end note
-    activate DataBase
 DataBase-->SiteCTS: Товары допущенны к торгам
+activate DataBase
+activate SiteCTS
 DataBase-->SiteCTS: Публикация новости о товарах допущенных к торгам
+deactivate DataBase
+deactivate SiteCTS
+   note left
+        Спецификация биржевых товаров 
+        с статусом "Утверждена":
+        Только перечень биржевых 
+        товаров в Спецификации.
+    end note
+
 /'Придумать текст новости???'/
 
 @enduml

@@ -2,7 +2,8 @@
 title "ЦТС.А3.1.2 Утверждение Спецификации на допуск товара к торгам"
 actor "Менеджер торгов" as UserCTS
 participant "Коммуникационная панель" as CommunicationPanel
-boundary "Форма Спецификация биржевых товаров" as Specification
+boundary "Реестр Спецификаций" as Specification
+participant "Каталоге ТРУ" as Communication
 actor "Участник торгов" as User
 
 autonumber
@@ -37,7 +38,7 @@ UserCTS-->CommunicationPanel: Нажать на кнопку "Утвердить
 deactivate UserCTS
 CommunicationPanel-->CommunicationPanel: Отображение уведомления об утверждении отправившему запрос
 deactivate UserCTS
-CommunicationPanel-->User: Переход к "А3.1.6 Уведомление – Спецификация утверждена"
+CommunicationPanel-->User: Смена статуса и добавление даты утверждения
 
 CommunicationPanel->Specification: Переход к "А3.1.4 Создание в Каталоге ТРУ записей по утвержденной спецификации"
 deactivate CommunicationPanel
@@ -49,5 +50,7 @@ note left
     на "Отклонена/Утверждена"
 end note
 Specification-->Specification: Изменить "Дату утверждения"
+
+Specification->Communication: Переход к "А3.1.4 Создание в Каталоге ТРУ записей по утвержденной спецификации"
 
 @enduml
