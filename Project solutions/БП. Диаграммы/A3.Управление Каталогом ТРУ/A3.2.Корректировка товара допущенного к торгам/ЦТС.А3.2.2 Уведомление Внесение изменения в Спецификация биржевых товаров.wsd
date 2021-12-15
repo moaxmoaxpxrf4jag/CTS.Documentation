@@ -1,0 +1,17 @@
+@startuml "A3.2.Корректировка товара допущенного к торгам"
+title "ЦТС.А3.2.2 Уведомление Внесение изменения в Спецификация биржевых товаров"
+
+actor "Менеджер торгов" as User_CTS
+participant "Коммуникационная панель" as CommunicationPanel
+
+autonumber
+activate User_CTS
+User_CTS-->User_CTS: Получено внесение изменения в Спецификация биржевых товаров , переход в блок уведомлений
+
+User_CTS->CommunicationPanel: Перейти в блок уведомлений
+CommunicationPanel-->User_CTS: Открылся список уведомлений
+User_CTS-->CommunicationPanel: Нажать на уведомление "Внесение изменения в Спецификация биржевых товаров"
+CommunicationPanel-->User_CTS: Открылось уведомление со списком внесенных изменений
+
+
+@enduml
