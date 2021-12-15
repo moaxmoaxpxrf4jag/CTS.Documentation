@@ -38,7 +38,7 @@ SpecificationForm --> User: Ошибка ввода данных! (Текст о
 deactivate SpecificationForm
 activate User
 
-User->SpecificationForm: Корректировка ранее введенных данных
+User->SpecificationForm: Корректировка ранее введенных данных (Перечень полей которые можно редактировать в разаботке)
 deactivate User
 deactivate SpecificationForm
 end
