@@ -1,0 +1,37 @@
+@startuml
+
+title "А2.1.9 Проверка оставшихся попыток на запрос данных у УТ"
+entity "Система" as System
+actor "Участник торгов" as User
+actor "Менеджер клиентского сервиса" as CustomerServiceManager
+
+autonumber
+
+System->System:Система проверяет сколько попыток осталось для запроса данных у УТ
+activate System
+deactivate System
+
+alt "Если попытки есть"
+System->User:Переход в А2.1.10 Получение уведомления о необходимости корректировки анкеты
+activate System
+activate User
+deactivate System
+deactivate User
+
+else "Если попыток нет"
+System->User: Уведомление! (Текст в разработке)
+activate System
+activate User
+deactivate User
+
+System->CustomerServiceManager:Переход в А2.1.8 Ручная проверка данных
+activate System
+activate CustomerServiceManager
+
+CustomerServiceManager->CustomerServiceManager:Переход в А2.1.8 Ручная проверка
+activate CustomerServiceManager
+deactivate CustomerServiceManager
+end
+
+
+@enduml
