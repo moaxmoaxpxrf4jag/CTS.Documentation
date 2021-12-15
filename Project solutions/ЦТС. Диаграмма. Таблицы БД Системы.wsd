@@ -312,7 +312,7 @@ skinparam class {
     /'Спецификация'/ *SpecificationId: GUID:Specifications.Id
     /'Продавец'/ OrganisationId: GUID:Organisations.Id
     --
-    /'Наименование'/ *NameId: GUID:CommoditiesNames.Id
+    /'Наименование'/ *NameId: GUID:CommodityNames.Id
     /'Мнемоника'/ *Mnemonic: str:50
     /'Лот (единица измерения товара)'/ *BaseUnitId: GUID:BaseUnits.Id
     /'Размер лота'/ Quantity: float: 
@@ -473,7 +473,7 @@ skinparam class {
     *Id: GUID
     --
     /'Код'/ Code str:50
-    /'Отделение торгов'/ CommodityDeskId: GUID:CommodityDesks.Id
+    /'Отделение торгов'/ CommoditySectionId: GUID:CommoditySections.Id
     /'Полное наименование'/ Name: str:200
     /'Краткое наименование'/ ShortName: str:50
     --
@@ -525,7 +525,7 @@ skinparam class {
 
 /'New 09/12/21'/
 'Каталог ТРУ'
-    Commodities::NameId ||--|| CommoditiesNames::Id
+    Commodities::NameId ||--|| CommodityNames::Id
     Commodities::MeasuringUnitId }|--|| MeasuringUnits::Id
     Commodities::CommoditiesClassifier }|--|| CommoditiesClassifier::Id
     Commodities::PackageKindId ||--|| PackageKinds::Id
@@ -540,7 +540,7 @@ skinparam class {
 
 'Табличная часть Спецификаций биржевых товаров
     CommoditySpecificationTables::CommoditySpecificationId }|--|| CommoditySpecifications::Id
-    CommoditySpecificationTables::CommodityNameId }|--|| CommoditiesNames::Id
+    CommoditySpecificationTables::CommodityNameId }|--|| CommodityNames::Id
     CommoditySpecificationTables::MeasuringUnitId }|--|| MeasuringUnits::Id
 
 @enduml
