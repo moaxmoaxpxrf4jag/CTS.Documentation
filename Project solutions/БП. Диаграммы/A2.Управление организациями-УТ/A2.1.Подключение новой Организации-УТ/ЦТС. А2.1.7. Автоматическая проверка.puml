@@ -4,7 +4,7 @@ title "ЦТС. А2.1.7.Автоматическая проверка"
 boundary "Система" as System
 Control "Внешняя ИС" as ExternaInformationSystem
 actor "Менеджер клиентского сервиса" as CustomerServiceManager
-actor "Участник Торгов" as User
+
 
 autonumber
 
@@ -25,16 +25,6 @@ deactivate ExternaInformationSystem
 
 /'Если проверка не пройдена'/
 
-System->CustomerServiceManager:Уведомление о не пройденной проверки (Текст в разработке).
-activate System
-activate CustomerServiceManager
-deactivate CustomerServiceManager
-
-System->User:Уведомление о не пройденной проверки (Текст в разработке).
-activate User
-deactivate User
-deactivate System
-
 System->System: Переход А2.1.9 Проверка оставшихся попыток на запрос данных у УТ
 activate System
 deactivate System
@@ -45,9 +35,6 @@ System->System:Формирование списка данных для руч�
 activate System
 deactivate System
 
-System->User:Уведомление о пройденной проверки (Текст в разработке)
-activate User
-activate System
 
 System->CustomerServiceManager:Уведомление о пройденной проверки (Текст в разработке)
 activate CustomerServiceManager
