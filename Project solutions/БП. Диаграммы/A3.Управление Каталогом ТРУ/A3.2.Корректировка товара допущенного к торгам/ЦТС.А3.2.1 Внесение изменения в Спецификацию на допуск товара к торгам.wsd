@@ -4,7 +4,7 @@ actor "Участник Торгов" as User
 boundary "Форма Спецификация биржевых товаров" as SpecificationForm
 database "База данных" as Database
 boundary "Форма Перечень биржевых товаров" as SpecificationCommoditiesForm
-actor "Администратор Торгов" as UserCTS
+actor "Менеджер торгов" as UserCTS
 
 autonumber
 User -> SpecificationForm: Открыть форму
@@ -38,7 +38,7 @@ SpecificationForm --> User: Ошибка ввода данных! (Текст о
 deactivate SpecificationForm
 activate User
 
-User->SpecificationForm: Корректировка ранее введенных данных
+User->SpecificationForm: Корректировка ранее введенных данных (Перечень полей которые можно редактировать в разаботке)
 deactivate User
 deactivate SpecificationForm
 end
@@ -57,8 +57,7 @@ SpecificationForm->User: Выходит из формы Спецификация
 
 deactivate User
 
-SpecificationForm->UserCTS: Отправка запросана на согласование при нажатие на кнопку "Отправить на согласование"
+SpecificationForm-->UserCTS: Отправка уведмления об изменения в спецификации
 deactivate SpecificationForm
-UserCTS-->UserCTS: А3.1.8 Утверждение добавления Спецификация биржевых товаров
 
 @enduml

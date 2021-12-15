@@ -330,7 +330,7 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
-/'Наименования товаров'/ entity CommoditiesNames <<Ready>> {
+/'Наименования товаров'/ entity CommodityNames <<Ready>> {
     *Id: GUID
     /'Классификатор товаров'/ *CommoditiesClassifier: GUID:CommoditiesClassifier.Id
     --
@@ -368,7 +368,7 @@ skinparam class {
     *Id: GUID 
     /'Спецификация'/ *CommoditySpecifications: GUID:CommoditySpecifications.Id
     --
-    /'Наименование товара'/ *CommodityNameId: GUID:CommoditiesNames.Id
+    /'Наименование товара'/ *CommodityNameId: GUID:CommodityNames.Id
     /'Мнемоника'/ *Mnemonic: str:50
     /'Единица измерения)'/ *MeasuringUnitsId: GUID:BaseUnit.Id
     /'Размер лота'/ *Quantity: str:50
