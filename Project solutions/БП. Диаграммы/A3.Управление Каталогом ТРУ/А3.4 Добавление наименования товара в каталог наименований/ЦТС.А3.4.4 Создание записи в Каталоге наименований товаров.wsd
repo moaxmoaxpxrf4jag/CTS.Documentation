@@ -1,0 +1,15 @@
+@startuml "ЦТС.А3.4.4 Создание записи в каталоге наименований товаров
+title "ЦТС.А3.4.5 Создание записи в каталоге наименований товаров"
+actor "Менеджер торгов" as User_Cts
+participant "Каталог наименований товаров" as CommoditiesNames
+database "База данных" as DateBase
+autonumber
+
+activate User_Cts
+User_Cts-->CommoditiesNames: Создание записи в каталоге наименований товаров
+note left
+  auto: Запрос на добавление наименования в каталог утвержден
+end note
+CommoditiesNames->DateBase: Сохранить новое наименование в БД
+
+@enduml
