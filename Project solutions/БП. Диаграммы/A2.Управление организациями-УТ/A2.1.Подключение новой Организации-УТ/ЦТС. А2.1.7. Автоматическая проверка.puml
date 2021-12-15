@@ -1,0 +1,57 @@
+@startuml
+title "ЦТС. А2.1.7.Автоматическая проверка"
+
+boundary "Система" as System
+Control "Внешняя ИС" as ExternaInformationSystem
+actor "Менеджер клиентского сервиса" as CustomerServiceManager
+actor "Участник Торгов" as User
+
+autonumber
+
+activate System
+System->System: Формирует список данных для автоматической проверки 
+deactivate System
+
+System->ExternaInformationSystem: Запрос во внешнюю ИС для проверки данных
+activate System
+activate ExternaInformationSystem
+
+ExternaInformationSystem->System: Отправка необходимых данных в Систему
+System->System:Проверка данных
+activate System
+deactivate System
+deactivate ExternaInformationSystem
+
+
+/'Если проверка не пройдена'/
+
+System->CustomerServiceManager:Уведомление о не пройденной проверки (Текст в разработке).
+activate System
+activate CustomerServiceManager
+deactivate CustomerServiceManager
+
+System->User:Уведомление о не пройденной проверки (Текст в разработке).
+activate User
+deactivate User
+deactivate System
+
+System->System: Переход А2.1.9 Проверка на попытки запроса данных у УТ
+activate System
+deactivate System
+
+/'Если проверка пройдена'/
+
+System->System:Формирование списка данных для ручной проверки
+activate System
+deactivate System
+
+System->User:Уведомление о пройденной проверки (Текст в разработке)
+activate User
+activate System
+
+System->CustomerServiceManager:Уведомление о пройденной проверки (Текст в разработке)
+activate CustomerServiceManager
+CustomerServiceManager->CustomerServiceManager:Переход в А2.1.8 Ручная проверка
+deactivate CustomerServiceManager
+
+@enduml
