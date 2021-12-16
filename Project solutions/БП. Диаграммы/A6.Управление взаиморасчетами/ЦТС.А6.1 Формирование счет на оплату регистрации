@@ -1,0 +1,52 @@
+@startuml "ЦТС.А6.1 Формирование счета на оплату регистрации"
+title "ЦТС.А3.3 Формирование счета на оплату регистрации"
+actor "Участник Торгов" as A
+participant "Личный кабинет" as B
+database "Система" as Database
+
+
+autonumber
+User->Specifications: Открывает форму создания спецификации
+activate User
+activate Specifications
+Specifications-->User: Система показывает форму спецификации
+deactivate User
+deactivate Specifications
+
+User->Specifications: Заполнить форму спецификации
+note left
+    manual: Заполнить поле "Тип спецификации:" (выбрать значение "Отмена допуска товара к торгам"), Перечень берживых товаров (табличная часть);
+    auto: Номер, Статус, Дата создания, Автор.
+end note
+activate User
+activate Specifications
+
+
+/'Проверка заполнения обязательных полей, масок полей'/
+
+User->Specifications: Нажатие кнопки "Сохранить"
+Specifications->Specifications: Проверка корректности заполнения полей 
+Specifications-->User: Ошибка!Не корректно заполненные поля!
+User-->User: Корректировка полей
+User-->Specifications: Нажатие кнопки "Сохранить"
+Specifications->Specifications: Проверка корректности заполнения полей
+Specifications-->User: Уведомление! Спецификация сохранена!
+deactivate Specifications
+
+/'Форма Спецификации биржевых товаров'/
+User -> SpecificationCommodities : Выбрать биржевые товары для отмены допуска
+note right
+    manual: Добавление товаров (статус товаров "Активный", по товару нет ни одной активной заявки на покупку или продажу)
+end note
+SpecificationCommodities-->User:Уведомление! Товары добавлены
+User->SpecificationCommodities: Нажать на кнопку "Сохранить"
+deactivate Specifications
+
+User -> Database : Нажать кнопку "Отменить допуск" в подстрочном меню созданной спецификации
+deactivate User
+
+activate Database
+Database --> User_CTS : Переход к А3.3.3 Отправка уведомления о снятии товаров с торгов
+Database --> CTS : Переход к А3.3.4 Публикация новости на сайте о снятии товара с торгов
+
+@enduml
