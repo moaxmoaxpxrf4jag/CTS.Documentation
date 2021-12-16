@@ -1,0 +1,23 @@
+@startuml
+
+title "ЦТС.А2.1.4 Ожидание подтверждения регистрации"
+
+entity "Е-мэйл" as Email
+entity "Система" as System
+boundary "Форма Правила торговли" as TradingForm
+
+autonumber
+
+Email->System:Отправка на сервер запрос на авторизацию
+activate Email
+activate System
+deactivate Email
+
+System->System:Авторизация E-mail в системе
+activate System
+deactivate System
+
+System->TradingForm: Переход к А 2.1.5 Ознакомление с Правилами торговли
+activate TradingForm
+
+@enduml

@@ -1,10 +1,9 @@
 @startuml
 /'Название файла будет: ЦТС.<Номер схемы БП>.<Номер этапа>.<Название этапа в схеме БП>'/
-title "ЦТС.А2.1.1.Ввод данных для предварительной регистрации"
+title "ЦТС.А2.1.1.Регистрация пользователя"
 actor "Участник Торгов" as User
 boundary "Форма для предварительной регистрации" as PreRegistrationForm
 entity "Система" as System
-
 
 autonumber
 
@@ -22,33 +21,31 @@ activate User
 activate PreRegistrationForm
 
 User -> PreRegistrationForm: Нажать кнопку "Зарегистрироваться"
-
 PreRegistrationForm -> PreRegistrationForm: Проверка корректности заполненных данных 
 activate PreRegistrationForm
 deactivate User
-
-PreRegistrationForm --> User: Ошибка ввода данных! (Текст ошибки в разработке) 
 deactivate PreRegistrationForm
-activate User
 
-User->PreRegistrationForm: Корректировка ранее введенных данных
-deactivate User
-deactivate PreRegistrationForm
+ alt "Если данные введены некорректно"
+
+ PreRegistrationForm --> User: Ошибка ввода данных! (Текст ошибки в разработке) 
+ activate PreRegistrationForm
+ activate User
+ deactivate PreRegistrationForm
+
+ User->PreRegistrationForm: Корректировка ранее введенных данных
+ deactivate User
+ deactivate PreRegistrationForm
+ 
+ else "Если данные  введены корректно"
+
+ PreRegistrationForm -> System: Переход к А2.1.2
+ activate PreRegistrationForm
+ activate System
+ deactivate PreRegistrationForm
+
+ end
 end
-
-PreRegistrationForm -> System: Переход к А2.1.2
-activate PreRegistrationForm
-activate System
-deactivate PreRegistrationForm
-
-'System->System:Создание записи в Справочнике "Организации-УТ"
-'System->System:Создание записи в Справочнике "Пользователь", связаную с Организацией-УТ
-'System->User: Подтверждение регистрации по Е-мэйл
-'activate User
-
-'User->User: Переход к А2.1.2
-'activate User
-
 @enduml
 
 

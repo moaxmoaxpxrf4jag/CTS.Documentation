@@ -1,0 +1,41 @@
+@startuml 
+
+title "ЦТС. А2.1.5.Ознакомление с Правилами торговли"
+actor "Участник Торгов" as User
+boundary "Форма Правила торговли" as TradingForm
+boundary "Форма для предварительной анкеты" as PreliminaryQuestionnaireForm
+
+autonumber
+
+User-> TradingForm:Открывет форму "Правила торговли"
+activate User
+activate TradingForm
+
+TradingForm-->User: Система отображает форму "Правила торговли"
+deactivate User
+deactivate TradingForm
+
+alt "Если пользователен не согласен"
+
+User->TradingForm:Нажать кнопку "Отмена"
+activate User
+activate TradingForm
+deactivate User
+
+TradingForm->TradingForm:Выход с экрана
+activate TradingForm
+deactivate TradingForm
+
+else "Если пользователь согласен"
+
+User->TradingForm: Нажать кнопку "Согласен"
+activate User
+deactivate User
+deactivate TradingForm
+
+TradingForm->PreliminaryQuestionnaireForm:Переход в А2.1.6 Предзаполнение профиля Организации УТ
+activate TradingForm
+activate PreliminaryQuestionnaireForm
+end
+
+@enduml
