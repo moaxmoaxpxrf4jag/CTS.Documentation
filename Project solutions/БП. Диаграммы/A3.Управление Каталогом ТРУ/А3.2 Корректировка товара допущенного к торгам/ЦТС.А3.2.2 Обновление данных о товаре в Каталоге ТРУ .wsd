@@ -1,0 +1,27 @@
+@startuml "ЦТС.А3.1 Допуск товара к торгам"
+title "ЦТС.А3.1.4 Создание в Каталоге ТРУ записей по утвержденной спецификации"
+participant "Реестр Спецификаций" as Specification
+database "База данных" as Database
+participant "Каталоге ТРУ" as Communication
+
+autonumber
+
+Specification->Database: Внесенные изменения в "Перечень биржевых товаров" (Удалить/Добавить товар. Информацию о товаре)
+activate Specification
+deactivate Specification
+activate Database
+
+Database->Database: Создание записи в базе данных
+
+Database->Communication: Изменение записи в Каталоге ТРУ записей по утвержденной спецификации
+deactivate Database
+
+activate Communication
+note right
+    Изменение записи в Каталоге ТРУ 
+    по товару не участвующих в торгах.
+    Заполнение полей: 
+    (в разработке).
+end note
+Communication->Communication: Создание записей Каталоге ТРУ 
+@enduml
