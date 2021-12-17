@@ -1,58 +1,59 @@
 @startuml "ЦТС.A1.1 Новый тариф (услуга)"
 title "ЦТС.А1.1.1 Создание нового тарифа(услуги) в Каталоге услуг"
 actor "Сотрудник ЦТС" as UserCTS
-participant "Форма Каталог услуг" as СatalogService
+boundary "Форма Каталог услуг" as СatalogServiceForm
 database "База данных" as Database
-participant "Сайт ЦТС" as SiteCTS
-actor "Участник торгов" as User
+participant "Каталог услуг" as СatalogService
 
 autonumber
-
-autonumber
-UserCTS -> СatalogService: Открыть форму
+UserCTS -> СatalogServiceForm: Открыть форму
 activate UserCTS
-activate СatalogService
+activate СatalogServiceForm
 
-СatalogService-->UserCTS: Система показывает форму Каталог услуг
+СatalogServiceForm-->UserCTS: Система показывает форму Каталог услуг
 deactivate UserCTS
-deactivate СatalogService
+deactivate СatalogServiceForm
 
 loop Проверка и заполнение формы
  
-    UserCTS->СatalogService: Заполняет Наименование тарифа (услуги)
+    UserCTS->СatalogServiceForm: Заполняет Наименование тарифа (услуги)
     
     activate UserCTS
-    activate СatalogService
+    activate СatalogServiceForm
     
     note right
     Заполняется автоматически при
     создании: Номер, Автор.
     end note
 
-    UserCTS->СatalogService: Заполняет Вид тарифа (услуги)
-    UserCTS->СatalogService: Основание оплаты
-    UserCTS->СatalogService: Цена тарифа (услуги)
-    UserCTS->СatalogService: Вид валюты
-    UserCTS->СatalogService: ??? НДС
+    UserCTS->СatalogServiceForm: Заполняет Вид тарифа (услуги)
+    UserCTS->СatalogServiceForm: Основание оплаты
+    UserCTS->СatalogServiceForm: Цена тарифа (услуги)
+    UserCTS->СatalogServiceForm: Вид валюты
 
-    UserCTS->СatalogService: Дата публикации тарифа (услуги)
-    UserCTS->СatalogService: Дата вступления указанных изменений в силу
+    UserCTS->СatalogServiceForm: Дата публикации тарифа (услуги)
+    UserCTS->СatalogServiceForm: Дата вступления указанных изменений в силу
+    note right
+    Дата вступления указанных изменений в силу 
+    (не менее чем за +3 (три) дня) >
+    Дата публикации тарифа (услуги)
+    end note
 
-    СatalogService -> СatalogService: Проверка корректности заполненных данных 
-    activate СatalogService
-    deactivate СatalogService
-    СatalogService --> UserCTS: Ошибка ввода данных! (Текст ошибки в разработке) 
+    СatalogServiceForm -> СatalogServiceForm: Проверка корректности заполненных данных 
+    activate СatalogServiceForm
+    deactivate СatalogServiceForm
+    СatalogServiceForm --> UserCTS: Ошибка ввода данных! (Текст ошибки в разработке) 
  
     activate UserCTS
-    UserCTS->СatalogService: Корректировка ранее введенных данных
+    UserCTS->СatalogServiceForm: Корректировка ранее введенных данных
     deactivate UserCTS
 deactivate UserCTS
-deactivate СatalogService
+deactivate СatalogServiceForm
 end
 
-UserCTS->СatalogService: Нажимает на кнопку Сохранить
+UserCTS->СatalogServiceForm: Нажимает на кнопку Сохранить
 activate UserCTS
-activate СatalogService
+activate СatalogServiceForm
 note right
     Заполняется автоматически 
     при сохранении записи: Статус, Дата создания.
@@ -62,21 +63,15 @@ note right
     (Пример. Текст статуса в разработке). 
 end note
 
-СatalogService->Database: Запись в базу данных
+СatalogServiceForm->Database: Запись в базу данных
 activate Database
-СatalogService-->UserCTS: Выходит из формы Каталог услуг
+СatalogServiceForm-->UserCTS: Выходит из формы Каталог услуг
 
 deactivate UserCTS
-deactivate СatalogService
+deactivate СatalogServiceForm
 
-Database->Database: Создание записи в базе данных
-
-activate Database
+Database->СatalogService: Переход к "A1.1.2 Создание новой записи в Каталога услуг"
 deactivate Database
-
-Database->SiteCTS: Переход к "А1.1.4 Публикация новости о новом тарифе(услуге)"
-Database->User: Переход к "А1.1.3 Уведомление - Новый тариф(услуга)"
-
 ' ЦТС.A1.1.2 Создание новой записи в Каталога услуг
 ' ЦТС.A1.1.3 Уведомление-Новый тариф(услуга)
 ' ЦТС.A1.1.4 Публикация новости о новом тарифе(услуге)

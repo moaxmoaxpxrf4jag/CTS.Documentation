@@ -1,0 +1,38 @@
+@startuml "ЦТС.A1.1 Новый тариф (услуга)"
+title "ЦТС.А1.1.2 Создание новой записи в Каталога услуг"
+boundary "Форма Каталог услуг" as СatalogServiceForm
+database "База данных" as Database
+participant "Каталог услуг" as СatalogService
+entity "Сайт ЦТС" as SiteCTS
+actor "Участник торгов" as User
+
+autonumber
+СatalogServiceForm->Database: Тарифа(услуги) с статусом "Создано" (Пример. Текст статуса в разработке).
+activate СatalogServiceForm
+deactivate СatalogServiceForm
+
+activate Database
+Database->Database: Сохранение записи в базе данных
+activate Database
+deactivate Database
+Database->СatalogService: Записи в Каталога услуг с статусом "Создано" (Пример. Текст статуса в разработке).
+
+activate СatalogService
+
+СatalogService->User: Переход к "A1.1.3 Уведомление-Новый тариф(услуга)"
+
+СatalogService->СatalogService: Изменение статуса на "Активно"
+activate СatalogService
+СatalogService-->Database: Сохранение изменение в базе данных статуса с "Создано" на "Активно" (Пример. Текст статуса в разработке).
+deactivate СatalogService
+note right
+    Изменение статуса на "Активно" 
+    в день/время указаные в 
+    Дата публикации тарифа (услуги)
+end note
+
+СatalogService->SiteCTS: Переход к A1.1.4 Публикация новости о новом тарифе(услуге)
+
+deactivate Database
+deactivate СatalogService
+@enduml
