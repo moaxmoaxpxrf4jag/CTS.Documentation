@@ -61,10 +61,12 @@ skinparam class {
     [1]
     'Примечание
     --
-    /'Код'/ +*Code: str:Payment.Code
-    'Принцип формирования кода...
+    /'Номер счета'/ +*Code: str:Payment.Code
+    'Принцип формирования номера...
     /'Наименование работ, услуг'/ +*Name: str:ТАРИФЫ.Name
     /'Участник торгов'/ #*OrganizationsName: str:Organisations.Name
+    /'ИНН'/ #*INN: str:Organizations.INN
+    
     /'Сокращенно наименование'/ +*ShortName: str:Organizations.ShortName
     /'Полное наименование на иностранном языке'/ +ForeignLanguageName: str:Organizations.ForeignLanguageName
     /'Краткое наименование на иностранном языке'/ +ForeignLanguageShortName: str:Organizations.ForeignLanguageShortName
