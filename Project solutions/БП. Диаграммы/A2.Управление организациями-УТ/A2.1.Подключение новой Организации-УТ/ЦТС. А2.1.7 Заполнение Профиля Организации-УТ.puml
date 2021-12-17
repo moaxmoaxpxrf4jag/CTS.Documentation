@@ -1,0 +1,45 @@
+@startuml 
+title "ЦТС. А2.1.7 Заполнение Профиля Организации-УТ"
+actor "Участник Торгов" as User
+boundary "Форма Профиля Организации-УТ" as ProfileForm
+entity "Система" as System
+
+autonumber
+
+User->ProfileForm: Открывает Форму Профиля Организации-УТ
+activate User
+activate ProfileForm
+ProfileForm-->User: Система показывает Форму Профиля Организации-УТ
+deactivate User
+deactivate ProfileForm
+
+User->ProfileForm: Заполняет Форму Профиля Организации-УТ
+activate User
+activate ProfileForm
+deactivate User
+
+ProfileForm->ProfileForm: Проверка корректности заполнения анкеты 
+/'Проверка заполнения обязательных полей, масок полей'/
+activate ProfileForm
+deactivate ProfileForm
+
+User->ProfileForm: Нажатие кнопки "Сохранить"
+activate User
+
+ProfileForm-->User: Уведомление! (Текст Ошибки в разработке)!
+ProfileForm-->User: Ошибка!(Текст ошибки в разработке)!
+/'!!!Надо продумать уведомления'/
+deactivate User
+
+ProfileForm->System: Передача данных в Систему
+
+activate ProfileForm
+activate System
+System->System: Сохранение данных в Системе в справочнике "Организация-УТ"
+activate System
+
+System ->System: Переход в А2.1.8  Автоматическая предварительная проверка данных Профиля ОУТ
+deactivate System
+
+
+@enduml

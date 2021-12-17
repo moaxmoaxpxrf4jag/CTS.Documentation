@@ -1,0 +1,12 @@
+@startuml "ЦТС.А6.2.2 Смена статуса счета оплаты"
+title "ЦТС.А6.2.2 Смена статуса счета оплаты"
+database "База данных" as DataBase
+collections "Реестр взаиморасчетов" as A
+
+autonumber
+
+activate DataBase
+DataBase-->DataBase: Получен статус из 1С - статус оплачен
+DataBase->A: Смена статуса счета на "Оплачен"
+A->A: Переход к 6.2.3 Уведомления об оплате счета
+@enduml

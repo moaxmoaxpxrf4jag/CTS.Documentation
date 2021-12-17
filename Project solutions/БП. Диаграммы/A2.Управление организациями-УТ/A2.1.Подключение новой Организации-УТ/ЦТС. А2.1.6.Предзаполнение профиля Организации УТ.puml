@@ -1,0 +1,47 @@
+@startuml 
+title "ЦТС. А2.1.6.Предзаполнение профиля Организации УТ"
+
+boundary "Форма Правила торговли" as TradingForm
+boundary "Форма Предзаполненный профиль" as PreliminaryQuestionnaireForm
+actor "Участник Торгов" as User
+entity "Внешняя ИС" as ExternalInformationSystem
+entity "Система" as System
+
+autonumber
+
+TradingForm->PreliminaryQuestionnaireForm: Переход на форму Анкеты
+activate TradingForm
+activate PreliminaryQuestionnaireForm
+deactivate TradingForm
+deactivate PreliminaryQuestionnaireForm
+
+PreliminaryQuestionnaireForm->ExternalInformationSystem: Запрос данных во внешнюю ИС
+activate PreliminaryQuestionnaireForm
+activate ExternalInformationSystem
+
+ExternalInformationSystem->PreliminaryQuestionnaireForm: Подтягивание данных в анкету со внешних ИС
+deactivate ExternalInformationSystem
+deactivate PreliminaryQuestionnaireForm
+
+
+PreliminaryQuestionnaireForm->User: Система отображает форму Предзаполненный профиль
+activate PreliminaryQuestionnaireForm
+activate User
+User->PreliminaryQuestionnaireForm: Пользователь нажимает кнопку "Далее"
+deactivate User
+deactivate PreliminaryQuestionnaireForm
+
+PreliminaryQuestionnaireForm->System: Передача данных анкеты в Систему
+activate PreliminaryQuestionnaireForm
+activate System
+deactivate PreliminaryQuestionnaireForm
+
+System->System: Создание записи в Системе
+activate System
+deactivate System
+
+System->System: Переход в А2.1.7 Заполнение Профиля Организации-УТ
+activate System
+deactivate System
+
+@enduml
