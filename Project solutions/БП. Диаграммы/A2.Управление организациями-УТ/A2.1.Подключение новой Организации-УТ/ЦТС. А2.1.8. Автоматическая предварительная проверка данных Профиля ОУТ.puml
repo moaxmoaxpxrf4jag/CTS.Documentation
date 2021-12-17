@@ -1,0 +1,81 @@
+@startuml
+title "ЦТС. А2.1.8. Автоматическая предварительная проверка данных Профиля ОУТ"
+
+boundary "Система" as System
+Control "Внешняя ИС" as ExternaInformationSystem
+actor "Менеджер клиентского сервиса" as CustomerServiceManager
+actor "Участник Торгов" as User
+
+autonumber
+
+activate System
+System->System: Формирует список данных для автоматической проверки 
+deactivate System
+
+System->ExternaInformationSystem: Запрос во внешнюю ИС для проверки данных
+activate System
+activate ExternaInformationSystem
+
+ExternaInformationSystem->System: Отправка необходимых данных в Систему
+System->System:Проверка данных
+activate System
+deactivate System
+deactivate ExternaInformationSystem
+deactivate System
+
+alt "Если проверка не пройдена"
+
+'System->CustomerServiceManager:Уведомление о не пройденной проверки (Текст в разработке).
+'activate System
+'activate CustomerServiceManager
+'deactivate CustomerServiceManager
+
+'System->User:Уведомление о не пройденной проверки (Текст в разработке).
+'activate User
+'deactivate User
+'deactivate System
+
+System->System:Система проверяет сколько попыток осталось для запроса данных у УТ
+activate System
+deactivate System
+
+ alt "Если попытки есть"
+ System->User:Переход в А2.1.9 Уведомления – Предварительная проверка профиля не пройдена
+ activate System
+ activate User
+ deactivate System
+ deactivate User
+
+ else "Если попыток нет"
+ System->User: Уведомление Превышено количество попыток автомат.проверки! (Текст в разработке)
+ activate System
+ activate User
+ deactivate User
+
+ System->CustomerServiceManager:Переход в А2.1.10 Ручная проверка данных Профиля ОУТ
+ activate System
+ activate CustomerServiceManager
+ deactivate System
+ deactivate CustomerServiceManager
+ deactivate System
+
+ end
+
+else "Если проверка пройдена"
+
+System->User:Уведомление об успешной пройденной проверки (Текст в разработке)
+activate User
+activate System
+deactivate User
+deactivate System
+
+System->CustomerServiceManager:Уведомление об успешной пройденной проверки (Текст в разработке)
+activate System
+activate CustomerServiceManager
+
+CustomerServiceManager->CustomerServiceManager:Переход в А2.1.10 Ручная проверка данных Профиля ОУТ
+deactivate CustomerServiceManager
+
+end 
+
+@enduml
