@@ -1,0 +1,30 @@
+@startuml "ЦТС.A1.1 Новый тариф (услуга)"
+title "ЦТС.A1.1.4 Публикация новости о новом тарифе(услуге)"
+
+database "База данных" as Database
+participant "Каталог услуг" as СatalogService
+entity "Сайт ЦТС" as SiteCTS
+
+autonumber
+
+activate СatalogService
+СatalogService->СatalogService: Изменение статуса 
+    note left
+    Статус изменяется автоматически 
+    на "Актуально" в день/время
+    указаные в 
+    Дата публикации тарифа (услуги)
+    end note
+СatalogService->Database: Изменение/Обновление записи в базе данных по новому тарифу(услуге)
+deactivate СatalogService
+activate Database
+deactivate Database
+
+Database-->SiteCTS: Новый тариф(услуга)
+activate Database
+activate SiteCTS
+Database-->SiteCTS: Публикация новости о новый тарифе(услуге)
+deactivate Database
+deactivate SiteCTS
+
+@enduml
