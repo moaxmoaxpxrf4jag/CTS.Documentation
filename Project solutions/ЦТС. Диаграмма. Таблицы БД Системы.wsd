@@ -381,6 +381,16 @@ skinparam class {
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
 
+/'Счет на оплату'/ entity Payments <<Work>> {
+    Id: GUID
+    --
+    /'Номер счета'/ Code str:50
+    /'Дата'/ Date datetime
+    /'Исполнитель'/ Name: Organisations.Name
+    /'ИНН'/ INN: Organisations.INN
+    /'Юридический адрес'/ *LegalAddressId: GUID:Addresses.Id
+}
+
 '**Справочники
 
 /'Статусы Каталога ТРУ'/ entity CommodityStatuses <<Ready>>{
@@ -496,6 +506,8 @@ skinparam class {
     /'Модифицировано'/ LastModifiedAt: DateTime
     /'Кем модифицировано'/ LastModifiedById: GUID:Users.Id
 }
+
+
 
 '***Связи таблиц
 
