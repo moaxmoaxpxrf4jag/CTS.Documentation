@@ -1,0 +1,29 @@
+@startuml "ЦТС.A1.1 Новый тариф (услуга)"
+title "ЦТС.A1.1.3 Уведомление-Новый тариф(услуга)"
+participant "Каталог услуг" as СatalogService
+collections "Коммуникационная панель" as CommunicationPanel
+actor "Участник торгов" as User
+
+autonumber
+
+СatalogService->CommunicationPanel: Тарифа(услуги) с статусом "Создано" в день/время указаные в "Дата публикации тарифа (услуги)".
+activate СatalogService
+activate CommunicationPanel
+deactivate СatalogService
+
+CommunicationPanel-->User: Получено уведомление о новом статусе тарифе(услуге), переход в блок уведомлений
+activate User 
+User-->CommunicationPanel: Нажать на уведомление "Новый тариф(услуга)"
+CommunicationPanel-->User: Открылись уведомления пользователя
+note left
+    Текст уведомления:
+    Новый тариф(услуга)
+    Наименование тарифа(услуги);
+    Вид/Тип;
+    Цена;
+    Дата вступления в силу;
+end note
+
+deactivate CommunicationPanel
+deactivate User
+@enduml
