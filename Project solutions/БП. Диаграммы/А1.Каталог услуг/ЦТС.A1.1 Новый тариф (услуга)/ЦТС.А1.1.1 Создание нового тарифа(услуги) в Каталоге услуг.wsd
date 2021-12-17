@@ -1,0 +1,90 @@
+@startuml "ЦТС.A1.1 Новый тариф (услуга)"
+title "ЦТС.А1.1.1 Создание нового тарифа(услуги) в Каталоге услуг"
+actor "Сотрудник ЦТС" as UserCTS
+boundary "Форма Каталог услуг" as СatalogServiceForm
+database "База данных" as Database
+participant "Каталог услуг" as СatalogService
+
+autonumber
+UserCTS -> СatalogServiceForm: Открыть форму
+activate UserCTS
+activate СatalogServiceForm
+
+СatalogServiceForm-->UserCTS: Система показывает форму Каталог услуг
+deactivate UserCTS
+deactivate СatalogServiceForm
+
+loop Проверка и заполнение формы
+ 
+    UserCTS->СatalogServiceForm: Заполняет Наименование тарифа (услуги)
+    
+    activate UserCTS
+    activate СatalogServiceForm
+    
+    note right
+    Заполняется автоматически при
+    создании: Номер, Автор.
+    end note
+
+    UserCTS->СatalogServiceForm: Заполняет Вид тарифа (услуги)
+    UserCTS->СatalogServiceForm: Основание оплаты
+    UserCTS->СatalogServiceForm: Цена тарифа (услуги)
+    UserCTS->СatalogServiceForm: Вид валюты
+
+    UserCTS->СatalogServiceForm: Дата публикации тарифа (услуги)
+    UserCTS->СatalogServiceForm: Дата вступления указанных изменений в силу
+    note right
+    Дата вступления указанных изменений в силу 
+    (не менее чем за +3 (три) дня) >
+    Дата публикации тарифа (услуги)
+    end note
+
+    СatalogServiceForm -> СatalogServiceForm: Проверка корректности заполненных данных 
+    activate СatalogServiceForm
+    deactivate СatalogServiceForm
+    СatalogServiceForm --> UserCTS: Ошибка ввода данных! (Текст ошибки в разработке) 
+ 
+    activate UserCTS
+    UserCTS->СatalogServiceForm: Корректировка ранее введенных данных
+    deactivate UserCTS
+deactivate UserCTS
+deactivate СatalogServiceForm
+end
+
+UserCTS->СatalogServiceForm: Нажимает на кнопку Сохранить
+activate UserCTS
+activate СatalogServiceForm
+note right
+    Заполняется автоматически 
+    при сохранении записи: Статус, Дата создания.
+    Статус="Создано" после сохранения записи,
+    c смена статуса на
+    "Активный" = Дата публикации тарифа
+    (Пример. Текст статуса в разработке). 
+end note
+
+СatalogServiceForm->Database: Запись в базу данных
+activate Database
+СatalogServiceForm-->UserCTS: Выходит из формы Каталог услуг
+
+deactivate UserCTS
+deactivate СatalogServiceForm
+
+Database->СatalogService: Переход к "A1.1.2 Создание новой записи в Каталога услуг"
+deactivate Database
+' ЦТС.A1.1.2 Создание новой записи в Каталога услуг
+' ЦТС.A1.1.3 Уведомление-Новый тариф(услуга)
+' ЦТС.A1.1.4 Публикация новости о новом тарифе(услуге)
+
+' ЦТС.A1.2 Изменение тарифа (услуги)
+' ЦТС.A1.2.1 Изменение записи тарифа(услуги)
+' ЦТС.A1.2.2 Создание записи о изменение в Каталога услуг
+' ЦТС.A1.2.3 Уведомление-Изменение в тарифе(услуге)
+' ЦТС.A1.2.4 Публикация новости о изменение в тарифе(услуге)
+
+' ЦТС.A1.3 Деактивированные тарифа(услуги)
+' ЦТС.A1.3.1 Деактивация записи тарифа(услуги)
+' ЦТС.A1.3.2 Создание записи о деактивации в Каталога услуг
+' ЦТС.A1.3.3 Уведомление-Деактивировали тариф(услугу)
+' ЦТС.A1.3.4 Публикация новости о деактивации тарифа(услуги)
+@enduml
