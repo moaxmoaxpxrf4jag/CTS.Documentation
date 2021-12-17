@@ -7,7 +7,7 @@ entity "Сайт ЦТС" as SiteCTS
 actor "Участник торгов" as User
 
 autonumber
-СatalogServiceForm->Database: Тарифа(услуги) с статусом "Создано" (Пример. Текст статуса в разработке).
+СatalogServiceForm->Database: Тарифы(услуги) с статусом "Создано" (Пример. Текст статуса в разработке).
 activate СatalogServiceForm
 deactivate СatalogServiceForm
 
