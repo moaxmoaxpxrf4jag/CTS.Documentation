@@ -1,0 +1,64 @@
+@startuml
+title ЦТС. А2.1.10.Ручная проверка данных Профиля ОУТ
+
+actor "Менеджер клиентского сервиса" as CustomerServiceManager
+entity "Система" as System
+actor "Участник Торгов" as User
+boundary "Форма Условия" as ConditionalForm
+
+
+autonumber
+CustomerServiceManager->CustomerServiceManager:Выполнение ручной проверки
+activate CustomerServiceManager
+deactivate CustomerServiceManager
+
+alt "Если ручная проверка пройдена"
+CustomerServiceManager->System: Внесение в систему информации о прохождение ручной проверки
+activate System
+activate CustomerServiceManager
+deactivate System
+deactivate CustomerServiceManager
+
+System->User:Уведомление об успешно пройденной ручной проверки!(Текст в работе)
+activate System
+activate User
+deactivate System
+deactivate User
+
+else "Если ручная проверка не пройдена"
+CustomerServiceManager->System: Внесение перечня данных не прошедшие проверку
+activate System
+activate CustomerServiceManager
+deactivate CustomerServiceManager
+
+    alt "Если необходимо запросить данные у УТ"
+    
+    System->User:Переход в А2.1.11 Уведомление - Проверка не пройдена
+    activate System
+    activate User
+    deactivate System
+    deactivate User
+
+    else "Если не надо запрость данные у УТ"
+    System-> User:Переход в А2.1.11 Уведомление - Проверка не пройдена
+    activate System
+    activate User
+    deactivate System
+    deactivate User
+   
+    end
+deactivate System
+
+else "Если проверка пройдена"
+System->User:Уведомление о пройденной проверке!(Текст в разработке)
+activate System
+activate User
+deactivate System
+
+User->ConditionalForm:Переход в А2.1.12 Принятие условий  договора, подписание его УКЭП
+activate ConditionalForm
+deactivate User
+deactivate ConditionalForm
+
+end
+@enduml
