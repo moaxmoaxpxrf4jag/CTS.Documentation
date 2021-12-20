@@ -26,5 +26,5 @@ activate SiteCTS
 Database-->SiteCTS: Публикация новости о новый тарифе(услуге)
 deactivate Database
 deactivate SiteCTS
-'/123456/'
+'/123456fd/'
 @enduml
